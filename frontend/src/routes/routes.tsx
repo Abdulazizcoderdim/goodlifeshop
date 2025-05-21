@@ -4,6 +4,7 @@ import Login from "../components/auth/login";
 import HomePage from "../components/home/home-page";
 import NotFound from "../components/NotFound";
 import CartPage from "@/components/cart/cart-page";
+import Register from "@/components/auth/register";
 
 export const router = createBrowserRouter([
   {
@@ -15,16 +16,20 @@ export const router = createBrowserRouter([
         element: <HomePage />,
       },
       {
-        path: "/login",
-        element: <Login />,
-      },
-      {
         path: "*",
         element: <NotFound />,
       },
       {
         path: "/personal/cart",
         element: <CartPage />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
+      },
+      {
+        path: "/register",
+        element: <Register />,
       },
     ],
   },

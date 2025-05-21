@@ -3,6 +3,11 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* config theme */
+@theme {
+  --color-gray: #efecea;
+}
+
 /* Custom styles for Swiper navigation */
 .swiper-container {
   padding: 0 40px;
@@ -189,5 +194,11 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+  button {
+    @apply cursor-pointer;
+  }
+  html {
+    @apply scroll-smooth;
   }
 }

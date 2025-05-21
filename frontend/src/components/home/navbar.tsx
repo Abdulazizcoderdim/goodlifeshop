@@ -183,7 +183,7 @@ const Navbar = () => {
                             <a
                               key={category.name}
                               href={category.href}
-                              className="hover:text-gray-200"
+                              className="hover:text-gray-700"
                             >
                               {category.name}
                             </a>

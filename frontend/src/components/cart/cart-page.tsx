@@ -46,8 +46,8 @@ export default function CartPage() {
   };
 
   return (
-    <div className="bg-[#EFECEA]">
-      <div className="max-w-6xl mx-auto px-4 py-8">
+    <div className="bg-gray-custom">
+      <div className="max-w-7xl mx-auto px-4 py-8">
         {cartItems.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-20">
             <div className="mb-6">
