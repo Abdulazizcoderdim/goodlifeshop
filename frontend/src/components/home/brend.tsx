@@ -49,7 +49,7 @@ const brendData: BrandItem[] = [
 
 const Brend = () => {
   return (
-    <section className="py-16 custom-container">
+    <section className="sm:py-16 py-8 custom-container">
       <h2 className="text-3xl font-bold text-center mb-12">БРЕНДЫ</h2>
 
       {/* Desktop View */}

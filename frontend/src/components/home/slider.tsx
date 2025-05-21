@@ -96,9 +96,9 @@ export default function Slider() {
       </Swiper>
 
       {/* Custom Navigation Buttons */}
-      <button className="swiper-button-prev absolute left-4 top-1/2 z-10 flex !h-10 !w-10 border border-white -translate-y-1/2 items-center justify-center rounded-full !bg-white/80 !text-gray-800 !shadow-md hover:!bg-white"></button>
+      <button className="swiper-button-prev absolute left-4 top-1/2 z-10 flex sm:!h-10 sm:!w-10 !h-8 !w-8 border border-white -translate-y-1/2 items-center justify-center rounded-full !bg-white/80 !text-gray-800 !shadow-md hover:!bg-white"></button>
 
-      <button className="swiper-button-next absolute right-4 top-1/2 z-10 flex !h-10 !w-10 border border-white -translate-y-1/2 items-center justify-center rounded-full !bg-white/80 !text-gray-800 !shadow-md hover:!bg-white"></button>
+      <button className="swiper-button-next absolute right-4 top-1/2 z-10 flex sm:!h-10 sm:!w-10 !h-8 !w-8 border border-white -translate-y-1/2 items-center justify-center rounded-full !bg-white/80 !text-gray-800 !shadow-md hover:!bg-white"></button>
 
       {/* Custom Pagination */}
       <div className="swiper-pagination absolute bottom-6 left-0 right-0 z-10 flex justify-center space-x-2">

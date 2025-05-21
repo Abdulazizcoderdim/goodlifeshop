@@ -14,9 +14,9 @@ import { productsData } from "../../constants";
 
 const NewProducts = () => {
   return (
-    <section className="py-12 ">
+    <section>
       <div className="custom-container">
-        <h2 className="text-3xl font-bold mb-8 text-center">Новинки</h2>
+        <h2 className="text-3xl font-bold sm:mb-8 mb-4 text-center">Новинки</h2>
 
         <div className="swiper-container relative">
           {/* Custom navigation buttons outside Swiper for better visibility */}

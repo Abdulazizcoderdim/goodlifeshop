@@ -33,7 +33,7 @@ export default function ProductItem({ product }: ProductProps) {
   };
 
   return (
-    <div className="group shadow-lg flex flex-col h-full rounded-lg border border-gray-200 overflow-hidden">
+    <div className="group shadow-lg flex flex-col h-full rounded-lg border border-gray-200 bg-white overflow-hidden">
       <div className="relative">
         <button
           className="absolute top-2 right-2 z-10 p-2 bg-white rounded-full shadow-sm hover:shadow-md transition-shadow"

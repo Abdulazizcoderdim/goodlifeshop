@@ -33,7 +33,7 @@ const Layout = () => {
       <Footer />
 
       <div
-        className={`fixed bottom-4 right-4 transition-opacity duration-300 ${
+        className={`fixed bottom-4 z-50 right-4 transition-opacity duration-300 ${
           scrolled ? "opacity-100" : "opacity-0"
         }`}
       >

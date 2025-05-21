@@ -47,7 +47,7 @@ const CategoryData2 = [
 
 const Category = () => {
   return (
-    <section className="py-12 custom-container">
+    <section className="sm:py-12 py-6 custom-container">
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
         {CategoryData.map((category, index) => (
           <Link
@@ -77,11 +77,11 @@ const Category = () => {
             className="relative group overflow-hidden rounded-lg cursor-pointer"
           >
             {/* Image container with overlay */}
-            <div className="relative h-[400px] w-full rounded-lg">
+            <div className="relative bg-red-400 w-full rounded-lg">
               <img
                 src={product.image || "/placeholder.svg"}
                 alt={product.name}
-                className="object-cover rounded-lg group-hover:scale-105 transition-all duration-300"
+                className="object-contain rounded-lg group-hover:scale-105 transition-all duration-300"
               />
               {/* Dark overlay */}
               <div className="absolute inset-0 bg-black/35 h-32 self-end"></div>
@@ -89,10 +89,10 @@ const Category = () => {
 
             {/* Content positioned at bottom */}
             <div className="absolute bottom-0 left-0 right-0 flex flex-col items-center pb-8">
-              <h3 className="text-white text-xl font-medium mb-4">
+              <h3 className="text-white lg:text-xl md:text-lg font-medium mb-4">
                 {product.name}
               </h3>
-              <button className="bg-white text-black px-8 py-2 text-sm font-bold rounded-md hover:bg-gray-100 transition-colors">
+              <button className="bg-white text-black sm:px-8 px-4 py-2 sm:text-sm text-sm font-bold rounded-md hover:bg-gray-100 transition-colors">
                 {product.buttonText}
               </button>
             </div>

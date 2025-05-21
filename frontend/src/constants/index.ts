@@ -7,6 +7,7 @@ export const productsData = [
     image: "/p1.webp",
     isNew: true,
     isFavorite: false,
+    quantity: 0,
   },
   {
     id: 2,
@@ -16,6 +17,7 @@ export const productsData = [
     image: "/p2.webp",
     isNew: true,
     isFavorite: false,
+    quantity: 0,
   },
   {
     id: 3,
@@ -25,6 +27,7 @@ export const productsData = [
     image: "/p3.webp",
     isNew: true,
     isFavorite: false,
+    quantity: 0,
   },
   {
     id: 4,
@@ -34,6 +37,7 @@ export const productsData = [
     image: "/p4.webp",
     isNew: true,
     isFavorite: false,
+    quantity: 0,
   },
   {
     id: 5,
@@ -43,6 +47,7 @@ export const productsData = [
     image: "/p5.webp",
     isNew: true,
     isFavorite: false,
+    quantity: 0,
   },
   {
     id: 6,
@@ -52,6 +57,7 @@ export const productsData = [
     image: "/p6.webp",
     isNew: true,
     isFavorite: false,
+    quantity: 0,
   },
   {
     id: 7,
@@ -61,6 +67,7 @@ export const productsData = [
     image: "/p1.webp",
     isNew: true,
     isFavorite: false,
+    quantity: 0,
   },
 ];
 export const bestsellerData = [
@@ -72,6 +79,7 @@ export const bestsellerData = [
     image: "/be1.webp",
     isNew: false,
     isFavorite: false,
+    quantity: 0,
   },
   {
     id: 2,
@@ -81,6 +89,7 @@ export const bestsellerData = [
     image: "/be2.webp",
     isNew: false,
     isFavorite: false,
+    quantity: 0,
   },
   {
     id: 3,
@@ -90,6 +99,7 @@ export const bestsellerData = [
     image: "/be3.webp",
     isNew: false,
     isFavorite: false,
+    quantity: 0,
   },
   {
     id: 4,
@@ -99,6 +109,7 @@ export const bestsellerData = [
     image: "/be4.webp",
     isNew: false,
     isFavorite: false,
+    quantity: 0,
   },
   {
     id: 5,
@@ -108,6 +119,7 @@ export const bestsellerData = [
     image: "/be4.webp",
     isNew: false,
     isFavorite: false,
+    quantity: 0,
   },
   {
     id: 6,
@@ -117,6 +129,7 @@ export const bestsellerData = [
     image: "/p6.webp",
     isNew: false,
     isFavorite: false,
+    quantity: 0,
   },
   {
     id: 7,
@@ -126,5 +139,6 @@ export const bestsellerData = [
     image: "/p1.webp",
     isNew: false,
     isFavorite: false,
+    quantity: 0,
   },
 ];

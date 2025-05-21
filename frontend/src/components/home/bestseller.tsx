@@ -14,8 +14,8 @@ import { bestsellerData } from "../../constants";
 
 const Bestseller = () => {
   return (
-    <div className="py-16 custom-container">
-      <h1 className="py-5 text-3xl font-medium uppercase text-center">
+    <div className="pb-16 custom-container">
+      <h1 className="py-5 lg:text-3xl text-2xl font-medium uppercase text-center">
         Бестселлеры
       </h1>
 

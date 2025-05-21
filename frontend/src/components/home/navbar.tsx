@@ -81,7 +81,7 @@ const Navbar = () => {
     <>
       <div className="bg-[#524E4A] text-white text-xs">
         <div className="flex items-center max-md:justify-center px-4 justify-between gap-3 custom-container py-1">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center max-sm:text-[10px] gap-2">
             {data.map((item, index) => (
               <Link key={index} to={item.path} className="">
                 {item.title}
@@ -103,11 +103,11 @@ const Navbar = () => {
       </div>
       <header className="bg-black text-white sticky top-0 z-50">
         <div className="flex justify-between items-center gap-3 custom-container py-3">
-          <div className="flex items-center gap-4 w-full">
+          <div className="flex items-center sm:gap-4 gap-2 w-full">
             <Sheet>
               <SheetTrigger asChild>
                 <button className="text-white cursor-pointer">
-                  <Menu size={28} />
+                  <Menu size={28} className="max-sm:h-6" />
                 </button>
               </SheetTrigger>
               <SheetContent
@@ -125,7 +125,7 @@ const Navbar = () => {
             </Sheet>
             <img
               onClick={() => navigate("/")}
-              className="w-32 cursor-pointer h-10 object-contain"
+              className="sm:w-32 w-20 cursor-pointer h-10 object-contain"
               src="https://zwilling.ru/local/templates/zwilling/images/new-header/ZWILLING-Culinary-World.png"
               alt=""
             />
