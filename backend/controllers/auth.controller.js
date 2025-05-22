@@ -29,11 +29,11 @@ class AuthController {
         },
       });
 
-      if (!user) throw BaseError.BadRequest(`Foydalanuvchi tizimda yo'q`);
+      if (!user) throw BaseError.BadRequest(`Пользователь не вошел в систему`);
 
       const isPassEqual = await bcrypt.compare(password, user.password);
 
-      if (!isPassEqual) throw BaseError.BadRequest("Parol noto'g'ri");
+      if (!isPassEqual) throw BaseError.BadRequest("Пароль неверен.");
 
       const userDto = new UserDto(user);
 

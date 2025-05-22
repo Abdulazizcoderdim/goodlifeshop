@@ -12,9 +12,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { X } from "lucide-react";
+import { Loader, X } from "lucide-react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import api from "@/http/axios";
 
 const LoginModal = ({
   open,
@@ -34,10 +35,22 @@ const LoginModal = ({
     },
   });
 
-  function onSubmit(data: LoginFormValues) {
-    console.log(data);
-    toast.success("Login successful");
-    onOpenChange(false);
+  async function onSubmit(data: LoginFormValues) {
+    try {
+      const res = await api.post("/auth/login", {
+        email: data.email,
+        password: data.password,
+      });
+
+      localStorage.setItem("accessToken", res.data.accessToken);
+
+      toast.success("Login successful");
+      onOpenChange(false);
+    } catch (error) {
+      // @ts-expect-error - something wrong
+      toast.error(error?.response?.data.message || "Login failed");
+      console.log(error);
+    }
   }
 
   function handleRegister() {
@@ -113,10 +126,18 @@ const LoginModal = ({
                 </div>
 
                 <Button
+                  disabled={form.formState.isSubmitting}
                   type="submit"
                   className="w-full bg-[#231F1E] hover:bg-[#3A3332] text-white h-12 rounded-none"
                 >
-                  ВОЙТИ
+                  {form.formState.isSubmitting ? (
+                    <p className="flex items-center">
+                      <Loader size={24} className="mr-2 animate-spin" />
+                      Loading...
+                    </p>
+                  ) : (
+                    "ВОЙТИ"
+                  )}
                 </Button>
 
                 <div className="flex items-center gap-2">
