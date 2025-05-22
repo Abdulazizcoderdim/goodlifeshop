@@ -16,8 +16,50 @@ class TokenService {
     };
   }
 
-  async saveToken(userId, refreshToken){
-    const existToken = await prisma
+  async saveToken(userId, refreshToken) {
+    const existToken = await prisma.refreshToken.findUnique({
+      where: {
+        userId,
+      },
+    });
+
+    if (existToken) {
+      await prisma.refreshToken.update({
+        where: {
+          userId,
+        },
+        data: {
+          token: refreshToken,
+          expiresAt: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30), // masalan 7 kunlik
+        },
+      });
+    }
+
+    const token = await prisma.refreshToken.create({
+      data: {
+        userId,
+        expiresAt: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30), // masalan 7 kunlik
+        token: refreshToken,
+      },
+    });
+
+    return token;
+  }
+
+  async removeToken(refreshToken) {
+    return await prisma.refreshToken.delete({
+      where: {
+        token: refreshToken,
+      },
+    });
+  }
+
+  async findToken(refreshToken) {
+    return await prisma.refreshToken.findUnique({
+      where: {
+        token: refreshToken,
+      },
+    });
   }
 
   validateAccessToken(token) {
