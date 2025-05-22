@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import prisma from "../config/prisma.client";
 
 class TokenService {
   generateToken(payload) {
@@ -14,6 +15,11 @@ class TokenService {
       refreshToken,
     };
   }
+
+  async saveToken(userId, refreshToken){
+    const existToken = await prisma
+  }
+
   validateAccessToken(token) {
     try {
       return jwt.verify(token, process.env.JWT_ACCESS_KEY);
