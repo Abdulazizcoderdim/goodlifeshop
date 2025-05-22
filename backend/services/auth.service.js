@@ -23,6 +23,29 @@ class AuthService {
 
     return { ...tokens, user: userDto };
   }
+
+  async refresh(refreshToken) {
+    const userPayload = tokenService.validateRefreshToken(refreshToken);
+    const tokenDb = await tokenService.findToken(refreshToken);
+
+    if (!userPayload || !tokenDb) throw BaseError.Unauthorized("Invalid token");
+
+    const user = await prisma.user.findUnique({
+      where: { id: userPayload.id },
+    });
+
+    const userDto = new UserDto(user);
+
+    const tokens = tokenService.generateToken({ ...userDto });
+
+    await tokenService.saveToken(user.id, tokens.refreshToken);
+
+    return { ...tokens };
+  }
+
+  async logout(refreshToken) {
+    return await tokenService.removeToken(refreshToken);
+  }
 }
 
 export default new AuthService();

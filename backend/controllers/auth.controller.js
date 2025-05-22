@@ -72,9 +72,49 @@ class AuthController {
     }
   }
 
-  async logout(req, res) {}
-  async refresh(req, res) {}
-  async me(req, res) {}
+  async logout(req, res, next) {
+    try {
+      const { refreshToken } = req.cookies;
+
+      if (!refreshToken) throw BaseError.BadRequest("Refresh token not found");
+
+      res.clearCookies("refreshToken");
+
+      return res.json({ message: "Успешный выход из системы" });
+    } catch (error) {
+      next(error);
+    }
+  }
+  async refresh(req, res, next) {
+    try {
+      const { refreshToken } = req.cookies;
+
+      if (!refreshToken) throw BaseError.BadRequest("Refresh token not found");
+
+      const data = await authService.refresh(refreshToken);
+
+      res.cookie("refreshToken", data.refreshToken, {
+        maxAge: 1000 * 60 * 60 * 24 * 30,
+        httpOnly: true,
+      });
+
+      return res.json({ accessToken: data.accessToken });
+    } catch (error) {
+      next(error);
+    }
+  }
+  async me(req, res, next) {
+    try {
+      const userId = req.user.id;
+      const user = await prisma.user.findUnique({ where: { id: userId } });
+
+      if (!user) throw BaseError.BadRequest("Пользователь не вошел в систему");
+
+      return res.json(user);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 export default new AuthController();
