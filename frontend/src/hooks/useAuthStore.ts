@@ -1,4 +1,20 @@
-export const useStore = create((set) => ({
+import api from "@/http/axios";
+import type { IUser } from "@/types";
+import { create } from "zustand";
+
+interface AuthState {
+  user: IUser | null;
+  isAuth: boolean;
+  loading: boolean;
+
+  setLoading: (loading: boolean) => void;
+  setIsAuth: (isAuth: boolean) => void;
+  setUser: (user: IUser) => void;
+  checkAuth: () => Promise<void>;
+  logout: () => Promise<void>;
+}
+
+export const useAuthStore = create<AuthState>((set) => ({
   user: null,
   isAuth: false,
   loading: false,
@@ -17,7 +33,7 @@ export const useStore = create((set) => ({
         set({ isAuth: false, user: null });
       }
 
-      const {} = await api.get("/auth/me", {
+      const { data } = await api.get("/auth/me", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -49,8 +65,6 @@ export const useStore = create((set) => ({
       localStorage.removeItem("accessToken");
 
       set({ isAuth: false, user: null, loading: false });
-    } catch (error) {
-      throw error;
     } finally {
       set({ isAuth: false, user: null, loading: false });
     }
