@@ -8,6 +8,7 @@ const dataProduct = [
     price: 19140.0,
     image: "/p1.webp",
     isNew: true,
+    quantity: 0,
     isFavorite: false,
   },
   {
@@ -17,6 +18,7 @@ const dataProduct = [
     price: 34740.0,
     image: "/p2.webp",
     isNew: true,
+    quantity: 0,
     isFavorite: false,
   },
   {
@@ -26,6 +28,7 @@ const dataProduct = [
     price: 85740.0,
     image: "/p3.webp",
     isNew: true,
+    quantity: 0,
     isFavorite: false,
   },
 ];

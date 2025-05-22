@@ -18,6 +18,9 @@ import {
 import { useEffect, useState } from "react";
 import LoginModal from "../auth/login-modal";
 import RegisterModal from "../auth/register-modal";
+import { useAuthStore } from "@/hooks/useAuthStore";
+import { menuItems, popularCategories } from "@/constants";
+import { Skeleton } from "../ui/skeleton";
 
 const data = [
   {
@@ -72,14 +75,7 @@ const Navbar = () => {
   const [openLogin, setOpenLogin] = useState(false);
   const [openRegister, setOpenRegister] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-
-  const popularCategories = [
-    { name: "Посуда", href: "#" },
-    { name: "Маникюрные наборы", href: "#" },
-    { name: "Сковороды", href: "#" },
-    { name: "Кастрюли", href: "#" },
-    { name: "Чугунная посуда", href: "#" },
-  ];
+  const { isAuth, loading } = useAuthStore();
 
   useEffect(() => {
     if (openLogin || openRegister) {
@@ -211,23 +207,41 @@ const Navbar = () => {
             <div className="flex items-center gap-4">
               <DropdownMenu>
                 <DropdownMenuTrigger className="outline-none cursor-pointer">
-                  <button className="outline-none cursor-pointer hover:text-gray-400 transition">
+                  <button className="outline-none mt-2 cursor-pointer hover:text-gray-400 transition">
                     <UserRound size={24} />
                   </button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="bg-white border border-white text-black">
-                  <DropdownMenuItem
-                    onClick={() => setOpenLogin(true)}
-                    className="uppercase hover:bg-gray-200 cursor-pointer transition"
-                  >
-                    Войти
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onClick={() => setOpenRegister(true)}
-                    className="uppercase hover:bg-gray-200 cursor-pointer transition"
-                  >
-                    Создать аккаунт
-                  </DropdownMenuItem>
+                  {loading ? (
+                    [...Array(2)].map((_, index) => (
+                      <Skeleton className="h-8 w-full mt-2" key={index} />
+                    ))
+                  ) : isAuth ? (
+                    menuItems.map((item, index) => (
+                      <DropdownMenuItem
+                        key={index}
+                        onClick={() => navigate(item.path)}
+                        className="uppercase hover:bg-gray-200 cursor-pointer transition"
+                      >
+                        {item.title}
+                      </DropdownMenuItem>
+                    ))
+                  ) : (
+                    <>
+                      <DropdownMenuItem
+                        onClick={() => setOpenLogin(true)}
+                        className="uppercase hover:bg-gray-200 cursor-pointer transition"
+                      >
+                        Войти
+                      </DropdownMenuItem>
+                      <DropdownMenuItem
+                        onClick={() => setOpenRegister(true)}
+                        className="uppercase hover:bg-gray-200 cursor-pointer transition"
+                      >
+                        Создать аккаунт
+                      </DropdownMenuItem>
+                    </>
+                  )}
                 </DropdownMenuContent>
               </DropdownMenu>
 

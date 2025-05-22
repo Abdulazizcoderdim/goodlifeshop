@@ -142,3 +142,30 @@ export const bestsellerData = [
     quantity: 0,
   },
 ];
+
+export const menuItems = [
+  {
+    title: "ЛИЧНЫЙ КАБИНЕТ",
+    path: "#",
+  },
+  {
+    title: "ТЕКУЩИЕ ЗАКАЗЫ",
+    path: "#",
+  },
+  {
+    title: "ЛИЧНЫЕ ДАННЫЕ",
+    path: "#",
+  },
+  {
+    title: "ВЫЙТИ",
+    path: "#",
+  },
+];
+
+export const popularCategories = [
+  { name: "Посуда", href: "#" },
+  { name: "Маникюрные наборы", href: "#" },
+  { name: "Сковороды", href: "#" },
+  { name: "Кастрюли", href: "#" },
+  { name: "Чугунная посуда", href: "#" },
+];

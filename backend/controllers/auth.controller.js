@@ -21,7 +21,8 @@ class AuthController {
         },
       });
 
-      if (!isExsist) throw BaseError.BadRequest(`Foydalanuvchi tizimda yo'q`);
+      if (!isExsist)
+        throw BaseError.BadRequest(`Пользователь не вошел в систему`);
 
       const user = await prisma.user.findUnique({
         where: {

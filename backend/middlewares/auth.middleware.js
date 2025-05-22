@@ -1,5 +1,5 @@
-import { BaseError } from "../errors/error.middleware";
-import tokenService from "../services/token.service";
+import { BaseError } from "../errors/base.error.js";
+import tokenService from "../services/token.service.js";
 
 export function authMiddleware(req, res, next) {
   try {

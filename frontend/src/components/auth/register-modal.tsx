@@ -11,13 +11,14 @@ import { registerFormSchema, type RegisterFormValues } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import { X } from "lucide-react";
+import { Loader, X } from "lucide-react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import generateCaptcha from "@/lib/generatecapthca";
 import CaptchaCanvas from "@/lib/CaptchaCanvas";
 import { Checkbox } from "../ui/checkbox";
+import api from "@/http/axios";
 
 const RegisterModal = ({
   open,
@@ -40,9 +41,8 @@ const RegisterModal = ({
   });
   const [captcha, setCaptcha] = useState(generateCaptcha());
 
-  function onSubmit(data: RegisterFormValues) {
+  async function onSubmit(data: RegisterFormValues) {
     try {
-      console.log(data);
       if (data.password !== data.confirmPassword) {
         toast.error("Пароли не совпадают");
         return;
@@ -53,12 +53,20 @@ const RegisterModal = ({
         setCaptcha(generateCaptcha());
         return;
       }
+
+      const res = await api.post("/auth/register", {
+        email: data.email,
+        password: data.password,
+      });
+
+      localStorage.setItem("accessToken", res.data.accessToken);
       toast.success("Вход успешен");
       form.reset();
       onOpenChange(false);
     } catch (error) {
       console.error("Error during registration:", error);
-      toast.error("Ошибка регистрации");
+      // @ts-expect-error - samething wrong
+      toast.error(error?.response?.data.message || "Ошибка регистрации");
     }
   }
 
@@ -172,10 +180,18 @@ const RegisterModal = ({
                 </div>
 
                 <Button
+                  disabled={form.formState.isSubmitting}
                   type="submit"
                   className="w-full bg-[#231F1E] hover:bg-[#3A3332] text-white h-12 rounded-none"
                 >
-                  ВОЙТИ
+                  {form.formState.isSubmitting ? (
+                    <p className="flex items-center">
+                      <Loader size={24} className="mr-2 animate-spin" />
+                      Loading...
+                    </p>
+                  ) : (
+                    "Регистрация"
+                  )}
                 </Button>
 
                 <div className="flex items-center gap-2">

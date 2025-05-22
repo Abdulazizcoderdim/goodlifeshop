@@ -8,7 +8,8 @@ class AuthService {
   async register(email, password) {
     const isExsistUser = await prisma.user.findUnique({ where: { email } });
 
-    if (isExsistUser) throw BaseError.BadRequest("Foydalanuvchi tizimda bor");
+    if (isExsistUser)
+      throw BaseError.BadRequest("Пользователь находится в системе");
 
     const hashPassword = await bcrypt.hash(password, 10);
     const user = await prisma.user.create({
