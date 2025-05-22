@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import prisma from "../config/prisma.client";
+import prisma from "../config/prisma.client.js";
 
 class TokenService {
   generateToken(payload) {
@@ -17,33 +17,31 @@ class TokenService {
   }
 
   async saveToken(userId, refreshToken) {
-    const existToken = await prisma.refreshToken.findUnique({
+    const existToken = await prisma.refreshToken.findFirst({
       where: {
         userId,
       },
     });
 
     if (existToken) {
-      await prisma.refreshToken.update({
+      return await prisma.refreshToken.update({
         where: {
-          userId,
+          id: existToken.id,
         },
         data: {
           token: refreshToken,
-          expiresAt: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30), // masalan 7 kunlik
+          expiresAt: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
         },
       });
     }
 
-    const token = await prisma.refreshToken.create({
+    return await prisma.refreshToken.create({
       data: {
         userId,
-        expiresAt: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30), // masalan 7 kunlik
+        expiresAt: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
         token: refreshToken,
       },
     });
-
-    return token;
   }
 
   async removeToken(refreshToken) {
@@ -55,7 +53,7 @@ class TokenService {
   }
 
   async findToken(refreshToken) {
-    return await prisma.refreshToken.findUnique({
+    return await prisma.refreshToken.findFirst({
       where: {
         token: refreshToken,
       },
