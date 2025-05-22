@@ -16,7 +16,7 @@ export default function Footer() {
   };
 
   return (
-    <div className="bg-[#EFECEA] pt-10 pb-6 text-gray-800">
+    <div className="bg-gray border-t border-gray-300 pt-10 pb-6 text-gray-800">
       <footer className="custom-container">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">

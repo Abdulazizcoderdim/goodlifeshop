@@ -15,7 +15,9 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import LoginModal from "../auth/login-modal";
+import RegisterModal from "../auth/register-modal";
 
 const data = [
   {
@@ -67,6 +69,8 @@ const navbarData = [
 const Navbar = () => {
   const navigate = useNavigate();
   const { cart, favorites } = useStore();
+  const [openLogin, setOpenLogin] = useState(false);
+  const [openRegister, setOpenRegister] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
   const popularCategories = [
@@ -76,6 +80,14 @@ const Navbar = () => {
     { name: "Кастрюли", href: "#" },
     { name: "Чугунная посуда", href: "#" },
   ];
+
+  useEffect(() => {
+    if (openLogin || openRegister) {
+      document.body.style.pointerEvents = "none";
+    } else {
+      document.body.style.pointerEvents = "auto";
+    }
+  }, [openLogin, openRegister]);
 
   return (
     <>
@@ -204,10 +216,16 @@ const Navbar = () => {
                   </button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="bg-white border border-white text-black">
-                  <DropdownMenuItem className="uppercase hover:bg-gray-200 cursor-pointer transition">
+                  <DropdownMenuItem
+                    onClick={() => setOpenLogin(true)}
+                    className="uppercase hover:bg-gray-200 cursor-pointer transition"
+                  >
                     Войти
                   </DropdownMenuItem>
-                  <DropdownMenuItem className="uppercase hover:bg-gray-200 cursor-pointer transition">
+                  <DropdownMenuItem
+                    onClick={() => setOpenRegister(true)}
+                    className="uppercase hover:bg-gray-200 cursor-pointer transition"
+                  >
                     Создать аккаунт
                   </DropdownMenuItem>
                 </DropdownMenuContent>
@@ -236,6 +254,16 @@ const Navbar = () => {
           </div>
         </div>
       </header>
+      <LoginModal
+        setOpenRegister={setOpenRegister}
+        open={openLogin}
+        onOpenChange={setOpenLogin}
+      />
+      <RegisterModal
+        open={openRegister}
+        onOpenChange={setOpenRegister}
+        setOpenLogin={setOpenLogin}
+      />
     </>
   );
 };
