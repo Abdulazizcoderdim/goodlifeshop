@@ -216,3 +216,48 @@ export const data2 = [
     path: "/store/",
   },
 ];
+
+export const CategoryData = [
+  {
+    imagLink: "/noji.webp",
+    title: "НОЖИ",
+  },
+  {
+    imagLink: "/posuda.webp",
+    title: "ПОСУДА",
+  },
+  {
+    imagLink: "/akses.webp",
+    title: "АКСЕССУАРЫ",
+  },
+  {
+    imagLink: "/mir.webp",
+    title: "МИР КРАСОТЫ",
+  },
+  {
+    imagLink: "/xran.webp",
+    title: "ХРАНЕНИЕ",
+  },
+  {
+    imagLink: "/tex.webp",
+    title: "ТЕХНИКА",
+  },
+];
+
+export const CategoryData2 = [
+  {
+    image: "/z1.webp",
+    name: "ZWILLING Sorrento",
+    buttonText: "ПОДРОБНЕЕ",
+  },
+  {
+    image: "/a2.webp",
+    name: "КЕРАМИЧЕСКИЕ ФОРМЫ STAUB",
+    buttonText: "ПОДРОБНЕЕ",
+  },
+  {
+    image: "/z3.webp",
+    name: "ZWILLING PROFESSIONAL S",
+    buttonText: "ПОДРОБНЕЕ",
+  },
+];

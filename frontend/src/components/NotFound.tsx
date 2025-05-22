@@ -1,5 +1,7 @@
 import { Ban, Search } from "lucide-react";
 import { Link } from "react-router-dom";
+import Category from "./home/category";
+import Sells from "./home/sells";
 
 export default function NotFound() {
   return (
@@ -49,6 +51,8 @@ export default function NotFound() {
           <p>ПН-ПТ: 10:00 - 18:00</p>
         </div>
       </div>
+      <Category />
+      <Sells />
     </div>
   );
 }

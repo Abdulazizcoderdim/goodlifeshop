@@ -1,49 +1,5 @@
+import { CategoryData } from "@/constants";
 import { Link } from "react-router-dom";
-
-const CategoryData = [
-  {
-    imagLink: "/noji.webp",
-    title: "НОЖИ",
-  },
-  {
-    imagLink: "/posuda.webp",
-    title: "ПОСУДА",
-  },
-  {
-    imagLink: "/akses.webp",
-    title: "АКСЕССУАРЫ",
-  },
-  {
-    imagLink: "/mir.webp",
-    title: "МИР КРАСОТЫ",
-  },
-  {
-    imagLink: "/xran.webp",
-    title: "ХРАНЕНИЕ",
-  },
-  {
-    imagLink: "/tex.webp",
-    title: "ТЕХНИКА",
-  },
-];
-
-const CategoryData2 = [
-  {
-    image: "/z1.webp",
-    name: "ZWILLING Sorrento",
-    buttonText: "ПОДРОБНЕЕ",
-  },
-  {
-    image: "/a2.webp",
-    name: "КЕРАМИЧЕСКИЕ ФОРМЫ STAUB",
-    buttonText: "ПОДРОБНЕЕ",
-  },
-  {
-    image: "/z3.webp",
-    name: "ZWILLING PROFESSIONAL S",
-    buttonText: "ПОДРОБНЕЕ",
-  },
-];
 
 const Category = () => {
   return (
@@ -68,35 +24,6 @@ const Category = () => {
               {category.title}
             </h3>
           </Link>
-        ))}
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-20">
-        {CategoryData2.map((product, i) => (
-          <div
-            key={i}
-            className="relative group overflow-hidden rounded-lg cursor-pointer"
-          >
-            {/* Image container with overlay */}
-            <div className="relative bg-red-400 w-full rounded-lg">
-              <img
-                src={product.image || "/placeholder.svg"}
-                alt={product.name}
-                className="object-contain rounded-lg group-hover:scale-105 transition-all duration-300"
-              />
-              {/* Dark overlay */}
-              <div className="absolute inset-0 bg-black/35 h-32 self-end"></div>
-            </div>
-
-            {/* Content positioned at bottom */}
-            <div className="absolute bottom-0 left-0 right-0 flex flex-col items-center pb-8">
-              <h3 className="text-white lg:text-xl md:text-lg font-medium mb-4">
-                {product.name}
-              </h3>
-              <button className="bg-white text-black sm:px-8 px-4 py-2 sm:text-sm text-sm font-bold rounded-md hover:bg-gray-100 transition-colors">
-                {product.buttonText}
-              </button>
-            </div>
-          </div>
         ))}
       </div>
     </section>
