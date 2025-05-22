@@ -76,11 +76,9 @@ class AuthController {
   async logout(req, res, next) {
     try {
       const { refreshToken } = req.cookies;
-
       if (!refreshToken) throw BaseError.BadRequest("Refresh token not found");
-
-      res.clearCookies("refreshToken");
-
+      await authService.logout(refreshToken);
+      res.clearCookie("refreshToken");
       return res.json({ message: "Успешный выход из системы" });
     } catch (error) {
       next(error);
@@ -107,7 +105,10 @@ class AuthController {
   async me(req, res, next) {
     try {
       const userId = req.user.id;
-      const user = await prisma.user.findUnique({ where: { id: userId } });
+      const user = await prisma.user.findUnique({
+        where: { id: userId },
+        omit: { password: true },
+      });
 
       if (!user) throw BaseError.BadRequest("Пользователь не вошел в систему");
 

@@ -19,55 +19,15 @@ import { useEffect, useState } from "react";
 import LoginModal from "../auth/login-modal";
 import RegisterModal from "../auth/register-modal";
 import { useAuthStore } from "@/hooks/useAuthStore";
-import { menuItems, popularCategories } from "@/constants";
+import {
+  data,
+  data2,
+  menuItems,
+  navbarData,
+  popularCategories,
+} from "@/constants";
 import { Skeleton } from "../ui/skeleton";
-
-const data = [
-  {
-    title: "Доставка и оплата",
-    path: "/here_to_help/delivery",
-  },
-  {
-    title: "Возврат и обмен ",
-    path: "/here_to_help/returns/",
-  },
-  {
-    title: "Гарантия качества",
-    path: "/here_to_help/returns",
-  },
-];
-
-const data2 = [
-  {
-    title: "Новинки",
-    path: "/catalog/novinki_2/",
-  },
-  {
-    title: "Рецепты",
-    path: "/culinary-world/vdokhnovlyayushchie-retsepty/",
-  },
-  {
-    title: "Идеи подарков",
-    path: "catalog/idei_podarkov_1/",
-  },
-  {
-    title: "Магазины",
-    path: "/store/",
-  },
-];
-
-const navbarData = [
-  {
-    title: "Бренды",
-  },
-  {
-    title: "Каталог",
-  },
-  {
-    title: "Контакты",
-    path: "/here_to_help/kontakty/",
-  },
-];
+import { toast } from "sonner";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -75,7 +35,7 @@ const Navbar = () => {
   const [openLogin, setOpenLogin] = useState(false);
   const [openRegister, setOpenRegister] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const { isAuth, loading } = useAuthStore();
+  const { isAuth, loading, logout } = useAuthStore();
 
   useEffect(() => {
     if (openLogin || openRegister) {
@@ -84,6 +44,11 @@ const Navbar = () => {
       document.body.style.pointerEvents = "auto";
     }
   }, [openLogin, openRegister]);
+
+  const handleLogout = () => {
+    logout();
+    toast.success("Вы вышли из аккаунта");
+  };
 
   return (
     <>
@@ -220,7 +185,9 @@ const Navbar = () => {
                     menuItems.map((item, index) => (
                       <DropdownMenuItem
                         key={index}
-                        onClick={() => navigate(item.path)}
+                        onClick={
+                          index === 3 ? handleLogout : () => navigate(item.path)
+                        }
                         className="uppercase hover:bg-gray-200 cursor-pointer transition"
                       >
                         {item.title}

@@ -19,6 +19,7 @@ import generateCaptcha from "@/lib/generatecapthca";
 import CaptchaCanvas from "@/lib/CaptchaCanvas";
 import { Checkbox } from "../ui/checkbox";
 import api from "@/http/axios";
+import { useAuthStore } from "@/hooks/useAuthStore";
 
 const RegisterModal = ({
   open,
@@ -40,6 +41,7 @@ const RegisterModal = ({
     },
   });
   const [captcha, setCaptcha] = useState(generateCaptcha());
+  const { checkAuth } = useAuthStore();
 
   async function onSubmit(data: RegisterFormValues) {
     try {
@@ -63,6 +65,7 @@ const RegisterModal = ({
       toast.success("Вход успешен");
       form.reset();
       onOpenChange(false);
+      await checkAuth();
     } catch (error) {
       console.error("Error during registration:", error);
       // @ts-expect-error - samething wrong

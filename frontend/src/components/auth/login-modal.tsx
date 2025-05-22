@@ -16,6 +16,7 @@ import { Loader, X } from "lucide-react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import api from "@/http/axios";
+import { useAuthStore } from "@/hooks/useAuthStore";
 
 const LoginModal = ({
   open,
@@ -34,6 +35,7 @@ const LoginModal = ({
       rememberMe: false,
     },
   });
+  const { checkAuth } = useAuthStore();
 
   async function onSubmit(data: LoginFormValues) {
     try {
@@ -46,6 +48,7 @@ const LoginModal = ({
 
       toast.success("Login successful");
       onOpenChange(false);
+      await checkAuth();
     } catch (error) {
       // @ts-expect-error - something wrong
       toast.error(error?.response?.data.message || "Login failed");

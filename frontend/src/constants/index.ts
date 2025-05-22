@@ -146,15 +146,15 @@ export const bestsellerData = [
 export const menuItems = [
   {
     title: "ЛИЧНЫЙ КАБИНЕТ",
-    path: "#",
+    path: "/personal",
   },
   {
     title: "ТЕКУЩИЕ ЗАКАЗЫ",
-    path: "#",
+    path: "/personal/orders",
   },
   {
     title: "ЛИЧНЫЕ ДАННЫЕ",
-    path: "#",
+    path: "/personal/private",
   },
   {
     title: "ВЫЙТИ",
@@ -168,4 +168,51 @@ export const popularCategories = [
   { name: "Сковороды", href: "#" },
   { name: "Кастрюли", href: "#" },
   { name: "Чугунная посуда", href: "#" },
+];
+
+export const navbarData = [
+  {
+    title: "Бренды",
+  },
+  {
+    title: "Каталог",
+  },
+  {
+    title: "Контакты",
+    path: "/here_to_help/kontakty/",
+  },
+];
+
+export const data = [
+  {
+    title: "Доставка и оплата",
+    path: "/here_to_help/delivery",
+  },
+  {
+    title: "Возврат и обмен ",
+    path: "/here_to_help/returns/",
+  },
+  {
+    title: "Гарантия качества",
+    path: "/here_to_help/returns",
+  },
+];
+
+export const data2 = [
+  {
+    title: "Новинки",
+    path: "/catalog/novinki_2/",
+  },
+  {
+    title: "Рецепты",
+    path: "/culinary-world/vdokhnovlyayushchie-retsepty/",
+  },
+  {
+    title: "Идеи подарков",
+    path: "catalog/idei_podarkov_1/",
+  },
+  {
+    title: "Магазины",
+    path: "/store/",
+  },
 ];
