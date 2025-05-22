@@ -62,7 +62,7 @@ const LoginModal = ({
           </Button>
 
           <div className="p-6">
-            <h1 className="uppercase text-2xl font-bold mb-4">
+            <h1 className="uppercase sm:text-2xl text-lg font-bold sm:mb-4 mb-2">
               Добро пожаловать
             </h1>
             <p className="text-sm font-normal mb-6">
