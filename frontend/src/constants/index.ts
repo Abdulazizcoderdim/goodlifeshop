@@ -305,3 +305,34 @@ export const helpPages = [
     path: "/here_to_help/sout",
   },
 ];
+
+export const personalData = [
+  {
+    title: "Текущие заказы",
+    path: "/personal/orders/",
+  },
+  {
+    title: "Личные данные",
+    path: "/personal/private/",
+  },
+  {
+    title: "История заказов",
+    path: "personal/orders/?filter_history=",
+  },
+  {
+    title: "Корзина",
+    path: "/personal/cart/",
+  },
+  {
+    title: "Подписки",
+    path: "/personal/subscribe/",
+  },
+  {
+    title: "Наши магазины",
+    path: "/store",
+  },
+  {
+    title: "Выйти",
+    path: "/",
+  },
+];

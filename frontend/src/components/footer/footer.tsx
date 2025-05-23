@@ -272,7 +272,7 @@ export default function Footer() {
           {/* Copyright Section */}
           <div className="mt-10 pt-6 border-t border-gray-300 flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="text-sm">© {new Date().getFullYear()} ZWILLING</div>
-            <div className="flex gap-6 text-sm">
+            <div className="flex max-sm:flex-col gap-6 text-sm">
               <Link to="#" className="hover:underline">
                 ПОЛЬЗОВАТЕЛЬСКОЕ СОГЛАШЕНИЕ
               </Link>

@@ -1,18 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import type { IProduct } from "../types";
-
-interface StoreState {
-  favorites: IProduct[];
-  cart: IProduct[];
-  toggleFavorite: (product: IProduct) => void;
-  addToCart: (product: IProduct) => void;
-  isFavorite: (productId: number) => boolean;
-  isInCart: (productId: number) => boolean;
-  removeFromCart: (productId: number) => void;
-  clearCart: () => void;
-  updateQuantity: (productId: number, quantity: number) => void;
-}
+import type { StoreState } from "../types";
 
 export const useStore = create<StoreState>()(
   persist(

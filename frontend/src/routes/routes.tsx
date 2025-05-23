@@ -3,7 +3,6 @@ import Layout from "../layout/layout";
 import HomePage from "../components/home/home-page";
 import NotFound from "../components/NotFound";
 import CartPage from "@/components/cart/cart-page";
-import HereToHelp from "@/pages/HereToHelp";
 import Terms from "@/pages/help/Terms";
 import Agreement from "@/pages/help/Agreement";
 import Politika from "@/pages/help/Politika";
@@ -14,6 +13,8 @@ import Delivery from "@/pages/help/Delivery";
 import Kontakty from "@/pages/help/Kontakty";
 import ContactForm from "@/pages/help/ContactForm";
 import Sout from "@/pages/help/Sout";
+import HereToHelp from "@/pages/help/HereToHelp";
+import Personal from "@/pages/personal/Personal";
 
 export const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ export const router = createBrowserRouter([
       {
         path: "personal/cart",
         element: <CartPage />,
+      },
+      {
+        path: "/personal",
+        element: <Personal />,
       },
       {
         path: "here_to_help",

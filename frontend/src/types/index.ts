@@ -20,7 +20,7 @@ export interface IUser {
   role: UserRole;
   createdAt: Date;
   updatedAt: Date;
-  refreshToken: IRefreshToken[]; 
+  refreshToken: IRefreshToken[];
 }
 
 enum UserRole {
@@ -35,4 +35,16 @@ export interface IRefreshToken {
   userId: string;
   createdAt: Date;
   expiresAt: Date;
+}
+
+export interface StoreState {
+  favorites: IProduct[];
+  cart: IProduct[];
+  toggleFavorite: (product: IProduct) => void;
+  addToCart: (product: IProduct) => void;
+  isFavorite: (productId: number) => boolean;
+  isInCart: (productId: number) => boolean;
+  removeFromCart: (productId: number) => void;
+  clearCart: () => void;
+  updateQuantity: (productId: number, quantity: number) => void;
 }
