@@ -15,6 +15,11 @@ import ContactForm from "@/pages/help/ContactForm";
 import Sout from "@/pages/help/Sout";
 import HereToHelp from "@/pages/help/HereToHelp";
 import Personal from "@/pages/personal/Personal";
+import Orders from "@/pages/personal/Orders";
+import Private from "@/pages/personal/Private";
+import HistoryOrder from "@/pages/personal/HistoryOrder";
+import Subscribe from "@/pages/personal/Subscribe";
+import Store from "@/pages/store/store";
 
 export const router = createBrowserRouter([
   {
@@ -36,6 +41,24 @@ export const router = createBrowserRouter([
       {
         path: "/personal",
         element: <Personal />,
+        children: [
+          {
+            path: "orders",
+            element: <Orders />,
+          },
+          {
+            path: "private",
+            element: <Private />,
+          },
+          {
+            path: "orders/history",
+            element: <HistoryOrder />,
+          },
+          {
+            path: "subscribe",
+            element: <Subscribe />,
+          },
+        ],
       },
       {
         path: "here_to_help",
@@ -82,6 +105,10 @@ export const router = createBrowserRouter([
             element: <Sout />,
           },
         ],
+      },
+      {
+        path: "store",
+        element: <Store />,
       },
     ],
   },

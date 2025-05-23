@@ -5,7 +5,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { personalData } from "@/constants";
-import { Link } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
 
 const data = [
   {
@@ -167,11 +167,13 @@ const data = [
 ];
 
 const Personal = () => {
+  const { pathname } = useLocation();
+
   return (
     <div className="bg-gray h-full">
       <div className="sm:py-10 py-5 custom-container">
         <div className="flex max-md:flex-col gap-5">
-          {/* md00 */}
+          {/* md-show */}
           <div className="md:hidden block">
             <Select>
               <SelectTrigger className="w-full bg-white rounded-none">
@@ -194,6 +196,7 @@ const Personal = () => {
               </SelectContent>
             </Select>
           </div>
+
           <div className="w-1/3 max-md:hidden flex flex-col gap-5">
             <Link className="font-bold uppercase text-sm" to={"/personal"}>
               Мой кабинет
@@ -202,7 +205,11 @@ const Personal = () => {
               {personalData.map((item, i) => {
                 return (
                   <Link
-                    className="text-gray-500 uppercase text-sm"
+                    className={`uppercase text-sm ${
+                      pathname === item.path
+                        ? "font-bold text-black"
+                        : "text-gray-500"
+                    }`}
                     key={i}
                     to={item.path}
                   >
@@ -212,21 +219,25 @@ const Personal = () => {
               })}
             </div>
           </div>
-          <div className="flex flex-col w-full">
-            {data.map((item, i) => {
-              return (
-                <div
-                  key={i}
-                  className="bg-white px-14 cursor-pointer hover:bg-gray-100 transition py-8 border-b border-b-[#efecea]"
-                >
-                  <div className="flex items-center md:gap-10 gap-5">
-                    <span>{item.icon}</span>
-                    <span className="uppercase font-bold">{item.title}</span>
+
+          {pathname === "/personal" && (
+            <div className="flex flex-col w-full">
+              {data.map((item, i) => {
+                return (
+                  <div
+                    key={i}
+                    className="bg-white px-14 cursor-pointer hover:bg-gray-100 transition py-8 border-b border-b-[#efecea]"
+                  >
+                    <div className="flex items-center md:gap-10 gap-5">
+                      <span>{item.icon}</span>
+                      <span className="uppercase font-bold">{item.title}</span>
+                    </div>
                   </div>
-                </div>
-              );
-            })}
-          </div>
+                );
+              })}
+            </div>
+          )}
+          <Outlet />
         </div>
       </div>
     </div>

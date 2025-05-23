@@ -317,11 +317,11 @@ export const personalData = [
   },
   {
     title: "История заказов",
-    path: "personal/orders/?filter_history=",
+    path: "/personal/orders/history",
   },
   {
     title: "Корзина",
-    path: "/personal/cart/",
+    path: "/personal/cart",
   },
   {
     title: "Подписки",
