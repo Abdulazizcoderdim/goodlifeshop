@@ -32,7 +32,9 @@ export const useStore = create<StoreState>()(
         if (cart.some((p) => p.id === product.id)) {
           set({
             cart: cart.map((p) =>
-              p.id === product.id ? { ...p, quantity: p.quantity + 1 } : p
+              p.id === product.id
+                ? { ...p, quantity: (p.quantity ?? 1) + 1 }
+                : p
             ),
           });
         } else {

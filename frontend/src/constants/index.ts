@@ -179,7 +179,7 @@ export const navbarData = [
   },
   {
     title: "Контакты",
-    path: "/here_to_help/kontakty/",
+    path: "/here_to_help/kontakty",
   },
 ];
 
@@ -259,5 +259,49 @@ export const CategoryData2 = [
     image: "/z3.webp",
     name: "ZWILLING PROFESSIONAL S",
     buttonText: "ПОДРОБНЕЕ",
+  },
+];
+
+export const helpPages = [
+  {
+    title: "УСЛОВИЯ ПРОДАЖИ ТОВАРОВ В ИНТЕРНЕТ-МАГАЗИНЕ ZWILLING",
+    path: "/here_to_help/terms-and-conditions",
+  },
+  {
+    title: "ПОЛЬЗОВАТЕЛЬСКОЕ СОГЛАШЕНИЕ",
+    path: "/here_to_help/user-agreement",
+  },
+  {
+    title: "ПОЛИТИКА КОНФИДЕНЦИАЛЬНОСТИ",
+    path: "/here_to_help/politika",
+  },
+  {
+    title: "ФОРМА СОГЛАСИЯ НА ОБРАБОТКУ ПЕРСОНАЛЬНЫХ ДАННЫХ НА САЙТЕ ZWILLING",
+    path: "/here_to_help/personal-agree",
+  },
+  {
+    title:
+      "ПОЛИТИКА В ОТНОШЕНИИ ОБРАБОТКИ И ЗАЩИТЫ ПЕРСОНАЛЬНЫХ ДАННЫХ ООО «ЦВИЛЛИНГ ДЖЕЙ.ЭЙ. ХЕНКЕЛЬС РУС»",
+    path: "/here_to_help/policies",
+  },
+  {
+    title: "ВОЗВРАТ И ОБМЕН",
+    path: "/here_to_help/returns",
+  },
+  {
+    title: "ДОСТАВКА И ОПЛАТА",
+    path: "/here_to_help/delivery",
+  },
+  {
+    title: "КОНТАКТЫ",
+    path: "/here_to_help/kontakty",
+  },
+  {
+    title: "ОБРАТНАЯ СВЯЗЬ",
+    path: "/here_to_help/contact-form",
+  },
+  {
+    title: "СПЕЦИАЛЬНАЯ ОЦЕНКА УСЛОВИЙ ТРУДА",
+    path: "/here_to_help/sout",
   },
 ];
