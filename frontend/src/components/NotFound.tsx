@@ -6,7 +6,7 @@ import Sells from "./home/sells";
 export default function NotFound() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-4 py-12 bg-white">
-      <div className="max-w-md w-full mx-auto text-center space-y-10">
+      <div className="max-w-md w-full mx-auto text-center space-y-10">  
         {/* Header with icon */}
         <div className="flex items-center justify-center gap-4">
           <div className="rounded-full border-2 border-gray-800 p-2">
