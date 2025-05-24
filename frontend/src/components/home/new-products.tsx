@@ -81,7 +81,7 @@ const NewProducts = ({
                 ))
               : products.map((product) => (
                   <SwiperSlide key={product.id} className="py-4">
-                    <ProductItem product={product} />
+                    <ProductItem isNewProduct={true} product={product} />
                   </SwiperSlide>
                 ))}
           </Swiper>

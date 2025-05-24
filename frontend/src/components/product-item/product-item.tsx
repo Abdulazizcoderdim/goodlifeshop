@@ -6,9 +6,13 @@ import isNew from "@/lib/IsNew";
 
 interface ProductProps {
   product: IProduct;
+  isNewProduct?: boolean;
 }
 
-export default function ProductItem({ product }: ProductProps) {
+export default function ProductItem({
+  product,
+  isNewProduct = false,
+}: ProductProps) {
   const { toggleFavorite, addToCart, isFavorite, isInCart } = useStore();
 
   const handleToggleFavorite = () => {
@@ -53,7 +57,7 @@ export default function ProductItem({ product }: ProductProps) {
             }`}
           />
         </button>
-        {isNew(product.createdAt) && (
+        {isNewProduct && isNew(product.createdAt) && (
           <div className="absolute top-2 left-2 z-10">
             <span className="inline-block px-3 py-1 text-xs font-medium bg-red-50 border border-red-500 text-red-500 rounded-full">
               НОВИНКА
