@@ -2,6 +2,9 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import authRoute from "./routes/auth.route.js";
+import productRoute from "./routes/product.route.js";
+import categoriesRoute from "./routes/categories.route.js";
+import brandsRoute from "./routes/brands.route.js";
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
@@ -23,6 +26,9 @@ app.use(morgan("dev"));
 
 // routes
 app.use("/api/auth", authRoute);
+app.use("/api/products", productRoute);
+app.use("/api/categories", categoriesRoute);
+app.use("/api/brands", brandsRoute);
 
 app.use(errorMiddleware);
 

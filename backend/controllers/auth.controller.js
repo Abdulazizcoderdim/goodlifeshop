@@ -47,7 +47,7 @@ class AuthController {
         httpOnly: true,
       });
 
-      return res.json({ accessToken: tokens.accessToken });
+      return res.json({ user: userDto, accessToken: tokens.accessToken });
     } catch (error) {
       next(error);
     }

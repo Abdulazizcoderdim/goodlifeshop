@@ -327,10 +327,10 @@ export const personalData = [
     title: "Подписки",
     path: "/personal/subscribe/",
   },
-  {
-    title: "Наши магазины",
-    path: "/store",
-  },
+  // {
+  //   title: "Наши магазины",
+  //   path: "/store",
+  // },
   {
     title: "Выйти",
     path: "/",

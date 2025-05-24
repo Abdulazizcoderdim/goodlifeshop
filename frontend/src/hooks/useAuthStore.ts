@@ -31,6 +31,7 @@ export const useAuthStore = create<AuthState>((set) => ({
 
       if (!token) {
         set({ isAuth: false, user: null });
+        return;
       }
 
       const { data } = await api.get("/auth/me", {
@@ -63,8 +64,6 @@ export const useAuthStore = create<AuthState>((set) => ({
       }
 
       localStorage.removeItem("accessToken");
-
-      set({ isAuth: false, user: null, loading: false });
     } finally {
       set({ isAuth: false, user: null, loading: false });
     }

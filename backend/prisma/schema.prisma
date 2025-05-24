@@ -40,10 +40,44 @@ model RefreshToken {
 }
 
 model Product {
-  id               String  @id @default(auto()) @map("_id") @db.ObjectId
-  slug             String  @unique
-  name             String
-  description      String
-  shortDescription String?
-  price            Float
+  id              String      @id @default(auto()) @map("_id") @db.ObjectId
+  title           String
+  slug            String      @unique
+  description     String?
+  price           Float
+  brand           String?
+  category        String?
+  series          String?
+  country         String?
+  material        String?
+  color           String?
+  weight          Float? // kg
+  dimensions      Dimensions? // nested object
+  dishwasherSafe  Boolean? // posudomoyka
+  batteryRequired Boolean?
+  features        Json? // характеристика: flexible
+  variants        Variant[] // ranglar yoki boshqa variantlar
+  images          String[] // product images
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+}
+
+type Dimensions {
+  productHeight Float?
+  productWidth  Float?
+  productLength Float?
+  packageHeight Float?
+  packageWidth  Float?
+  packageLength Float?
+}
+
+model Variant {
+  id      String   @id @default(auto()) @map("_id") @db.ObjectId
+  color   String?
+  price   Float?
+  inStock Boolean
+  images  String[] // variant-specific images
+
+  product   Product @relation(fields: [productId], references: [id])
+  productId String
 }

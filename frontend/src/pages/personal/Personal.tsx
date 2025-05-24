@@ -5,7 +5,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { personalData } from "@/constants";
-import { Link, Outlet, useLocation } from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 
 const data = [
   {
@@ -25,6 +25,7 @@ const data = [
         ></path>
       </svg>
     ),
+    path: "/personal/orders",
   },
   {
     title: "Личные данные",
@@ -51,6 +52,7 @@ const data = [
         ></path>
       </svg>
     ),
+    path: "/personal/private",
   },
   {
     title: "История заказов",
@@ -70,6 +72,7 @@ const data = [
         ></path>
       </svg>
     ),
+    path: "/personal/orders/history",
   },
   {
     title: "Корзина",
@@ -107,6 +110,7 @@ const data = [
         ></circle>
       </svg>
     ),
+    path: "/personal/cart",
   },
   {
     title: "Подписки",
@@ -144,30 +148,32 @@ const data = [
         ></circle>
       </svg>
     ),
+    path: "/personal/subscribe",
   },
-  {
-    title: "Наши магазины",
-    icon: (
-      <svg
-        width="46"
-        height="41"
-        viewBox="0 0 46 41"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
-          d="M6.71094 2.5H0V0.5H7.5H8.28906L8.47258 1.26743L10.5608 10H44.5H45.7602L45.4738 11.2272L41.9738 26.2272L41.7935 27H41H13H12.1923L12.0224 26.2104L8.79652 11.2215L6.71094 2.5ZM11.0099 12L13.8077 25H40.2065L43.2398 12H11.0099ZM35.5 39C37.433 39 39 37.433 39 35.5C39 33.567 37.433 32 35.5 32C33.567 32 32 33.567 32 35.5C32 37.433 33.567 39 35.5 39ZM35.5 41C38.5376 41 41 38.5376 41 35.5C41 32.4624 38.5376 30 35.5 30C32.4624 30 30 32.4624 30 35.5C30 38.5376 32.4624 41 35.5 41ZM21 35.5C21 37.433 19.433 39 17.5 39C15.567 39 14 37.433 14 35.5C14 33.567 15.567 32 17.5 32C19.433 32 21 33.567 21 35.5ZM23 35.5C23 38.5376 20.5376 41 17.5 41C14.4624 41 12 38.5376 12 35.5C12 32.4624 14.4624 30 17.5 30C20.5376 30 23 32.4624 23 35.5Z"
-          fill="#27221D"
-        ></path>
-      </svg>
-    ),
-  },
+  // {
+  //   title: "Наши магазины",
+  //   icon: (
+  //     <svg
+  //       width="46"
+  //       height="41"
+  //       viewBox="0 0 46 41"
+  //       fill="none"
+  //       xmlns="http://www.w3.org/2000/svg"
+  //     >
+  //       <path
+  //         fill-rule="evenodd"
+  //         clip-rule="evenodd"
+  //         d="M6.71094 2.5H0V0.5H7.5H8.28906L8.47258 1.26743L10.5608 10H44.5H45.7602L45.4738 11.2272L41.9738 26.2272L41.7935 27H41H13H12.1923L12.0224 26.2104L8.79652 11.2215L6.71094 2.5ZM11.0099 12L13.8077 25H40.2065L43.2398 12H11.0099ZM35.5 39C37.433 39 39 37.433 39 35.5C39 33.567 37.433 32 35.5 32C33.567 32 32 33.567 32 35.5C32 37.433 33.567 39 35.5 39ZM35.5 41C38.5376 41 41 38.5376 41 35.5C41 32.4624 38.5376 30 35.5 30C32.4624 30 30 32.4624 30 35.5C30 38.5376 32.4624 41 35.5 41ZM21 35.5C21 37.433 19.433 39 17.5 39C15.567 39 14 37.433 14 35.5C14 33.567 15.567 32 17.5 32C19.433 32 21 33.567 21 35.5ZM23 35.5C23 38.5376 20.5376 41 17.5 41C14.4624 41 12 38.5376 12 35.5C12 32.4624 14.4624 30 17.5 30C20.5376 30 23 32.4624 23 35.5Z"
+  //         fill="#27221D"
+  //       ></path>
+  //     </svg>
+  //   ),
+  // },
 ];
 
 const Personal = () => {
   const { pathname } = useLocation();
+  const navigate = useNavigate();
 
   return (
     <div className="bg-gray h-full">
@@ -226,6 +232,7 @@ const Personal = () => {
                 return (
                   <div
                     key={i}
+                    onClick={() => navigate(item.path)}
                     className="bg-white px-14 cursor-pointer hover:bg-gray-100 transition py-8 border-b border-b-[#efecea]"
                   >
                     <div className="flex items-center md:gap-10 gap-5">
