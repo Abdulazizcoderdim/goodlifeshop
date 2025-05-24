@@ -43,6 +43,7 @@ class ProductController {
         where,
         include: {
           variants: true,
+          category: true,
         },
         orderBy: {
           [sortBy]: sortOrder,
@@ -75,6 +76,7 @@ class ProductController {
         where: { id },
         include: {
           variants: true,
+          category: true,
         },
       });
 
@@ -102,7 +104,7 @@ class ProductController {
         series,
         originCountry,
         price,
-        category,
+        categoryId,
         color,
         dishwasherSafe,
         batteryRequired,
@@ -128,7 +130,12 @@ class ProductController {
           series,
           originCountry,
           price,
-          category,
+          category: {
+            connect: {
+              id: categoryId,
+            },
+          },
+
           color,
           dishwasherSafe,
           batteryRequired,
@@ -145,6 +152,7 @@ class ProductController {
         },
         include: {
           variants: true,
+          category: true,
         },
       });
 
