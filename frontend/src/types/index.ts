@@ -1,12 +1,50 @@
 export interface IProduct {
-  id: number;
-  name: string;
+  id: string;
+  title: string;
+  slug: string;
   description: string;
+  article: string;
+  brand: string;
+  series: string;
+  originCountry: string;
   price: number;
-  quantity: number;
-  image: string;
-  isNew: boolean;
-  isFavorite?: boolean;
+  category: string;
+  color: string;
+  dishwasherSafe: boolean;
+  batteryRequired: boolean;
+  createdAt: string; // yoki Date agar to'g'ridan-to'g'ri ishlatsang
+  updatedAt: string;
+
+  images: string[]; // URL'lar
+
+  characteristics: {
+    flexible?: boolean;
+    speedLevels?: number;
+    salom?: number;
+    [key: string]: unknown; // qo‘shimcha dynamic fieldlarga ruxsat
+  };
+
+  dimensions: {
+    productWeight: number;
+    productHeight: number;
+    productWidth: number;
+    productLength: number;
+    packageHeight: number;
+    packageWidth: number;
+    packageLength: number;
+  };
+
+  variants: IProductVariant[];
+  isNew?: boolean; // optional if used
+  quantity?: number;
+}
+
+export interface IProductVariant {
+  id?: string;
+  color: string;
+  price: number;
+  inStock: boolean;
+  images: string[];
 }
 
 export interface IUser {

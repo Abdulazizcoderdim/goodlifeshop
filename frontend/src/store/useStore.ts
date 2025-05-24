@@ -30,14 +30,14 @@ export const useStore = create<StoreState>()(
         }
       },
       isFavorite: (productId) => {
-        return get().favorites.some((p) => p.id === productId);
+        return get().favorites.some((p) => parseInt(p.id) === productId);
       },
       isInCart: (productId) => {
-        return get().cart.some((p) => p.id === productId);
+        return get().cart.some((p) => parseInt(p.id) === productId);
       },
       removeFromCart: (productId: number) => {
         set({
-          cart: get().cart.filter((p) => p.id !== productId),
+          cart: get().cart.filter((p) => parseInt(p.id) !== productId),
         });
       },
       clearCart: () => {
@@ -46,7 +46,7 @@ export const useStore = create<StoreState>()(
       updateQuantity: (productId: number, quantity: number) => {
         set({
           cart: get().cart.map((p) =>
-            p.id === productId ? { ...p, quantity } : p
+            parseInt(p.id) === productId ? { ...p, quantity } : p
           ),
         });
       },

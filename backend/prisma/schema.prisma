@@ -44,18 +44,17 @@ model Product {
   title           String
   slug            String      @unique
   description     String?
+  article         String // Артикул: 53001-001
+  brand           String // Бренд: Zwilling
+  series          String // Серия: ZWILLING ENFINIGY
+  originCountry   String // Страна происхождения: КИТАЙ
   price           Float
-  brand           String?
   category        String?
-  series          String?
-  country         String?
-  material        String?
   color           String?
-  weight          Float? // kg
   dimensions      Dimensions? // nested object
   dishwasherSafe  Boolean? // posudomoyka
   batteryRequired Boolean?
-  features        Json? // характеристика: flexible
+  characteristics Json? // характеристика: flexible
   variants        Variant[] // ranglar yoki boshqa variantlar
   images          String[] // product images
   createdAt       DateTime    @default(now())
@@ -63,12 +62,14 @@ model Product {
 }
 
 type Dimensions {
+  productWeight Float? // kg
   productHeight Float?
   productWidth  Float?
   productLength Float?
   packageHeight Float?
   packageWidth  Float?
   packageLength Float?
+  productVolume Float?
 }
 
 model Variant {

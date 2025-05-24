@@ -10,9 +10,35 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 
 import ProductItem from "../product-item/product-item";
-import { productsData } from "../../constants";
+import { useEffect, useState } from "react";
+import type { IProduct } from "@/types";
+import { getProducts } from "@/services/products.service";
 
 const NewProducts = () => {
+  const [products, setProducts] = useState<IProduct[]>([]);
+  const [pagination, setPagination] = useState({
+    currentPage: 1,
+    totalPages: 0,
+    totalItems: 0,
+    itemsPerPage: 10,
+  });
+
+  console.log(pagination);
+
+  useEffect(() => {
+    fetchProductes();
+  }, []);
+
+  const fetchProductes = async () => {
+    try {
+      const res = await getProducts();
+
+      setProducts(res.content);
+      setPagination(res.pagination);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <section>
       <div className="custom-container">
@@ -66,7 +92,7 @@ const NewProducts = () => {
             }}
             className="product-swiper pb-12"
           >
-            {productsData.map((product) => (
+            {products.map((product) => (
               <SwiperSlide key={product.id} className="py-4">
                 <ProductItem product={product} />
               </SwiperSlide>

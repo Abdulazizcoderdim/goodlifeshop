@@ -55,7 +55,7 @@ class ProductController {
       const total = await prisma.product.count({ where });
 
       res.json({
-        data: products,
+        content: products,
         pagination: {
           currentPage: parseInt(page),
           totalPages: Math.ceil(total / parseInt(limit)),
@@ -86,7 +86,7 @@ class ProductController {
       }
 
       res.json({
-        data: product,
+        content: product,
       });
     } catch (error) {
       next(error);
@@ -97,49 +97,50 @@ class ProductController {
       const {
         title,
         description,
-        price,
+        article,
         brand,
-        category,
         series,
-        country,
-        material,
+        originCountry,
+        price,
+        category,
         color,
-        weight,
-        dimensions,
         dishwasherSafe,
         batteryRequired,
-        features,
-        images = [],
-        variants = [],
+        characteristics,
+        dimensions,
+        images,
+        variants,
       } = req.body;
+      // const user = req.user;
+      // if (user.role !== "ADMIN")
+      //   return res.status(403).json({ message: "Forbidden" });
 
-      const finalSlug = generateUniqueSlug(title);
+      const finalSlug = await generateUniqueSlug(title);
 
+      // create product
       const product = await prisma.product.create({
         data: {
           title,
           slug: finalSlug,
           description,
-          price: parseFloat(price),
+          article,
           brand,
-          category,
           series,
-          country,
-          material,
+          originCountry,
+          price,
+          category,
           color,
-          weight: weight ? parseFloat(weight) : null,
-          dimensions,
           dishwasherSafe,
           batteryRequired,
-          features,
+          characteristics,
+
+          // nested type
+          dimensions,
+          // product images
           images,
+          // product variants
           variants: {
-            create: variants.map((variant) => ({
-              color: variant.color,
-              price: variant.price ? parseFloat(variant.price) : null,
-              inStock: variant.inStock || false,
-              images: variant.images || [],
-            })),
+            create: variants,
           },
         },
         include: {
@@ -149,7 +150,7 @@ class ProductController {
 
       res
         .status(201)
-        .json({ message: "Продукт успешно создан", data: product });
+        .json({ message: "Продукт успешно создан", content: product });
     } catch (error) {
       next(error);
     }
