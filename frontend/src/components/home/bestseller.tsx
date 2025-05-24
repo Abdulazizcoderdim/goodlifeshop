@@ -10,9 +10,22 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 
 import ProductItem from "../product-item/product-item";
-import { bestsellerData } from "../../constants";
+import type { IProduct } from "@/types";
+import ProductItemLoading from "../loading/ProductItemLoading";
 
-const Bestseller = () => {
+const Bestseller = ({
+  products,
+  loading,
+}: {
+  products: IProduct[];
+  loading: boolean;
+}) => {
+  const filterBestsellers = () => {
+    const filter: IProduct[] = products
+      .sort((a, b) => b.sold - a.sold)
+      .slice(0, 12);
+    return filter;
+  };
   return (
     <div className="pb-16 custom-container">
       <h1 className="py-5 lg:text-3xl text-2xl font-medium uppercase text-center">
@@ -67,11 +80,17 @@ const Bestseller = () => {
           }}
           className="product-swiper pb-12"
         >
-          {bestsellerData.map((product) => (
-            <SwiperSlide key={product.id} className="py-4">
-              <ProductItem product={product} />
-            </SwiperSlide>
-          ))}
+          {loading
+            ? [...Array(5)].map((_, index) => (
+                <SwiperSlide key={index} className="py-4">
+                  <ProductItemLoading />
+                </SwiperSlide>
+              ))
+            : filterBestsellers().map((product) => (
+                <SwiperSlide key={product.id} className="py-4">
+                  <ProductItem product={product} />
+                </SwiperSlide>
+              ))}
         </Swiper>
 
         {/* Custom pagination */}

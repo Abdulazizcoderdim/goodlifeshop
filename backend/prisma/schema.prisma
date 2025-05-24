@@ -51,6 +51,7 @@ model Product {
   price           Float
   category        String?
   color           String?
+  sold            Int         @default(0)
   dimensions      Dimensions? // nested object
   dishwasherSafe  Boolean? // posudomoyka
   batteryRequired Boolean?

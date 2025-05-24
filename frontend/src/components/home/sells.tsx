@@ -1,39 +1,21 @@
+import type { IProduct } from "@/types";
 import ProductItem from "../product-item/product-item";
+import ProductItemLoading from "../loading/ProductItemLoading";
 
-const dataProduct = [
-  {
-    id: 1,
-    name: "ZWILLING",
-    description: "МАНИКЮРНЫЙ НАБОР 3 ПР. ЧЕРНЫЙ ZWILLING BEAUTY PREMIUM",
-    price: 19140.0,
-    image: "/p1.webp",
-    isNew: true,
-    quantity: 0,
-    isFavorite: false,
-  },
-  {
-    id: 2,
-    name: "ZWILLING",
-    description: "МАНИКЮРНЫЙ НАБОР 5 ПР. ЧЕРНЫЙ ZWILLING BEAUTY PREMIU",
-    price: 34740.0,
-    image: "/p2.webp",
-    isNew: true,
-    quantity: 0,
-    isFavorite: false,
-  },
-  {
-    id: 3,
-    name: "ZWILLING",
-    description: "МАНИКЮРНЫЙ НАБОР 12 ПР. ЧЕРНЫЙ ZWILLING BEAUTY PREMIUM",
-    price: 85740.0,
-    image: "/p3.webp",
-    isNew: true,
-    quantity: 0,
-    isFavorite: false,
-  },
-];
+const Sells = ({
+  products,
+  loading,
+}: {
+  products: IProduct[];
+  loading: boolean;
+}) => {
+  const filterProducts = () => {
+    const filter: IProduct[] = products
+      .filter((product) => product.category === "electronics")
+      .slice(0, 3);
+    return filter;
+  };
 
-const Sells = () => {
   return (
     <div className="py-16 custom-container">
       <div className="flex flex-col gap-3 md:px-10  justify-center text-center w-full">
@@ -49,11 +31,15 @@ const Sells = () => {
       </div>
       <div className="flex mt-5 max-lg:flex-col gap-5 justify-between w-full">
         <div className="lg:w-1/2 flex max-md:flex-col gap-3">
-          {dataProduct.map((item, i) => (
-            <div key={i}>
-              <ProductItem product={item} />
-            </div>
-          ))}
+          {loading ? (
+            <ProductItemLoading />
+          ) : (
+            filterProducts().map((item, i) => (
+              <div key={i}>
+                <ProductItem product={item} />
+              </div>
+            ))
+          )}
         </div>
         <div className="relative lg:w-1/2 w-full h-full">
           <img

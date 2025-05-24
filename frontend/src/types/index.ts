@@ -12,7 +12,8 @@ export interface IProduct {
   color: string;
   dishwasherSafe: boolean;
   batteryRequired: boolean;
-  createdAt: string; // yoki Date agar to'g'ridan-to'g'ri ishlatsang
+  sold: number;
+  createdAt: string;
   updatedAt: string;
 
   images: string[]; // URL'lar
@@ -21,7 +22,7 @@ export interface IProduct {
     flexible?: boolean;
     speedLevels?: number;
     salom?: number;
-    [key: string]: unknown; // qo‘shimcha dynamic fieldlarga ruxsat
+    [key: string]: unknown;
   };
 
   dimensions: {
