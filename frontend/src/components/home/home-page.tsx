@@ -6,48 +6,41 @@ import CategoryProduct from "./category-product";
 import NewProducts from "./new-products";
 import Sells from "./sells";
 import Slider from "./slider";
-import type { IProduct } from "@/types";
-import { getProducts } from "@/services/products.service";
+import useSWR from "swr";
+import { fetcher } from "@/lib/fetcher";
 
 const HomePage = () => {
-  const [products, setProducts] = useState<IProduct[]>([]);
   const [pagination, setPagination] = useState({
     currentPage: 1,
     totalPages: 0,
     totalItems: 0,
     itemsPerPage: 10,
   });
-  const [loading, setLoading] = useState(false);
-
   console.log(pagination);
 
+  const { data, error, isLoading } = useSWR("/products", fetcher);
+
+  const products = data?.content || [];
+
   useEffect(() => {
-    fetchProductes();
-  }, []);
-
-  const fetchProductes = async () => {
-    try {
-      setLoading(true);
-      const res = await getProducts();
-
-      setProducts(res.content);
-      setPagination(res.pagination);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
+    if (data) {
+      setPagination(data.pagination);
     }
-  };
+  }, [data]);
+
+  if (error) {
+    console.error("Failed to fetch posts", error);
+  }
 
   return (
     <div className="flex flex-col">
       <Slider />
       <Category />
       <CategoryProduct />
-      <NewProducts loading={loading} products={products} />
+      <NewProducts loading={isLoading} products={products} />
       <Brend />
-      <Sells loading={loading} products={products} />
-      <Bestseller loading={loading} products={products} />
+      <Sells loading={isLoading} products={products} />
+      <Bestseller loading={isLoading} products={products} />
     </div>
   );
 };
