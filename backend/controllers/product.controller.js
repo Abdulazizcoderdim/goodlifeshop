@@ -1,4 +1,5 @@
 import prisma from "../config/prisma.client.js";
+import { BaseError } from "../errors/base.error.js";
 import generateUniqueSlug from "../shared/generateSlug.js";
 
 class ProductController {
@@ -169,19 +170,19 @@ class ProductController {
       const {
         title,
         description,
-        price,
+        article,
         brand,
-        category,
         series,
-        country,
-        material,
+        originCountry,
+        price,
+        categoryId,
         color,
-        weight,
-        dimensions,
         dishwasherSafe,
         batteryRequired,
-        features,
+        characteristics,
+        dimensions,
         images,
+        variants,
       } = req.body;
 
       // Check if product exists
@@ -190,10 +191,7 @@ class ProductController {
       });
 
       if (!existingProduct) {
-        return res.status(404).json({
-          success: false,
-          message: "Product not found",
-        });
+        return next(BaseError.BadRequest("Product not found"));
       }
 
       // Update product
@@ -202,28 +200,29 @@ class ProductController {
         data: {
           title,
           description,
-          price: parseFloat(price),
+          article,
           brand,
-          category,
           series,
-          country,
-          material,
+          originCountry,
+          price,
+          categoryId,
           color,
-          weight: weight ? parseFloat(weight) : null,
-          dimensions,
           dishwasherSafe,
           batteryRequired,
-          features,
+          characteristics,
+          dimensions,
           images,
+          variants,
         },
         include: {
           variants: true,
+          category: true,
         },
       });
 
       res.json({
         message: "Product updated successfully",
-        data: product,
+        content: product,
       });
     } catch (error) {
       next(error);
@@ -238,10 +237,7 @@ class ProductController {
       });
 
       if (!existingProduct) {
-        return res.status(404).json({
-          success: false,
-          message: "Product not found",
-        });
+        return next(BaseError.BadRequest("Product not found"));
       }
 
       // Delete all variants first (cascade delete)

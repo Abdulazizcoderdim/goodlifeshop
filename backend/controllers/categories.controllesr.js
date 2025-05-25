@@ -56,6 +56,7 @@ class CategoriesController {
       next(error);
     }
   }
+
   async updateCategory(req, res, next) {
     try {
       const { id } = req.params;
@@ -76,6 +77,7 @@ class CategoriesController {
       next(error);
     }
   }
+
   async deleteCategory(req, res, next) {
     try {
       const { id } = req.params;
