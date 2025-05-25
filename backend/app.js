@@ -38,9 +38,7 @@ const bootstrap = async () => {
   try {
     const PORT = process.env.PORT || 5000;
     app.listen(PORT, () =>
-      console.log(
-        `Server is running on port http://localhost:${PORT}/api/auth/`
-      )
+      console.log(`Server is running on port http://localhost:${PORT}/api`)
     );
   } catch (error) {
     console.error(error);
