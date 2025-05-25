@@ -1,7 +1,7 @@
 import { slugify as translitSlugify } from "transliteration";
 import prisma from "../config/prisma.client.js";
 
-async function generateUniqueSlug(title) {
+async function generateSubCategorySlug(title) {
   const baseSlug = translitSlugify(title, { lowercase: true });
   let slug = baseSlug;
   let count = 1;
@@ -14,4 +14,4 @@ async function generateUniqueSlug(title) {
   return slug;
 }
 
-export default generateUniqueSlug;
+export default generateSubCategorySlug;

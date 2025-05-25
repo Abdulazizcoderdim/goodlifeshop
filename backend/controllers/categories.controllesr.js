@@ -1,11 +1,16 @@
 import prisma from "../config/prisma.client.js";
 import { BaseError } from "../errors/base.error.js";
+import generateCategorySlug from "../shared/generateCategorySlug.js";
 import generateUniqueSlug from "../shared/generateSlug.js";
 
 class CategoriesController {
   async getAllCategories(req, res, next) {
     try {
-      const categories = await prisma.category.findMany();
+      const categories = await prisma.category.findMany({
+        include: {
+          subcategories: true,
+        },
+      });
 
       res.json({
         success: true,
@@ -39,7 +44,7 @@ class CategoriesController {
     try {
       const { name } = req.body;
 
-      const slug = await generateUniqueSlug(name);
+      const slug = await generateCategorySlug(name);
 
       const category = await prisma.category.create({
         data: {
