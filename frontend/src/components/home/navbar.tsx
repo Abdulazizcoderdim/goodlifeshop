@@ -7,14 +7,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useEffect, useState } from "react";
 import LoginModal from "../auth/login-modal";
 import RegisterModal from "../auth/register-modal";
@@ -28,6 +21,7 @@ import {
 } from "@/constants";
 import { Skeleton } from "../ui/skeleton";
 import { toast } from "sonner";
+import MenuBarr from "../menu/menu-barr";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -87,13 +81,7 @@ const Navbar = () => {
                 className="bg-black text-white border-black"
                 side="left"
               >
-                <SheetHeader>
-                  <SheetTitle>Are you absolutely sure?</SheetTitle>
-                  <SheetDescription>
-                    This action cannot be undone. This will permanently delete
-                    your account and remove your data from our servers.
-                  </SheetDescription>
-                </SheetHeader>
+                <MenuBarr />
               </SheetContent>
             </Sheet>
             <img
