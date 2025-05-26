@@ -51,6 +51,33 @@ const brend = [
   },
 ];
 
+const fakeKatalog = [
+  {
+    title: "НОЖИ",
+    icon: "/k1.svg",
+  },
+  {
+    title: "ПОСУДА",
+    icon: "/k2.webp",
+  },
+  {
+    title: "АКСЕССУАРЫ",
+    icon: "/k3.webp",
+  },
+  {
+    title: "МИР КРАСОТЫ",
+    icon: "/k3.webp",
+  },
+  {
+    title: "ТЕХНИКА",
+    icon: "/k3.webp",
+  },
+  {
+    title: "ХРАНЕНИЕ",
+    icon: "/k3.webp",
+  },
+];
+
 type SectionType = "brand" | "catalog" | "contact";
 
 interface MenuBarrProps {
@@ -64,17 +91,14 @@ const MenuBarr = ({
   currentSection,
   setCurrentSection,
 }: MenuBarrProps) => {
-  // Har bir bo'limni tanlash uchun
   const handleSectionClick = (section: SectionType) => {
     setCurrentSection(section);
   };
 
-  // Ortga qaytish
   const handleBackClick = () => {
     setCurrentSection(null);
   };
 
-  // Har bir bo'limga mos kontentni render qilish
   const renderContent = () => {
     switch (currentSection) {
       case "brand":
@@ -98,35 +122,19 @@ const MenuBarr = ({
                 />
               </div>
             ))}
-            {brend.map((item, index) => (
+          </div>
+        );
+      case "catalog":
+        return (
+          <div className="space-y-4 sm:mt-4 overflow-y-auto h-96">
+            {fakeKatalog.map((item, index) => (
               <div
                 key={index}
                 className="flex border-b justify-between w-full border-b-gray-400 cursor-pointer group items-center gap-4 pb-4"
               >
-                <div>
-                  <p className="text-lg group-hover:text-gray-400 font-normal uppercase">
-                    {item.title}
-                  </p>
-                  <p className="text-xs text-gray-300">{item.desc}</p>
-                </div>
-                <img
-                  src={item.icon}
-                  alt={item.title}
-                  className="w-7 h-7 object-contain"
-                />
-              </div>
-            ))}
-            {brend.map((item, index) => (
-              <div
-                key={index}
-                className="flex border-b justify-between w-full border-b-gray-400 cursor-pointer group items-center gap-4 pb-4"
-              >
-                <div>
-                  <p className="text-lg group-hover:text-gray-400 font-normal uppercase">
-                    {item.title}
-                  </p>
-                  <p className="text-xs text-gray-300">{item.desc}</p>
-                </div>
+                <p className="text-lg group-hover:text-gray-400 font-normal uppercase">
+                  {item.title}
+                </p>
                 <img
                   src={item.icon}
                   alt={item.title}
@@ -136,8 +144,6 @@ const MenuBarr = ({
             ))}
           </div>
         );
-      case "catalog":
-        return <div>Katalog haqida ma'lumot</div>;
       case "contact":
         return <div>Aloqa ma'lumotlari</div>;
       default:
