@@ -173,13 +173,16 @@ export const popularCategories = [
 export const navbarData = [
   {
     title: "Бренды",
+    tab: "brand",
   },
   {
     title: "Каталог",
+    tab: "catalog",
   },
   {
     title: "Контакты",
     path: "/here_to_help/kontakty",
+    tab: "contact",
   },
 ];
 

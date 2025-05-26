@@ -8,13 +8,33 @@
   --color-gray: #efecea;
 }
 
-/* Custom styles for Swiper navigation */
+* {
+  scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 .swiper-container {
   padding: 0 40px;
   position: relative;
 }
 
-/* Make sure arrows are visible */
 .swiper-button-next,
 .swiper-button-prev {
   background-color: white;
@@ -51,12 +71,10 @@
   opacity: 1;
 }
 
-/* Add margin to each slide for better spacing */
 .swiper-slide {
   height: auto;
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
   .swiper-container {
     padding: 0 10px;

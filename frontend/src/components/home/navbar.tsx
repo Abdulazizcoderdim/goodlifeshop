@@ -23,6 +23,8 @@ import { Skeleton } from "../ui/skeleton";
 import { toast } from "sonner";
 import MenuBarr from "../menu/menu-barr";
 
+type SectionType = "brand" | "catalog" | "contact";
+
 const Navbar = () => {
   const navigate = useNavigate();
   const { cart, favorites } = useStore();
@@ -30,6 +32,10 @@ const Navbar = () => {
   const [openRegister, setOpenRegister] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const { isAuth, loading, logout } = useAuthStore();
+  const [open, setOpen] = useState(false);
+  const [currentSection, setCurrentSection] = useState<SectionType | null>(
+    null
+  );
 
   useEffect(() => {
     if (openLogin || openRegister) {
@@ -42,6 +48,16 @@ const Navbar = () => {
   const handleLogout = () => {
     logout();
     toast.success("Вы вышли из аккаунта");
+  };
+
+  const handleOPenBar = (tab: string) => {
+    if (tab === "contact") {
+      return;
+    }
+    setCurrentSection(tab as SectionType);
+    setOpen(true);
+    document.body.style.overflow = "auto";
+    document.body.style.pointerEvents = "auto";
   };
 
   return (
@@ -71,17 +87,24 @@ const Navbar = () => {
       <header className="bg-black text-white sticky top-0 z-50">
         <div className="flex justify-between items-center gap-3 custom-container py-3">
           <div className="flex items-center sm:gap-4 gap-2 w-full">
-            <Sheet>
+            <Sheet open={open} onOpenChange={setOpen}>
               <SheetTrigger asChild>
-                <button className="text-white cursor-pointer">
+                <button
+                  onClick={() => setOpen(true)}
+                  className="text-white cursor-pointer"
+                >
                   <Menu size={28} className="max-sm:h-6" />
                 </button>
               </SheetTrigger>
               <SheetContent
-                className="bg-black text-white border-black"
+                className="bg-black w-full text-white border-black"
                 side="left"
               >
-                <MenuBarr />
+                <MenuBarr
+                  currentSection={currentSection}
+                  setCurrentSection={setCurrentSection}
+                  setOpen={setOpen}
+                />
               </SheetContent>
             </Sheet>
             <img
@@ -97,6 +120,7 @@ const Navbar = () => {
                 <Link
                   key={index}
                   to={item.path ? item.path : "#"}
+                  onClick={() => handleOPenBar(item.tab)}
                   className="text-white uppercase cursor-pointer hover:text-gray-300 transition-all text-[16px] font-bold"
                 >
                   {item.title}

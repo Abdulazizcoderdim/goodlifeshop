@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { SheetHeader } from "../ui/sheet";
 import {
   ArrowLeft,
@@ -33,13 +32,38 @@ const data = [
     path: "#",
   },
 ];
+
+const brend = [
+  {
+    title: "Zwilling",
+    desc: "Качественные изделия, производимые в Германии с 1731 г.",
+    icon: "/brend1.webp",
+  },
+  {
+    title: "Staub",
+    desc: "Традиционное французское качество",
+    icon: "/brend2.webp",
+  },
+  {
+    title: "Ballarini",
+    desc: "Качественная кухонная посуда производства Bella Italia с 1889 г.",
+    icon: "/brend3.webp",
+  },
+];
+
 type SectionType = "brand" | "catalog" | "contact";
 
-const MenuBarr = () => {
-  const [currentSection, setCurrentSection] = useState<SectionType | null>(
-    null
-  );
+interface MenuBarrProps {
+  setOpen: (open: boolean) => void;
+  currentSection: SectionType | null;
+  setCurrentSection: (section: SectionType | null) => void;
+}
 
+const MenuBarr = ({
+  setOpen,
+  currentSection,
+  setCurrentSection,
+}: MenuBarrProps) => {
   // Har bir bo'limni tanlash uchun
   const handleSectionClick = (section: SectionType) => {
     setCurrentSection(section);
@@ -54,7 +78,64 @@ const MenuBarr = () => {
   const renderContent = () => {
     switch (currentSection) {
       case "brand":
-        return <div>Brend haqida ma'lumot</div>;
+        return (
+          <div className="space-y-4 sm:mt-4 overflow-y-auto h-96">
+            {brend.map((item, index) => (
+              <div
+                key={index}
+                className="flex border-b justify-between w-full border-b-gray-400 cursor-pointer group items-center gap-4 pb-4"
+              >
+                <div>
+                  <p className="text-lg group-hover:text-gray-400 font-normal uppercase">
+                    {item.title}
+                  </p>
+                  <p className="text-xs text-gray-300">{item.desc}</p>
+                </div>
+                <img
+                  src={item.icon}
+                  alt={item.title}
+                  className="w-7 h-7 object-contain"
+                />
+              </div>
+            ))}
+            {brend.map((item, index) => (
+              <div
+                key={index}
+                className="flex border-b justify-between w-full border-b-gray-400 cursor-pointer group items-center gap-4 pb-4"
+              >
+                <div>
+                  <p className="text-lg group-hover:text-gray-400 font-normal uppercase">
+                    {item.title}
+                  </p>
+                  <p className="text-xs text-gray-300">{item.desc}</p>
+                </div>
+                <img
+                  src={item.icon}
+                  alt={item.title}
+                  className="w-7 h-7 object-contain"
+                />
+              </div>
+            ))}
+            {brend.map((item, index) => (
+              <div
+                key={index}
+                className="flex border-b justify-between w-full border-b-gray-400 cursor-pointer group items-center gap-4 pb-4"
+              >
+                <div>
+                  <p className="text-lg group-hover:text-gray-400 font-normal uppercase">
+                    {item.title}
+                  </p>
+                  <p className="text-xs text-gray-300">{item.desc}</p>
+                </div>
+                <img
+                  src={item.icon}
+                  alt={item.title}
+                  className="w-7 h-7 object-contain"
+                />
+              </div>
+            ))}
+          </div>
+        );
       case "catalog":
         return <div>Katalog haqida ma'lumot</div>;
       case "contact":
@@ -62,6 +143,10 @@ const MenuBarr = () => {
       default:
         return <div>Bo'limni tanlang: Brend, Katalog yoki Aloqa</div>;
     }
+  };
+
+  const handleCloseSheet = () => {
+    setOpen(false);
   };
 
   return (
@@ -93,13 +178,14 @@ const MenuBarr = () => {
               <p className="text-2xl font-bold uppercase">Каталог</p>
               <ChevronRight size={24} />
             </div>
-            <div
-              onClick={() => handleSectionClick("contact")}
+            <Link
+              onClick={handleCloseSheet}
+              to={"/here_to_help/kontakty"}
               className="flex cursor-pointer hover:text-gray-400 transition w-full items-center justify-between gap-2"
             >
               <p className="text-2xl font-bold uppercase">Контакты</p>
               <ChevronRight size={24} />
-            </div>
+            </Link>
 
             <ul className="mt-5 text-sm space-y-3">
               <li className="uppercase font-medium">
