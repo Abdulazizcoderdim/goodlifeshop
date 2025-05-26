@@ -17,6 +17,7 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import api from "@/http/axios";
 import { useAuthStore } from "@/hooks/useAuthStore";
+import { useNavigate } from "react-router-dom";
 
 const LoginModal = ({
   open,
@@ -35,6 +36,7 @@ const LoginModal = ({
       rememberMe: false,
     },
   });
+  const navigate = useNavigate();
   const { checkAuth } = useAuthStore();
 
   async function onSubmit(data: LoginFormValues) {
@@ -45,6 +47,7 @@ const LoginModal = ({
       });
 
       localStorage.setItem("accessToken", res.data.accessToken);
+      if (res.data.user.role === "ADMIN") navigate("/admin-panel");
 
       toast.success("Login successful");
       onOpenChange(false);

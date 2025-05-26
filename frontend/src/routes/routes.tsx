@@ -20,6 +20,13 @@ import Private from "@/pages/personal/Private";
 import HistoryOrder from "@/pages/personal/HistoryOrder";
 import Subscribe from "@/pages/personal/Subscribe";
 import Store from "@/pages/store/store";
+import LayoutAdmin from "@/layout/layout-admin";
+import ProductsPage from "@/pages/admin-panel/ProductsPage";
+import UsersPage from "@/pages/admin-panel/UsersPage";
+import SalesPage from "@/pages/admin-panel/SalesPage";
+import OrdersPage from "@/pages/admin-panel/OrdersPage";
+import AnalyticsPage from "@/pages/admin-panel/AnalyticsPage";
+import OverviewPage from "@/pages/admin-panel/OverviewPage";
 
 export const router = createBrowserRouter([
   {
@@ -109,6 +116,36 @@ export const router = createBrowserRouter([
       {
         path: "store",
         element: <Store />,
+      },
+    ],
+  },
+  {
+    path: "/admin-panel",
+    element: <LayoutAdmin />,
+    children: [
+      {
+        index: true,
+        element: <OverviewPage />,
+      },
+      {
+        path: "products",
+        element: <ProductsPage />,
+      },
+      {
+        path: "users",
+        element: <UsersPage />,
+      },
+      {
+        path: "sales",
+        element: <SalesPage />,
+      },
+      {
+        path: "orders",
+        element: <OrdersPage />,
+      },
+      {
+        path: "analytics",
+        element: <AnalyticsPage />,
       },
     ],
   },
