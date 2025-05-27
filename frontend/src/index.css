@@ -75,6 +75,43 @@
   height: auto;
 }
 
+.custom-pagination .ant-pagination-item,
+.custom-pagination .ant-pagination-prev,
+.custom-pagination .ant-pagination-next {
+  background-color: #444; /* Gray background */
+  border-color: #444;
+  border: 1px solid white;
+  color: white;
+}
+.custom-pagination {
+  display: flex;
+  justify-content: space-between;
+}
+
+.custom-pagination .ant-pagination-item a {
+  color: white;
+}
+
+.custom-pagination .ant-pagination-item-active {
+  background-color: #666;
+  border-color: #666;
+}
+
+.custom-pagination .ant-pagination-item-active a {
+  color: #fff;
+}
+
+.custom-pagination .ant-pagination-prev:hover,
+.custom-pagination .ant-pagination-next:hover,
+.custom-pagination .ant-pagination-item:hover {
+  background-color: #555;
+  border-color: #555;
+}
+
+.custom-pagination .ant-pagination-disabled {
+  opacity: 0.5;
+}
+
 @media (max-width: 768px) {
   .swiper-container {
     padding: 0 10px;

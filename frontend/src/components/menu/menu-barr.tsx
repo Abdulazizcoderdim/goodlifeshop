@@ -7,7 +7,7 @@ import {
   ShieldQuestion,
   User,
 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
 
 const data = [
@@ -38,16 +38,19 @@ const brend = [
     title: "Zwilling",
     desc: "Качественные изделия, производимые в Германии с 1731 г.",
     icon: "/brend1.webp",
+    path: "/catalog/zwilling",
   },
   {
     title: "Staub",
     desc: "Традиционное французское качество",
     icon: "/brend2.webp",
+    path: "/catalog/staub",
   },
   {
     title: "Ballarini",
     desc: "Качественная кухонная посуда производства Bella Italia с 1889 г.",
     icon: "/brend3.webp",
+    path: "/catalog/ballarini",
   },
 ];
 
@@ -55,26 +58,32 @@ const fakeKatalog = [
   {
     title: "НОЖИ",
     icon: "/k1.svg",
+    path: "/catalog/nozhi",
   },
   {
     title: "ПОСУДА",
     icon: "/k2.webp",
+    path: "/catalog/posuda",
   },
   {
     title: "АКСЕССУАРЫ",
     icon: "/k3.webp",
+    path: "/catalog/aksessuary",
   },
   {
     title: "МИР КРАСОТЫ",
     icon: "/k3.webp",
+    path: "/catalog/mir_krasoty",
   },
   {
     title: "ТЕХНИКА",
     icon: "/k3.webp",
+    path: "/catalog/tekhnika",
   },
   {
     title: "ХРАНЕНИЕ",
     icon: "/k3.webp",
+    path: "/catalog/fresh-and-save",
   },
 ];
 
@@ -91,12 +100,18 @@ const MenuBarr = ({
   currentSection,
   setCurrentSection,
 }: MenuBarrProps) => {
+  const navigate = useNavigate();
   const handleSectionClick = (section: SectionType) => {
     setCurrentSection(section);
   };
 
   const handleBackClick = () => {
     setCurrentSection(null);
+  };
+
+  const handleClick = (path: string) => {
+    navigate(path);
+    setOpen(false);
   };
 
   const renderContent = () => {
@@ -106,6 +121,7 @@ const MenuBarr = ({
           <div className="space-y-4 sm:mt-4 overflow-y-auto h-96">
             {brend.map((item, index) => (
               <div
+                onClick={() => handleClick(item.path)}
                 key={index}
                 className="flex border-b justify-between w-full border-b-gray-400 cursor-pointer group items-center gap-4 pb-4"
               >
@@ -129,6 +145,7 @@ const MenuBarr = ({
           <div className="space-y-4 sm:mt-4 overflow-y-auto h-96">
             {fakeKatalog.map((item, index) => (
               <div
+                onClick={() => handleClick(item.path)}
                 key={index}
                 className="flex border-b justify-between w-full border-b-gray-400 cursor-pointer group items-center gap-4 pb-4"
               >

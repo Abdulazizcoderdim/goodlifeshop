@@ -4,46 +4,100 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useStore } from "@/store/useStore";
 import { Link, useNavigate } from "react-router-dom";
+import type { IProduct } from "@/types";
+import api from "@/http/axios";
+
+interface CartItemWithProduct {
+  productId: string; // Changed from 'id' to 'productId' to match your store
+  quantity: number;
+  product: IProduct | null;
+  loading: boolean;
+}
 
 export default function CartPage() {
-  const { cart, updateQuantity, removeFromCart, isFavorite } = useStore();
+  const { cart, updateQuantity, removeFromCart, isFavorite, clearCart } =
+    useStore();
   const navigate = useNavigate();
-  const [cartItems, setCartItems] = useState(cart);
+  const [cartItems, setCartItems] = useState<CartItemWithProduct[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    setCartItems(cart);
-  }, [cart]);
-
-  console.log("cartItems", cartItems);
-
-  const handleQuantityChange = (productId: number, quantity: number) => {
-    const updatedCart = cartItems.map((item) => {
-      if (item.id === productId) {
-        const newQuantity = item.quantity + quantity;
-        if (newQuantity < 1) return item;
-        return { ...item, quantity: newQuantity };
-      }
-      return item;
-    });
-
-    setCartItems(updatedCart);
-    updateQuantity(
-      productId,
-      updatedCart.find((item) => item.id === productId)?.quantity || 0
-    );
+  const fetchProductById = async (id: string): Promise<IProduct | null> => {
+    try {
+      const response = await api.get(`/products/${id}`);
+      return response.data.content;
+    } catch (error) {
+      console.error(`Error fetching product ${id}:`, error);
+      return null;
+    }
   };
 
-  const handleRemoveItem = (id: number) => {
-    setCartItems(cartItems.filter((item) => item.id !== id));
-    removeFromCart(id);
+  useEffect(() => {
+    const loadCartItems = async () => {
+      setLoading(true);
+      const itemsWithProducts = await Promise.all(
+        cart.map(async (item) => ({
+          productId: item.productId, // Changed to match store structure
+          quantity: item.quantity,
+          product: await fetchProductById(item.productId),
+          loading: false,
+        }))
+      );
+      setCartItems(itemsWithProducts);
+      setLoading(false);
+    };
+
+    if (cart.length > 0) {
+      loadCartItems();
+    } else {
+      setCartItems([]);
+      setLoading(false);
+    }
+  }, [cart]);
+
+  const handleQuantityChange = (productId: string, quantityChange: number) => {
+    const currentItem = cartItems.find((item) => item.productId === productId);
+    if (!currentItem) return;
+
+    const newQuantity = currentItem.quantity + quantityChange;
+    if (newQuantity < 1) return;
+
+    setCartItems((prev) =>
+      prev.map((item) =>
+        item.productId === productId ? { ...item, quantity: newQuantity } : item
+      )
+    );
+
+    updateQuantity(productId, newQuantity);
+  };
+
+  const handleRemoveItem = (productId: string) => {
+    setCartItems((prev) => prev.filter((item) => item.productId !== productId));
+    removeFromCart(productId);
+  };
+
+  const handleClearCart = () => {
+    setCartItems([]);
+    clearCart();
   };
 
   const calculateTotal = () => {
-    return cartItems.reduce(
-      (total, item) => total + item.price * Number(item.quantity),
-      0
-    );
+    return cartItems.reduce((total, item) => {
+      const price = item.product?.price || 0;
+      return total + price * item.quantity;
+    }, 0);
   };
+
+  if (loading) {
+    return (
+      <div className="bg-gray">
+        <div className="max-w-7xl mx-auto px-4 py-8">
+          <div className="flex items-center justify-center py-20">
+            <div className="text-xl text-gray-600">Загрузка корзины...</div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-gray">
@@ -73,7 +127,6 @@ export default function CartPage() {
             </div>
 
             <div className="bg-white border border-gray-100 rounded-sm shadow-sm mb-8">
-              {/* Header - Hidden on mobile */}
               <div className="hidden sm:grid grid-cols-12 py-4 px-6 text-sm border-b text-gray-500">
                 <div className="col-span-6">ТОВАР</div>
                 <div className="col-span-2 text-center">ЦЕНА</div>
@@ -81,133 +134,159 @@ export default function CartPage() {
                 <div className="col-span-2 text-center">СТОИМОСТЬ</div>
               </div>
 
-              {/* Cart Items */}
-              {cartItems.map((item) => (
-                <div
-                  key={item.id}
-                  className="grid grid-cols-1 sm:grid-cols-12 py-6 px-4 mb-5 sm:px-6 items-center border-b"
-                >
-                  {/* Product info - Full width on mobile */}
-                  <div className="col-span-1 sm:col-span-6 flex gap-4 sm:gap-6 mb-4 sm:mb-0">
-                    <div
-                      onClick={() => navigate("/catalog")}
-                      className="w-16 h-24 relative flex-shrink-0 cursor-pointer"
-                    >
-                      <img
-                        src={item.image || "/placeholder.svg"}
-                        alt={item.name}
-                        className="object-contain"
-                      />
-                    </div>
-                    <div className="flex flex-col justify-between py-1 flex-grow">
-                      <div>
-                        <h3
-                          onClick={() => navigate("/catalog/")}
-                          className="text-base font-normal hover:underline cursor-pointer"
-                        >
-                          {item.name.substring(1)}
-                        </h3>
-                        <p className="text-sm text-gray-500 mt-1">В наличии</p>
-                      </div>
-                      {/* Favorite Icon */}
-                      {isFavorite(item.id) && (
-                        <div className="flex items-center mt-2">
-                          <div className="w-6 h-6 bg-black rounded-full flex items-center justify-center mr-2">
-                            <Heart className="w-3 h-3 text-white" />
-                          </div>
-                          <span className="text-xs text-gray-600">
-                            Товар отложен. Добавить к заказу?
-                          </span>
-                        </div>
-                      )}
-                    </div>
-                  </div>
+              {cartItems.map((item) => {
+                const product = item.product;
 
-                  {/* Mobile layout for price, quantity and total */}
-                  <div className="sm:hidden grid grid-cols-3 gap-2 w-full mb-2">
-                    <div className="flex flex-col items-start">
-                      <span className="text-xs text-gray-500 mb-1">ЦЕНА</span>
-                      <span className="font-medium">
-                        {item.price.toLocaleString("ru-RU")} ₽
-                      </span>
+                if (!product) {
+                  return (
+                    <div
+                      key={item.productId}
+                      className="grid grid-cols-1 sm:grid-cols-12 py-6 px-4 mb-5 sm:px-6 items-center border-b"
+                    >
+                      <div className="col-span-12 text-center text-gray-500">
+                        Продукт не найден
+                      </div>
                     </div>
-                    <div className="flex flex-col items-center">
-                      <span className="text-xs text-gray-500 mb-1">КОЛ-ВО</span>
+                  );
+                }
+
+                return (
+                  <div
+                    key={item.productId}
+                    className="grid grid-cols-1 sm:grid-cols-12 py-6 px-4 mb-5 sm:px-6 items-center border-b"
+                  >
+                    <div className="col-span-1 sm:col-span-6 flex gap-4 sm:gap-6 mb-4 sm:mb-0">
+                      <div
+                        onClick={() => navigate("/catalog")}
+                        className="w-16 h-24 relative flex-shrink-0 cursor-pointer"
+                      >
+                        <img
+                          src={product.images[0] || "/placeholder.svg"}
+                          alt={product.title}
+                          className="object-contain w-full h-full"
+                        />
+                      </div>
+                      <div className="flex flex-col justify-between py-1 flex-grow">
+                        <div>
+                          <h3
+                            onClick={() => navigate(`/catalog/${product.id}`)}
+                            className="text-base font-normal hover:underline cursor-pointer"
+                          >
+                            {product.title?.substring(0, 50)}
+                          </h3>
+                          <p className="text-sm text-gray-500 mt-1">
+                            В наличии
+                          </p>
+                        </div>
+                        {isFavorite(product.id) && (
+                          <div className="flex items-center mt-2">
+                            <div className="w-6 h-6 bg-black rounded-full flex items-center justify-center mr-2">
+                              <Heart className="w-3 h-3 text-white" />
+                            </div>
+                            <span className="text-xs text-gray-600">
+                              Товар отложен. Добавить к заказу?
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="sm:hidden grid grid-cols-3 gap-2 w-full mb-2">
+                      <div className="flex flex-col items-start">
+                        <span className="text-xs text-gray-500 mb-1">ЦЕНА</span>
+                        <span className="font-medium">
+                          {product.price.toLocaleString("ru-RU")} ₽
+                        </span>
+                      </div>
+                      <div className="flex flex-col items-center">
+                        <span className="text-xs text-gray-500 mb-1">
+                          КОЛ-ВО
+                        </span>
+                        <div className="flex items-center">
+                          <button
+                            onClick={() =>
+                              handleQuantityChange(item.productId, -1)
+                            }
+                            className="w-7 h-7 cursor-pointer flex items-center justify-center"
+                          >
+                            <Minus className="w-4 h-4" />
+                          </button>
+                          <span className="w-6 text-center">
+                            {item.quantity}
+                          </span>
+                          <button
+                            onClick={() =>
+                              handleQuantityChange(item.productId, 1)
+                            }
+                            className="w-7 h-7 cursor-pointer flex items-center justify-center"
+                          >
+                            <Plus className="w-4 h-4" />
+                          </button>
+                        </div>
+                      </div>
+                      <div className="flex flex-col items-end">
+                        <span className="text-xs text-gray-500 mb-1">
+                          СТОИМОСТЬ
+                        </span>
+                        <div className="flex items-center justify-between">
+                          <span className="font-medium mr-2">
+                            {(product.price * item.quantity).toLocaleString(
+                              "ru-RU"
+                            )}{" "}
+                            ₽
+                          </span>
+                          <button
+                            onClick={() => handleRemoveItem(item.productId)}
+                            className="text-gray-400 hover:text-gray-600"
+                          >
+                            <X className="w-5 h-5" />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="hidden sm:block col-span-2 text-center font-medium">
+                      {product.price.toLocaleString("ru-RU")} ₽
+                    </div>
+                    <div className="hidden sm:flex col-span-2 items-center justify-center">
                       <div className="flex items-center">
                         <button
-                          onClick={() => handleQuantityChange(item.id, -1)}
-                          className="w-7 h-7 cursor-pointer flex items-center justify-center"
+                          onClick={() =>
+                            handleQuantityChange(item.productId, -1)
+                          }
+                          className="w-8 h-8 cursor-pointer flex items-center justify-center text-xl font-light"
                         >
-                          <Minus className="w-4 h-4" />
+                          <Minus className="w-5 h-5" />
                         </button>
-                        <span className="w-6 text-center">{item.quantity}</span>
+                        <span className="w-8 text-center">{item.quantity}</span>
                         <button
-                          onClick={() => handleQuantityChange(item.id, 1)}
-                          className="w-7 h-7 cursor-pointer flex items-center justify-center"
+                          onClick={() =>
+                            handleQuantityChange(item.productId, 1)
+                          }
+                          className="w-8 h-8 cursor-pointer flex items-center justify-center text-xl font-light"
                         >
-                          <Plus className="w-4 h-4" />
+                          <Plus className="w-5 h-5" />
                         </button>
                       </div>
                     </div>
-                    <div className="flex flex-col items-end">
-                      <span className="text-xs text-gray-500 mb-1">
-                        СТОИМОСТЬ
+                    <div className="hidden sm:flex col-span-2 items-center justify-between">
+                      <span className="font-medium">
+                        {(product.price * item.quantity).toLocaleString(
+                          "ru-RU"
+                        )}{" "}
+                        ₽
                       </span>
-                      <div className="flex items-center justify-between">
-                        <span className="font-medium mr-2">
-                          {(item.price * Number(item.quantity)).toLocaleString(
-                            "ru-RU"
-                          )}{" "}
-                          ₽
-                        </span>
-                        <button
-                          onClick={() => handleRemoveItem(item.id)}
-                          className="text-gray-400 hover:text-gray-600"
-                        >
-                          <X className="w-5 h-5" />
-                        </button>
-                      </div>
+                      <button
+                        onClick={() => handleRemoveItem(item.productId)}
+                        className="text-gray-400 hover:text-gray-600"
+                      >
+                        <X className="w-5 h-5" />
+                      </button>
                     </div>
                   </div>
+                );
+              })}
 
-                  {/* Desktop layout - hidden on mobile */}
-                  <div className="hidden sm:block col-span-2 text-center font-medium">
-                    {item.price.toLocaleString("ru-RU")} ₽
-                  </div>
-                  <div className="hidden sm:flex col-span-2 items-center justify-center">
-                    <div className="flex items-center">
-                      <button
-                        onClick={() => handleQuantityChange(item.id, -1)}
-                        className="w-8 h-8 cursor-pointer flex items-center justify-center text-xl font-light"
-                      >
-                        <Minus className="w-5 h-5" />
-                      </button>
-                      <span className="w-8 text-center">{item.quantity}</span>
-                      <button
-                        onClick={() => handleQuantityChange(item.id, 1)}
-                        className="w-8 h-8 cursor-pointer flex items-center justify-center text-xl font-light"
-                      >
-                        <Plus className="w-5 h-5" />
-                      </button>
-                    </div>
-                  </div>
-                  <div className="hidden sm:flex col-span-2 items-center justify-between">
-                    <span className="font-medium">
-                      {(item.price * Number(item.quantity)).toLocaleString(
-                        "ru-RU"
-                      )}{" "}
-                      ₽
-                    </span>
-                    <button
-                      onClick={() => handleRemoveItem(item.id)}
-                      className="text-gray-400 hover:text-gray-600"
-                    >
-                      <X className="w-5 h-5" />
-                    </button>
-                  </div>
-                </div>
-              ))}
-              {/* Coupon and Summary */}
               <div className="flex px-6 flex-col md:flex-row justify-between gap-6 md:gap-8 mb-8">
                 <div className="w-full md:w-1/2">
                   <p className="text-sm text-gray-600 mb-2">
@@ -254,9 +333,11 @@ export default function CartPage() {
               </div>
             </div>
 
-            {/* Actions */}
             <div className="flex flex-col-reverse sm:flex-row justify-between items-center gap-4">
-              <button className="text-sm underline cursor-pointer text-gray-500 hover:text-gray-700 mt-4 sm:mt-0">
+              <button
+                onClick={handleClearCart}
+                className="text-sm underline cursor-pointer text-gray-500 hover:text-gray-700 mt-4 sm:mt-0"
+              >
                 Очистить корзину
               </button>
               <Button className="w-full sm:w-auto px-8 sm:px-16 py-5 sm:py-6 bg-red-500 hover:bg-red-600 cursor-pointer text-white rounded-none font-normal text-base">

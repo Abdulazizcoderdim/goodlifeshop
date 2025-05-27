@@ -3,10 +3,46 @@ import StatCard from "@/components/admin-panel/common/StatCard";
 import CategoryDistributionChart from "@/components/admin-panel/overview/CategoryDistributionChart";
 import ProductsTable from "@/components/admin-panel/products/ProductsTable";
 import SalesTrendChart from "@/components/admin-panel/products/SalesTrendChart";
+import api from "@/http/axios";
+import type { IProduct } from "@/types";
 import { motion } from "framer-motion";
 import { AlertTriangle, DollarSign, Package, TrendingUp } from "lucide-react";
+import { useEffect, useState } from "react";
 
 const ProductsPage = () => {
+  const [products, setProducts] = useState<IProduct[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [pagination, setPagination] = useState({
+    number: 1,
+    size: 10,
+    totalElements: 0,
+    totalPages: 0,
+  });
+
+  useEffect(() => {
+    fetchProducts(pagination.number);
+  }, []);
+
+  const fetchProducts = async (page = 1) => {
+    try {
+      setLoading(true);
+      const res = await api.get(
+        `/products?page=${page}&size=${pagination.size}`
+      );
+
+      setProducts(res.data.content);
+      setPagination(res.data.pagination);
+    } catch (error) {
+      console.log("Failed to fetch products", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handlePageChange = (page: number) => {
+    fetchProducts(page);
+  };
+
   return (
     <div className="flex-1 overflow-auto relative z-10">
       <Header title="Products" />
@@ -45,7 +81,12 @@ const ProductsPage = () => {
           />
         </motion.div>
 
-        <ProductsTable />
+        <ProductsTable
+          handlePageChange={handlePageChange}
+          pagination={pagination}
+          products={products}
+          loading={loading}
+        />
 
         {/* CHARTS */}
         <div className="grid grid-col-1 lg:grid-cols-2 gap-8">

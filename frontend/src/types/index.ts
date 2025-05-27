@@ -8,7 +8,6 @@ export interface IProduct {
   series: string;
   originCountry: string;
   price: number;
-  category: string;
   color: string;
   dishwasherSafe: boolean;
   batteryRequired: boolean;
@@ -33,6 +32,11 @@ export interface IProduct {
     packageHeight: number;
     packageWidth: number;
     packageLength: number;
+  };
+  category: {
+    id: string;
+    name: string;
+    slug: string;
   };
 
   variants: IProductVariant[];

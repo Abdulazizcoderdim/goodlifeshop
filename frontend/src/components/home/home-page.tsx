@@ -11,10 +11,10 @@ import { fetcher } from "@/lib/fetcher";
 
 const HomePage = () => {
   const [pagination, setPagination] = useState({
-    currentPage: 1,
+    number: 0,
+    size: 10,
+    totalElements: 0,
     totalPages: 0,
-    totalItems: 0,
-    itemsPerPage: 10,
   });
   console.log(pagination);
 

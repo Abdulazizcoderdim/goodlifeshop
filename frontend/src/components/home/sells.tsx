@@ -3,14 +3,14 @@ import ProductItem from "../product-item/product-item";
 import ProductItemLoading from "../loading/ProductItemLoading";
 
 const Sells = ({
-  products,
+  products = [],
   loading,
 }: {
-  products: IProduct[];
+  products?: IProduct[];
   loading: boolean;
 }) => {
   const filterProducts = () => {
-    const filter: IProduct[] = products
+    const filter: IProduct[] = (products || [])
       // .filter((product) => product.category === "electronics")
       .slice(0, 3);
     return filter;

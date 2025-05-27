@@ -1,58 +1,121 @@
+// stores/useStore.ts
+import type { IProduct } from "@/types";
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
-import type { StoreState } from "../types";
+import { persist, createJSONStorage } from "zustand/middleware";
 
-export const useStore = create<StoreState>()(
+interface OptimizedStoreState {
+  favorites: FavoriteItem[];
+  cart: CartItem[];
+  toggleFavorite: (product: IProduct) => void;
+  addToCart: (product: IProduct) => void;
+  isFavorite: (productId: string) => boolean;
+  isInCart: (productId: string) => boolean;
+  removeFromCart: (productId: string) => void;
+  clearCart: () => void;
+  updateQuantity: (productId: string, quantity: number) => void;
+}
+
+interface FavoriteItem {
+  productId: string;
+  product: IProduct;
+}
+
+interface CartItem {
+  productId: string;
+  product: IProduct;
+  quantity: number;
+}
+
+export const useStore = create<OptimizedStoreState>()(
   persist(
     (set, get) => ({
       favorites: [],
       cart: [],
+
       toggleFavorite: (product) => {
-        const favorites = get().favorites;
-        const isFav = favorites.some((p) => p.id === product.id);
-        const updatedFavorites = isFav
-          ? favorites.filter((p) => p.id !== product.id)
-          : [...favorites, product];
-        set({ favorites: updatedFavorites });
-      },
-      addToCart: (product) => {
-        const cart = get().cart;
-        if (cart.some((p) => p.id === product.id)) {
-          set({
-            cart: cart.map((p) =>
-              p.id === product.id
-                ? { ...p, quantity: (p.quantity ?? 1) + 1 }
-                : p
-            ),
-          });
-        } else {
-          set({ cart: [...cart, product] });
-        }
-      },
-      isFavorite: (productId) => {
-        return get().favorites.some((p) => parseInt(p.id) === productId);
-      },
-      isInCart: (productId) => {
-        return get().cart.some((p) => parseInt(p.id) === productId);
-      },
-      removeFromCart: (productId: number) => {
-        set({
-          cart: get().cart.filter((p) => parseInt(p.id) !== productId),
+        set((state) => {
+          const isFavorite = state.favorites.some(
+            (item) => item.productId === product.id
+          );
+
+          if (isFavorite) {
+            return {
+              favorites: state.favorites.filter(
+                (item) => item.productId !== product.id
+              ),
+            };
+          } else {
+            return {
+              favorites: [
+                ...state.favorites,
+                { productId: product.id, product },
+              ],
+            };
+          }
         });
       },
+
+      addToCart: (product) => {
+        set((state) => {
+          const existingItem = state.cart.find(
+            (item) => item.productId === product.id
+          );
+
+          if (existingItem) {
+            return {
+              cart: state.cart.map((item) =>
+                item.productId === product.id
+                  ? { ...item, quantity: item.quantity + 1 }
+                  : item
+              ),
+            };
+          } else {
+            return {
+              cart: [
+                ...state.cart,
+                { productId: product.id, product, quantity: 1 },
+              ],
+            };
+          }
+        });
+      },
+
+      isFavorite: (productId) => {
+        return get().favorites.some((item) => item.productId === productId);
+      },
+
+      isInCart: (productId) => {
+        return get().cart.some((item) => item.productId === productId);
+      },
+
+      removeFromCart: (productId) => {
+        set((state) => ({
+          cart: state.cart.filter((item) => item.productId !== productId),
+        }));
+      },
+
       clearCart: () => {
         set({ cart: [] });
       },
-      updateQuantity: (productId: number, quantity: number) => {
-        set({
-          cart: get().cart.map((p) =>
-            parseInt(p.id) === productId ? { ...p, quantity } : p
+
+      updateQuantity: (productId, quantity) => {
+        if (quantity <= 0) {
+          get().removeFromCart(productId);
+          return;
+        }
+
+        set((state) => ({
+          cart: state.cart.map((item) =>
+            item.productId === productId ? { ...item, quantity } : item
           ),
-        });
+        }));
       },
     }),
     {
-      name: "store-storage", // localStorage key
+      name: "ecommerce-store", // unique name for localStorage key
+      storage: createJSONStorage(() => localStorage), // or sessionStorage
+      // You can also whitelist or blacklist specific state keys
+      // partialize: (state) => ({ favorites: state.favorites, cart: state.cart }),
     }
   )
 );

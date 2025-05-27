@@ -7,7 +7,7 @@ class ProductController {
     try {
       const {
         page = 1,
-        limit = 10,
+        size = 10,
         search,
         category,
         brand,
@@ -17,7 +17,9 @@ class ProductController {
         sortOrder = "desc",
       } = req.query;
 
-      const skip = (parseInt(page) - 1) * parseInt(limit);
+      const pageNumber = parseInt(page);
+      const pageSize = parseInt(size);
+      const skip = (pageNumber - 1) * pageSize;
 
       //   build where clase
       const where = {};
@@ -40,29 +42,34 @@ class ProductController {
       }
 
       //   get products with variants
-      const products = await prisma.product.findMany({
-        where,
-        include: {
-          variants: true,
-          category: true,
-        },
-        orderBy: {
-          [sortBy]: sortOrder,
-        },
-        skip,
-        take: parseInt(limit),
-      });
+      const [products, totalElements] = await Promise.all([
+        prisma.product.findMany({
+          where,
+          include: {
+            variants: true,
+            category: true,
+          },
+          orderBy: {
+            [sortBy]: sortOrder,
+          },
+          skip,
+          take: parseInt(size),
+        }),
+        prisma.product.count({
+          where,
+        }),
+      ]);
 
       //   get total count for pagination
-      const total = await prisma.product.count({ where });
+      const totalPages = Math.ceil(totalElements / pageSize);
 
       res.json({
         content: products,
         pagination: {
-          currentPage: parseInt(page),
-          totalPages: Math.ceil(total / parseInt(limit)),
-          totalItems: total,
-          itemsPerPage: parseInt(limit),
+          number: pageNumber,
+          size: pageSize,
+          totalElements,
+          totalPages,
         },
       });
     } catch (error) {
