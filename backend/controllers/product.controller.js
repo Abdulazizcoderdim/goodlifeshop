@@ -96,6 +96,7 @@ class ProductController {
       }
 
       res.json({
+        success: true,
         content: product,
       });
     } catch (error) {
@@ -171,6 +172,7 @@ class ProductController {
       next(error);
     }
   }
+
   async update(req, res, next) {
     try {
       const { id } = req.params;
@@ -201,6 +203,9 @@ class ProductController {
         return next(BaseError.BadRequest("Product not found"));
       }
 
+      const cleanedVariants =
+        variants?.map(({ productId, ...rest }) => rest) || [];
+
       // Update product
       const product = await prisma.product.update({
         where: { id },
@@ -212,14 +217,17 @@ class ProductController {
           series,
           originCountry,
           price,
-          categoryId,
+          categoryId: categoryId, // handle undefined
           color,
           dishwasherSafe,
           batteryRequired,
           characteristics,
           dimensions,
           images,
-          variants,
+          variants: {
+            deleteMany: {},
+            create: cleanedVariants,
+          },
         },
         include: {
           variants: true,
@@ -235,6 +243,7 @@ class ProductController {
       next(error);
     }
   }
+
   async delete(req, res, next) {
     try {
       const { id } = req.params;

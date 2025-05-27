@@ -4,6 +4,7 @@ import AuthProvider from "@/provider/auth-provider";
 import { UserRole } from "@/types";
 import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
+import { Toaster } from "sonner";
 
 const LayoutAdmin = () => {
   const { user } = useAuthStore();
@@ -22,6 +23,7 @@ const LayoutAdmin = () => {
         <Sidebar />
         <Outlet />
       </div>
+      <Toaster position="top-center" />
     </AuthProvider>
   );
 };

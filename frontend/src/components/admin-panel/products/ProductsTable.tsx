@@ -1,51 +1,9 @@
 import type { IProduct } from "@/types";
 import { motion } from "framer-motion";
 import { Edit, Search, Trash2 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MyPagination from "../pagination/MyPagination";
-
-const PRODUCT_DATA = [
-  {
-    id: 1,
-    name: "Wireless Earbuds",
-    category: "Electronics",
-    price: 59.99,
-    stock: 143,
-    sales: 1200,
-  },
-  {
-    id: 2,
-    name: "Leather Wallet",
-    category: "Accessories",
-    price: 39.99,
-    stock: 89,
-    sales: 800,
-  },
-  {
-    id: 3,
-    name: "Smart Watch",
-    category: "Electronics",
-    price: 199.99,
-    stock: 56,
-    sales: 650,
-  },
-  {
-    id: 4,
-    name: "Yoga Mat",
-    category: "Fitness",
-    price: 29.99,
-    stock: 210,
-    sales: 950,
-  },
-  {
-    id: 5,
-    name: "Coffee Maker",
-    category: "Home",
-    price: 79.99,
-    stock: 78,
-    sales: 720,
-  },
-];
+import { useNavigate } from "react-router-dom";
 
 interface PropsProductsTable {
   pagination: {
@@ -54,14 +12,6 @@ interface PropsProductsTable {
     totalElements: number;
     totalPages: number;
   };
-  // setPagination: React.Dispatch<
-  //   React.SetStateAction<{
-  //     number: number;
-  //     size: number;
-  //     totalElements: number;
-  //     totalPages: number;
-  //   }>
-  // >;
   loading: boolean;
   products: IProduct[];
   handlePageChange: (page: number) => void;
@@ -74,23 +24,52 @@ const ProductsTable = ({
   handlePageChange,
 }: PropsProductsTable) => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [filteredProducts, setFilteredProducts] = useState(PRODUCT_DATA);
+  const [filteredProducts, setFilteredProducts] = useState(products);
+  const navigate = useNavigate();
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const term = e.target.value.toLowerCase();
     setSearchTerm(term);
-    const filtered = PRODUCT_DATA.filter(
+    const filtered = products.filter(
       (product) =>
-        product.name.toLowerCase().includes(term) ||
-        product.category.toLowerCase().includes(term)
+        product.title.toLowerCase().includes(term) ||
+        product.category.name.toLowerCase().includes(term)
     );
 
     setFilteredProducts(filtered);
   };
 
+  useEffect(() => {
+    if (!searchTerm.trim()) {
+      setFilteredProducts(products);
+    } else {
+      const term = searchTerm.toLowerCase();
+      const filtered = products.filter(
+        (product) =>
+          product.title.toLowerCase().includes(term) ||
+          product.category?.name.toLowerCase().includes(term)
+      );
+      setFilteredProducts(filtered);
+    }
+  }, [products, searchTerm]);
+
+  const handleEditClick = (productId: string) => {
+    navigate("/admin-panel/products/edit/" + productId);
+  };
+
+  // const handleSuccessEdit = (updatedProduct: IProduct) => {
+  //   setFilteredProducts((prev) =>
+  //     prev.map((product) =>
+  //       product.id === updatedProduct.id
+  //         ? { ...product, ...updatedProduct }
+  //         : product
+  //     )
+  //   );
+  // };
+
   if (loading) {
     return (
-      <div className="flex w-full justify-center items-center py-10 my-5 bg-gray-800 ">
+      <div className="flex w-full rounded-lg justify-center items-center py-10 my-5 bg-gray-800 ">
         <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-blue-500"></div>
       </div>
     );
@@ -99,7 +78,7 @@ const ProductsTable = ({
   return (
     <>
       <motion.div
-        className="bg-gray-800 bg-opacity-50 backdrop-blur-md shadow-lg rounded-xl p-6 border border-gray-700 mb-8"
+        className="bg-gray-800 bg-opacity-50 backdrop-blur-md shadow-lg rounded-xl p-6 border border-gray-700 mb-4"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
@@ -144,7 +123,7 @@ const ProductsTable = ({
             </thead>
 
             <tbody className="divide-y divide-gray-700">
-              {products.map((product: IProduct) => (
+              {filteredProducts.map((product: IProduct) => (
                 <motion.tr
                   key={product.id}
                   initial={{ opacity: 0 }}
@@ -175,7 +154,10 @@ const ProductsTable = ({
                   </td>
 
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                    <button className="text-indigo-400 hover:text-indigo-300 mr-2">
+                    <button
+                      onClick={() => handleEditClick(product.id)}
+                      className="text-indigo-400 hover:text-indigo-300 mr-2"
+                    >
                       <Edit size={18} />
                     </button>
                     <button className="text-red-400 hover:text-red-300">
@@ -184,6 +166,17 @@ const ProductsTable = ({
                   </td>
                 </motion.tr>
               ))}
+
+              {filteredProducts.length === 0 && (
+                <tr>
+                  <td
+                    colSpan={5}
+                    className="px-6 py-4 text-center text-gray-500"
+                  >
+                    No products found
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>
@@ -195,6 +188,15 @@ const ProductsTable = ({
         itemsPerPage={pagination.size}
         onPageChange={handlePageChange}
       />
+
+      {/* {isEditModalOpen && productEdit && (
+        <EditProductForm
+          isOpen={isEditModalOpen}
+          setIsEditModalOpen={setIsEditModalOpen}
+          defaultValues={productEdit}
+          onSuccess={handleSuccessEdit}
+        />
+      )} */}
     </>
   );
 };

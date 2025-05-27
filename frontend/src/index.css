@@ -74,42 +74,65 @@
 .swiper-slide {
   height: auto;
 }
-
-.custom-pagination .ant-pagination-item,
-.custom-pagination .ant-pagination-prev,
-.custom-pagination .ant-pagination-next {
-  background-color: #444; /* Gray background */
-  border-color: #444;
-  border: 1px solid white;
-  color: white;
-}
-.custom-pagination {
+/* Wrapper */
+.custom-pagination-wrapper {
   display: flex;
   justify-content: space-between;
-}
-
-.custom-pagination .ant-pagination-item a {
+  align-items: center;
+  margin-bottom: 15px;
   color: white;
 }
 
-.custom-pagination .ant-pagination-item-active {
-  background-color: #666;
-  border-color: #666;
+/* Chapdagi total matn */
+.custom-pagination-left {
+  font-size: 14px;
 }
 
-.custom-pagination .ant-pagination-item-active a {
+/* Asosiy pagination block styling */
+.custom-pagination-right .ant-pagination-item,
+.custom-pagination-right .ant-pagination-prev,
+.custom-pagination-right .ant-pagination-next {
+  background-color: #1f2937; /* bg-gray-800 */
+  border-color: #1f2937;
+  border: 1px solid #374151; /* border-gray-700 */
+  color: white;
+  transition: all 0.3s ease;
+}
+
+/* Item ichidagi link */
+.custom-pagination-right .ant-pagination-item a {
+  color: white;
+}
+
+/* Active pagination item */
+.custom-pagination-right .ant-pagination-item-active {
+  background-color: #374151; /* bg-gray-700 */
+  border-color: #374151;
+}
+
+.custom-pagination-right .ant-pagination-item-active a {
   color: #fff;
+  font-weight: bold;
 }
 
-.custom-pagination .ant-pagination-prev:hover,
-.custom-pagination .ant-pagination-next:hover,
-.custom-pagination .ant-pagination-item:hover {
-  background-color: #555;
-  border-color: #555;
+/* Hover effektlari */
+.custom-pagination-right .ant-pagination-prev:hover,
+.custom-pagination-right .ant-pagination-next:hover,
+.custom-pagination-right .ant-pagination-item:hover {
+  background-color: #4b5563; /* bg-gray-600 */
+  border-color: #4b5563;
 }
 
-.custom-pagination .ant-pagination-disabled {
+.anticon {
+  color: white;
+}
+
+/* Disabled tugmalar */
+.custom-pagination-right .ant-pagination-disabled {
   opacity: 0.5;
+  background-color: #1f2937; /* bg-gray-800 */
+  border-color: #1f2937;
+  color: #9ca3af; /* text-gray-400 */
 }
 
 @media (max-width: 768px) {

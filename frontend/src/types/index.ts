@@ -18,9 +18,6 @@ export interface IProduct {
   images: string[]; // URL'lar
 
   characteristics: {
-    flexible?: boolean;
-    speedLevels?: number;
-    salom?: number;
     [key: string]: unknown;
   };
 
@@ -32,11 +29,20 @@ export interface IProduct {
     packageHeight: number;
     packageWidth: number;
     packageLength: number;
+    productVolume: number;
   };
   category: {
     id: string;
     name: string;
     slug: string;
+    subcategories: [
+      {
+        id: string;
+        name: string;
+        slug: string;
+        categoryId: string;
+      }
+    ];
   };
 
   variants: IProductVariant[];

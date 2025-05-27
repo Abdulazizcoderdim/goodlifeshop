@@ -27,6 +27,11 @@ import SalesPage from "@/pages/admin-panel/SalesPage";
 import OrdersPage from "@/pages/admin-panel/OrdersPage";
 import AnalyticsPage from "@/pages/admin-panel/AnalyticsPage";
 import OverviewPage from "@/pages/admin-panel/OverviewPage";
+import ProductUserPage from "@/pages/product/ProductUserPage";
+import CatalogUserPage from "@/pages/catalog/CatalogUserPage";
+import CatalogStatikUserPage from "@/pages/statikcatalog/CatalogStatikUserPage";
+import SubcategoryUserPage from "@/pages/subcategory/SubcategoryUserPage";
+import EditProductForm from "@/components/admin-panel/edit-product/EditProductForm";
 
 export const router = createBrowserRouter([
   {
@@ -117,6 +122,22 @@ export const router = createBrowserRouter([
         path: "store",
         element: <Store />,
       },
+      {
+        path: "catalog/:category/:subcategory/:productSlug",
+        element: <ProductUserPage />,
+      },
+      {
+        path: "catalog/:category/:subcategory",
+        element: <SubcategoryUserPage />,
+      },
+      {
+        path: "catalog/:category",
+        element: <CatalogUserPage />,
+      },
+      {
+        path: "catalog",
+        element: <CatalogStatikUserPage />,
+      },
     ],
   },
   {
@@ -146,6 +167,10 @@ export const router = createBrowserRouter([
       {
         path: "analytics",
         element: <AnalyticsPage />,
+      },
+      {
+        path: "products/edit/:id",
+        element: <EditProductForm />,
       },
     ],
   },

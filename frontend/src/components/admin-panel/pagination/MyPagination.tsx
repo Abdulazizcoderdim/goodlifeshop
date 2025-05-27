@@ -16,20 +16,26 @@ const MyPagination: React.FC<MyPaginationProps> = ({
   onPageChange,
   hideOnSinglePage = true,
 }) => {
-  const showTotal = (total: number, range: [number, number]) =>
-    `Показано с ${range[0]} по ${range[1]}, всего ${total}`;
+  const showTotalText = `Показано с ${
+    (currentPage - 1) * itemsPerPage + 1
+  } по ${Math.min(
+    currentPage * itemsPerPage,
+    totalItems
+  )}, всего ${totalItems}`;
 
   return (
-    <Pagination
-      className="custom-pagination"
-      style={{ color: "white" }}
-      current={currentPage}
-      total={totalItems}
-      pageSize={itemsPerPage}
-      onChange={onPageChange}
-      hideOnSinglePage={hideOnSinglePage}
-      showTotal={showTotal}
-    />
+    <div className="custom-pagination-wrapper">
+      <div className="custom-pagination-left">{showTotalText}</div>
+      <div className="custom-pagination-right">
+        <Pagination
+          current={currentPage}
+          total={totalItems}
+          pageSize={itemsPerPage}
+          onChange={onPageChange}
+          hideOnSinglePage={hideOnSinglePage}
+        />
+      </div>
+    </div>
   );
 };
 
