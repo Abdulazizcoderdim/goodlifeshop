@@ -1,11 +1,9 @@
 import { AnimatePresence, motion } from "framer-motion";
 import {
   BarChart2,
-  DollarSign,
+  CalendarCheck,
   Menu,
   ShoppingBag,
-  ShoppingCart,
-  TrendingUp,
   Users,
 } from "lucide-react";
 import { useState } from "react";
@@ -26,22 +24,10 @@ const SIDEBAR_ITEMS = [
   },
   { name: "Users", icon: Users, color: "#EC4899", href: "/admin-panel/users" },
   {
-    name: "Sales",
-    icon: DollarSign,
+    name: "Category",
+    icon: CalendarCheck,
     color: "#10B981",
-    href: "/admin-panel/sales",
-  },
-  {
-    name: "Orders",
-    icon: ShoppingCart,
-    color: "#F59E0B",
-    href: "/admin-panel/orders",
-  },
-  {
-    name: "Analytics",
-    icon: TrendingUp,
-    color: "#3B82F6",
-    href: "/admin-panel/analytics",
+    href: "/admin-panel/category",
   },
 ];
 

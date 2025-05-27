@@ -96,3 +96,24 @@ export interface StoreState {
   clearCart: () => void;
   updateQuantity: (productId: number, quantity: number) => void;
 }
+
+export type Subcategory = {
+  id: string;
+  name: string;
+  slug: string;
+  categoryId: string;
+  products: IProduct[]; // Agar Product tipi mavjud bo‘lsa
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type Category = {
+  id: string;
+  name: string;
+  slug: string;
+  subcategories: Subcategory[];
+  products: IProduct[]; // Agar Product tipi mavjud bo‘lsa
+  createdAt: string;
+  updatedAt: string;
+  _count: { products: number; subcategories: number };
+};
