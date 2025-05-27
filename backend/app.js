@@ -6,6 +6,7 @@ import productRoute from "./routes/product.route.js";
 import categoriesRoute from "./routes/categories.route.js";
 import brandsRoute from "./routes/brands.route.js";
 import subCategoryRoute from "./routes/subcategory.route.js";
+import usersRoute from "./routes/users.route.js";
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
@@ -31,6 +32,7 @@ app.use("/api/products", productRoute);
 app.use("/api/categories", categoriesRoute);
 app.use("/api/brands", brandsRoute);
 app.use("/api/subcategories", subCategoryRoute);
+app.use("/api/users", usersRoute);
 
 app.use(errorMiddleware);
 

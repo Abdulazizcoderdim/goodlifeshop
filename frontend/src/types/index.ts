@@ -75,7 +75,6 @@ export interface IUser {
 export enum UserRole {
   ADMIN = "ADMIN",
   CUSTOMER = "CUSTOMER",
-  MANAGER = "MANAGER",
 }
 
 export interface IRefreshToken {

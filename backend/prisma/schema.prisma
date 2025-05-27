@@ -50,6 +50,7 @@ model Product {
   originCountry   String // Страна происхождения: КИТАЙ
   price           Float
   color           String?
+  quantity        Int         @default(0)
   sold            Int         @default(0)
   dimensions      Dimensions? // nested object
   dishwasherSafe  Boolean? // posudomoyka
