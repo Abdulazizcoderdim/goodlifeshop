@@ -4,6 +4,8 @@ import { Edit, Search, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import MyPagination from "../pagination/MyPagination";
 import { useNavigate } from "react-router-dom";
+import api from "@/http/axios";
+import { toast } from "sonner";
 
 interface PropsProductsTable {
   pagination: {
@@ -57,15 +59,34 @@ const ProductsTable = ({
     navigate("/admin-panel/products/edit/" + productId);
   };
 
-  // const handleSuccessEdit = (updatedProduct: IProduct) => {
-  //   setFilteredProducts((prev) =>
-  //     prev.map((product) =>
-  //       product.id === updatedProduct.id
-  //         ? { ...product, ...updatedProduct }
-  //         : product
-  //     )
-  //   );
-  // };
+  const handleDelete = async (productId: string) => {
+    const confirmDelete = window.confirm(
+      "Вы уверены, что хотите удалить этот продукт? Это действие не может быть отменено."
+    );
+    if (!confirmDelete) return;
+
+    const toastId = toast.loading("Удаление товара...");
+
+    try {
+      const res = await api.delete(`/products/${productId}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      });
+
+      if (res.data.success) {
+        toast.success(res.data.message || "Товар успешно удален", {
+          id: toastId,
+        });
+        handlePageChange(pagination.number);
+      } else {
+        toast.error("Ошибка при удалении", { id: toastId });
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Произошла ошибка при удалении товара", { id: toastId });
+    }
+  };
 
   if (loading) {
     return (
@@ -160,7 +181,10 @@ const ProductsTable = ({
                     >
                       <Edit size={18} />
                     </button>
-                    <button className="text-red-400 hover:text-red-300">
+                    <button
+                      onClick={() => handleDelete(product.id)}
+                      className="text-red-400 hover:text-red-300"
+                    >
                       <Trash2 size={18} />
                     </button>
                   </td>

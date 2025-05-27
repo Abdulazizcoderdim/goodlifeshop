@@ -32,6 +32,7 @@ import CatalogUserPage from "@/pages/catalog/CatalogUserPage";
 import CatalogStatikUserPage from "@/pages/statikcatalog/CatalogStatikUserPage";
 import SubcategoryUserPage from "@/pages/subcategory/SubcategoryUserPage";
 import EditProductForm from "@/components/admin-panel/edit-product/EditProductForm";
+import NewProductAdd from "@/components/admin-panel/add-product/NewProductAdd";
 
 export const router = createBrowserRouter([
   {
@@ -171,6 +172,10 @@ export const router = createBrowserRouter([
       {
         path: "products/edit/:id",
         element: <EditProductForm />,
+      },
+      {
+        path: "products/new",
+        element: <NewProductAdd />,
       },
     ],
   },

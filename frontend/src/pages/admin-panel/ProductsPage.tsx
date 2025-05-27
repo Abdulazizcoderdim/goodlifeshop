@@ -6,12 +6,20 @@ import SalesTrendChart from "@/components/admin-panel/products/SalesTrendChart";
 import api from "@/http/axios";
 import type { IProduct } from "@/types";
 import { motion } from "framer-motion";
-import { AlertTriangle, DollarSign, Package, TrendingUp } from "lucide-react";
+import {
+  AlertTriangle,
+  Package,
+  Plus,
+  Settings,
+  TrendingUp,
+} from "lucide-react";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const ProductsPage = () => {
   const [products, setProducts] = useState<IProduct[]>([]);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   const [pagination, setPagination] = useState({
     number: 1,
     size: 10,
@@ -74,10 +82,18 @@ const ProductsPage = () => {
             color="#F59E0B"
           />
           <StatCard
-            name="Total Revenue"
-            icon={DollarSign}
-            value={"$543,210"}
-            color="#EF4444"
+            name="Settings"
+            icon={Settings}
+            value={
+              <button
+                onClick={() => navigate("/admin-panel/products/new")}
+                className="bg-purple-500 text-sm hover:bg-purple-700 text-white font-bold py-2 px-4 rounded transition duration-300"
+              >
+                <Plus className="inline-block mr-2" size={16} />
+                Добавить новый продукт
+              </button>
+            }
+            color="#159000"
           />
         </motion.div>
 

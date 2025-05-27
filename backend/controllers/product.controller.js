@@ -268,7 +268,7 @@ class ProductController {
 
       res.json({
         success: true,
-        message: "Product deleted successfully",
+        message: "Товар успешно удален",
       });
     } catch (error) {
       next(error);
