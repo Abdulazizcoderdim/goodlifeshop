@@ -4,6 +4,7 @@ import {
   CalendarCheck,
   Menu,
   ShoppingBag,
+  SquaresSubtract,
   Users,
 } from "lucide-react";
 import { useState } from "react";
@@ -28,6 +29,12 @@ const SIDEBAR_ITEMS = [
     icon: CalendarCheck,
     color: "#10B981",
     href: "/admin-panel/category",
+  },
+  {
+    name: "Subcategory",
+    icon: SquaresSubtract,
+    color: "#19D981",
+    href: "/admin-panel/subcategory",
   },
 ];
 

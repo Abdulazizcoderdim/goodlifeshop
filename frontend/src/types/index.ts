@@ -105,6 +105,7 @@ export type Subcategory = {
   products: IProduct[]; // Agar Product tipi mavjud bo‘lsa
   createdAt: string;
   updatedAt: string;
+  category: Category;
 };
 
 export type Category = {

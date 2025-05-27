@@ -5,14 +5,36 @@ import generateSubcategorySlug from "../shared/generateSubcategorySlug.js";
 class SubCategoryController {
   async getAll(req, res, next) {
     try {
-      const subcategories = await prisma.subcategory.findMany();
+      const { page = 1, size = 10 } = req.query;
+
+      const pageNumber = parseInt(page);
+      const pageSize = parseInt(size);
+      const skip = (pageNumber - 1) * pageSize;
+
+      const [subcategories, totalElements] = await Promise.all([
+        prisma.subcategory.findMany({
+          skip,
+          take: pageSize,
+          include: {
+            category: true,
+          },
+        }),
+        prisma.subcategory.count(),
+      ]);
 
       if (!subcategories)
         return next(BaseError.BadRequest("Subcategories not found"));
 
+      const totalPages = Math.ceil(totalElements / pageSize);
+
       res.json({
-        success: true,
         content: subcategories,
+        pagination: {
+          number: pageNumber,
+          size: pageSize,
+          totalElements,
+          totalPages,
+        },
       });
     } catch (error) {
       next(error);
@@ -69,12 +91,17 @@ class SubCategoryController {
   async update(req, res, next) {
     try {
       const { id } = req.params;
-      const { name } = req.body;
+      const { name, categoryId } = req.body;
 
       const subcategory = await prisma.subcategory.update({
         where: { id },
         data: {
           name,
+          category: {
+            connect: {
+              id: categoryId,
+            },
+          },
         },
         include: {
           category: true,
@@ -93,13 +120,19 @@ class SubCategoryController {
     try {
       const { id } = req.params;
 
-      const subcategory = await prisma.subcategory.delete({
-        where: { id },
-      });
+      await prisma.$transaction([
+        prisma.product.deleteMany({
+          where: { subcategoryId: id },
+        }),
+
+        prisma.subcategory.delete({
+          where: { id },
+        }),
+      ]);
 
       res.json({
         success: true,
-        content: subcategory,
+        message: "Подкатегория успешно удалена",
       });
     } catch (error) {
       next(error);

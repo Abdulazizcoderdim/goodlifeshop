@@ -6,7 +6,7 @@ async function generateCategorySlug(title) {
   let slug = baseSlug;
   let count = 1;
 
-  while (await prisma.product.findUnique({ where: { slug } })) {
+  while (await prisma.category.findUnique({ where: { slug } })) {
     slug = `${baseSlug}-${count}`;
     count++;
   }

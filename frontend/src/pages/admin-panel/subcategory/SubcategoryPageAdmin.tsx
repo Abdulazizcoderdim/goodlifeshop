@@ -1,14 +1,14 @@
 import { Plus, Settings, Users, Zap } from "lucide-react";
 import { motion } from "framer-motion";
 import StatCard from "@/components/admin-panel/common/StatCard";
-import CategoryTableAdmin from "./CategoryTableAdmin";
 import { useEffect, useState } from "react";
 import api from "@/http/axios";
-import type { Category } from "@/types";
+import type { Subcategory } from "@/types";
 import Header from "@/components/admin-panel/common/Header";
+import SubcategoryTableAdmin from "./SubcategoryTableAdmin";
 
-const CategoryAdmin = () => {
-  const [categorys, setCategorys] = useState<Category[]>([]);
+const SubcategoryPageAdmin = () => {
+  const [subCategorys, setSubcategorys] = useState<Subcategory[]>([]);
   const [pagination, setPagination] = useState({
     number: 1,
     size: 10,
@@ -26,9 +26,9 @@ const CategoryAdmin = () => {
     try {
       setLoading(true);
       const res = await api.get(
-        `/categories?page=${page}&size=${pagination.size}`
+        `/subcategories?page=${page}&size=${pagination.size}`
       );
-      setCategorys(res.data.content);
+      setSubcategorys(res.data.content);
       setPagination(res.data.pagination);
     } catch (error) {
       console.log("Failed to fetch categorys", error);
@@ -81,11 +81,11 @@ const CategoryAdmin = () => {
           />
         </motion.div>
 
-        <CategoryTableAdmin
+        <SubcategoryTableAdmin
           setIsModalOpen={setIsModalOpen}
           isModalOpen={isModalOpen}
           loading={loading}
-          categorys={categorys}
+          subCategorys={subCategorys}
           pagination={pagination}
           onPageChange={handlePageChange}
         />
@@ -94,4 +94,4 @@ const CategoryAdmin = () => {
   );
 };
 
-export default CategoryAdmin;
+export default SubcategoryPageAdmin;

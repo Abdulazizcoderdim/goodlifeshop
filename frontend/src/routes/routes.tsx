@@ -34,6 +34,7 @@ import SubcategoryUserPage from "@/pages/subcategory/SubcategoryUserPage";
 import EditProductForm from "@/components/admin-panel/edit-product/EditProductForm";
 import NewProductAdd from "@/components/admin-panel/add-product/NewProductAdd";
 import CategoryAdmin from "@/pages/categoryadmin/CategoryAdmin";
+import SubcategoryPageAdmin from "@/pages/admin-panel/subcategory/SubcategoryPageAdmin";
 
 export const router = createBrowserRouter([
   {
@@ -181,6 +182,10 @@ export const router = createBrowserRouter([
       {
         path: "category",
         element: <CategoryAdmin />,
+      },
+      {
+        path: "subcategory",
+        element: <SubcategoryPageAdmin />,
       },
     ],
   },
