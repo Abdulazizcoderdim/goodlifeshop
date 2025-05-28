@@ -11,25 +11,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Loader2 } from "lucide-react";
+import { Loader2, X } from "lucide-react";
 import { toast } from "sonner";
 import api from "@/http/axios";
+import { useImageUploader } from "@/hooks/useImageUploader";
+import type { Category, Subcategory } from "@/types";
+import { Textarea } from "@/components/ui/textarea";
 
 interface Props {
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   onClose: () => void;
   onCategoryAdded: (page: string) => void;
   isOpen: boolean;
-}
-
-interface Category {
-  id: string;
-  name: string;
-}
-
-interface SubCategoryFormData {
-  name: string;
-  categoryId: string;
 }
 
 const AddNewSubCategory = ({
@@ -41,6 +34,7 @@ const AddNewSubCategory = ({
   const [categories, setCategories] = useState<Category[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isFetchingCategories, setIsFetchingCategories] = useState(false);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
 
   const {
     register,
@@ -49,16 +43,19 @@ const AddNewSubCategory = ({
     watch,
     reset,
     formState: { errors },
-  } = useForm<SubCategoryFormData>({
+  } = useForm<Subcategory>({
     defaultValues: {
       name: "",
       categoryId: "",
+      imageUrl: "",
+      description: "",
     },
   });
 
+  const { uploadImage, uploading } = useImageUploader();
   const selectedCategoryId = watch("categoryId");
+  const currentImageUrl = watch("imageUrl");
 
-  // Fetch categories when modal opens
   useEffect(() => {
     if (isOpen) {
       fetchCategories();
@@ -69,24 +66,25 @@ const AddNewSubCategory = ({
     setIsFetchingCategories(true);
     try {
       const response = await api.get("/categories");
-
       setCategories(response.data.content || []);
     } catch (error) {
       console.error("Error fetching categories:", error);
-      toast("Failed to fetch categories. Please try again");
+      toast.error("Failed to fetch categories. Please try again");
     } finally {
       setIsFetchingCategories(false);
     }
   };
 
-  const onSubmit = async (data: SubCategoryFormData) => {
+  const onSubmit = async (data: Subcategory) => {
     setIsLoading(true);
+
+    console.log(data);
 
     try {
       const token = localStorage.getItem("accessToken");
 
       if (!token) {
-        toast("Authentication token not found. Please login again");
+        toast.error("Authentication token not found. Please login again");
         return;
       }
 
@@ -95,6 +93,8 @@ const AddNewSubCategory = ({
         {
           name: data.name.trim(),
           categoryId: data.categoryId,
+          imageUrl: data.imageUrl,
+          description: data.description,
         },
         {
           headers: {
@@ -105,25 +105,62 @@ const AddNewSubCategory = ({
       );
 
       toast.success("Subcategory added successfully");
-
-      reset();
-
+      resetForm();
       onCategoryAdded("1");
-
       handleClose();
     } catch (error) {
       console.error("Error adding subcategory:", error);
-
       toast.error("Failed to add subcategory. Please try again");
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handleClose = () => {
+  const resetForm = () => {
     reset();
+    setImagePreview(null);
+  };
+
+  const handleClose = () => {
+    resetForm();
     setIsModalOpen(false);
     onClose();
+  };
+
+  const handleUploadImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // Check if file is an image
+    if (!file.type.startsWith("image/")) {
+      toast.error("Please upload an image file");
+      return;
+    }
+
+    // Create preview URL
+    const previewUrl = URL.createObjectURL(file);
+    setImagePreview(previewUrl);
+
+    try {
+      const url = await uploadImage(file);
+      if (url) {
+        setValue("imageUrl", url);
+        toast.success("Image uploaded successfully");
+      } else {
+        toast.error("Failed to upload image");
+      }
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      toast.error("Failed to upload image");
+    }
+  };
+
+  const handleRemoveImage = () => {
+    setValue("imageUrl", "");
+    if (imagePreview) {
+      URL.revokeObjectURL(imagePreview);
+      setImagePreview(null);
+    }
   };
 
   return (
@@ -192,13 +229,8 @@ const AddNewSubCategory = ({
                 value: 100,
                 message: "Subcategory name must not exceed 100 characters",
               },
-              pattern: {
-                value: /^[a-zA-Z0-9\s\-_]+$/,
-                message:
-                  "Subcategory name can only contain letters, numbers, spaces, hyphens, and underscores",
-              },
             })}
-            className={errors.name ? "border-red-500" : "text-white"}
+            className={errors.name ? "border-red-500" : ""}
             disabled={isLoading}
           />
           {errors.name && (
@@ -206,11 +238,80 @@ const AddNewSubCategory = ({
           )}
         </div>
 
+        {/* Subcategory Description */}
+        <div className="space-y-2">
+          <Label htmlFor="description">Subcategory Description *</Label>
+          <Textarea
+            id="description"
+            placeholder="Enter subcategory description"
+            {...register("description", {
+              required: "Subcategory description is required",
+              minLength: {
+                value: 10,
+                message: "Description must be at least 10 characters",
+              },
+              maxLength: {
+                value: 500,
+                message: "Description must not exceed 500 characters",
+              },
+            })}
+            className={errors.description ? "border-red-500" : ""}
+            disabled={isLoading}
+          />
+          {errors.description && (
+            <p className="text-sm text-red-500">{errors.description.message}</p>
+          )}
+        </div>
+
+        {/* Subcategory Image */}
+        <div className="space-y-2">
+          <Label htmlFor="image">Subcategory Image *</Label>
+
+          {/* Image Preview */}
+          {(imagePreview || currentImageUrl) && (
+            <div className="relative">
+              <img
+                src={imagePreview || currentImageUrl || ""}
+                alt="Preview"
+                className="h-40 w-full object-contain rounded-md border"
+              />
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon"
+                className="absolute top-2 right-2 bg-white/90 hover:bg-white"
+                onClick={handleRemoveImage}
+              >
+                <X className="h-4 w-4 text-red-500" />
+              </Button>
+            </div>
+          )}
+
+          {/* File Input */}
+          <div className="flex items-center gap-2">
+            <Input
+              id="image"
+              type="file"
+              accept="image/*"
+              onChange={handleUploadImage}
+              disabled={isLoading || uploading}
+              className="cursor-pointer"
+            />
+            {uploading && (
+              <Loader2 className="h-4 w-4 animate-spin text-gray-500" />
+            )}
+          </div>
+
+          {errors.imageUrl && (
+            <p className="text-sm text-red-500">{errors.imageUrl.message}</p>
+          )}
+        </div>
+
         {/* Form Actions */}
         <div className="flex justify-end space-x-2 pt-4">
           <Button
             type="button"
-            variant="destructive"
+            variant="outline"
             onClick={handleClose}
             disabled={isLoading}
           >
@@ -218,9 +319,12 @@ const AddNewSubCategory = ({
           </Button>
           <Button
             type="submit"
-            variant={"secondary"}
             disabled={
-              isLoading || isFetchingCategories || categories.length === 0
+              isLoading ||
+              isFetchingCategories ||
+              categories.length === 0 ||
+              uploading ||
+              !currentImageUrl
             }
           >
             {isLoading ? (

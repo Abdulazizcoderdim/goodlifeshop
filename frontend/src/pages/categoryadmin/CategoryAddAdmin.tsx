@@ -9,6 +9,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useImageUploader } from "@/hooks/useImageUploader";
 import api from "@/http/axios";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
@@ -24,6 +25,7 @@ const categorySchema = z.object({
     .min(2, "Category name must be at least 2 characters")
     .max(50, "Category name cannot exceed 50 characters")
     .trim(),
+  imageUrl: z.string().url({ message: "Неверный URL изображения" }),
 });
 
 type CategoryFormData = z.infer<typeof categorySchema>;
@@ -42,11 +44,13 @@ const CategoryAddAdmin = ({
   onCategoryAdded,
 }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
+  const { uploadImage, uploading } = useImageUploader();
 
   const form = useForm<CategoryFormData>({
     resolver: zodResolver(categorySchema),
     defaultValues: {
       name: "",
+      imageUrl: "",
     },
   });
 
@@ -87,6 +91,20 @@ const CategoryAddAdmin = ({
     onClose();
   };
 
+  const handleUploadImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+
+    if (!file) return;
+
+    const url = await uploadImage(file);
+    if (url) {
+      form.setValue("imageUrl", url);
+      toast.success("Изображение успешно загружено");
+    } else {
+      toast.error("Failed to upload image");
+    }
+  };
+
   return (
     <Modal isOpen={isOpen} onClose={handleClose} title="Add New Category">
       <div className="space-y-4">
@@ -110,6 +128,25 @@ const CategoryAddAdmin = ({
                 </FormItem>
               )}
             />
+            <FormField
+              control={form.control}
+              name="imageUrl"
+              render={() => (
+                <FormItem>
+                  <FormLabel>Category Image</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleUploadImage}
+                      disabled={isLoading}
+                      className="w-full"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
             <div className="flex justify-end space-x-2 pt-4">
               <Button
@@ -123,7 +160,7 @@ const CategoryAddAdmin = ({
               <Button
                 variant={"secondary"}
                 type="submit"
-                disabled={isLoading || !form.formState.isValid}
+                disabled={isLoading || uploading}
                 className="min-w-[100px] text-black"
               >
                 {isLoading ? (

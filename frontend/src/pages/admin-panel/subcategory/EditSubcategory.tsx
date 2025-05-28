@@ -12,9 +12,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Loader2 } from "lucide-react";
+import { Loader2, X } from "lucide-react";
 import { toast } from "sonner";
 import api from "@/http/axios";
+import { useImageUploader } from "@/hooks/useImageUploader";
+import { Textarea } from "@/components/ui/textarea";
 
 interface EditSubcategoryProps {
   setIsEditModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -30,6 +32,8 @@ interface Category {
 interface SubcategoryFormData {
   name: string;
   categoryId: string;
+  description: string;
+  imageUrl: string;
 }
 
 const EditSubcategory = ({
@@ -40,6 +44,7 @@ const EditSubcategory = ({
   const [categories, setCategories] = useState<Category[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isFetchingCategories, setIsFetchingCategories] = useState(false);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
 
   const {
     register,
@@ -51,10 +56,21 @@ const EditSubcategory = ({
     defaultValues: {
       name: defaultValues.name || "",
       categoryId: defaultValues.categoryId || "",
+      description: defaultValues.description || "",
+      imageUrl: defaultValues.imageUrl || "",
     },
   });
 
+  const { uploadImage, uploading } = useImageUploader();
   const selectedCategoryId = watch("categoryId");
+  const currentImageUrl = watch("imageUrl");
+
+  // Set initial image preview
+  useEffect(() => {
+    if (defaultValues.imageUrl) {
+      setImagePreview(defaultValues.imageUrl);
+    }
+  }, [defaultValues.imageUrl]);
 
   // Fetch categories when component mounts
   useEffect(() => {
@@ -65,11 +81,10 @@ const EditSubcategory = ({
     setIsFetchingCategories(true);
     try {
       const response = await api.get("/categories");
-
       setCategories(response.data.content || []);
     } catch (error) {
       console.error("Error fetching categories:", error);
-      toast("Failed to fetch categories. Please try again");
+      toast.error("Failed to fetch categories. Please try again");
     } finally {
       setIsFetchingCategories(false);
     }
@@ -78,6 +93,7 @@ const EditSubcategory = ({
   const onSubmit = async (data: SubcategoryFormData) => {
     setIsLoading(true);
 
+    console.log(data);
     try {
       const token = localStorage.getItem("accessToken");
 
@@ -86,29 +102,19 @@ const EditSubcategory = ({
         return;
       }
 
-      await api.put(
-        `/subcategories/${defaultValues.id}`,
-        {
-          name: data.name.trim(),
-          categoryId: data.categoryId,
+      await api.put(`/subcategories/${defaultValues.id}`, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
         },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      });
 
       toast.success("Subcategory updated successfully");
-
       onSuccess("1");
-
       setIsEditModalOpen(false);
     } catch (error) {
       console.error("Error updating subcategory:", error);
-
-      toast("Failed to update subcategory. Please try again.");
+      toast.error("Failed to update subcategory. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -116,6 +122,42 @@ const EditSubcategory = ({
 
   const handleClose = () => {
     setIsEditModalOpen(false);
+  };
+
+  const handleUploadImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // Check if file is an image
+    if (!file.type.startsWith("image/")) {
+      toast.error("Please upload an image file");
+      return;
+    }
+
+    // Create preview URL
+    const previewUrl = URL.createObjectURL(file);
+    setImagePreview(previewUrl);
+
+    try {
+      const url = await uploadImage(file);
+      if (url) {
+        setValue("imageUrl", url);
+        toast.success("Image uploaded successfully");
+      } else {
+        toast.error("Failed to upload image");
+      }
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      toast.error("Failed to upload image");
+    }
+  };
+
+  const handleRemoveImage = () => {
+    setValue("imageUrl", "");
+    if (imagePreview) {
+      URL.revokeObjectURL(imagePreview);
+      setImagePreview(null);
+    }
   };
 
   return (
@@ -193,6 +235,71 @@ const EditSubcategory = ({
           )}
         </div>
 
+        {/* Subcategory Description */}
+        <div className="space-y-2">
+          <Label htmlFor="description">Description *</Label>
+          <Textarea
+            id="description"
+            placeholder="Enter subcategory description"
+            {...register("description", {
+              required: "Description is required",
+              minLength: {
+                value: 10,
+                message: "Description must be at least 10 characters",
+              },
+              maxLength: {
+                value: 500,
+                message: "Description must not exceed 500 characters",
+              },
+            })}
+            className={errors.description ? "border-red-500" : ""}
+            disabled={isLoading}
+          />
+          {errors.description && (
+            <p className="text-sm text-red-500">{errors.description.message}</p>
+          )}
+        </div>
+
+        {/* Subcategory Image */}
+        <div className="space-y-2">
+          <Label htmlFor="image">Subcategory Image</Label>
+
+          {/* Image Preview */}
+          {(imagePreview || currentImageUrl) && (
+            <div className="relative">
+              <img
+                src={imagePreview || currentImageUrl || ""}
+                alt="Preview"
+                className="h-40 w-full object-contain rounded-md border"
+              />
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon"
+                className="absolute top-2 right-2 bg-white/90 hover:bg-white"
+                onClick={handleRemoveImage}
+              >
+                <X className="h-4 w-4 text-red-500" />
+              </Button>
+            </div>
+          )}
+
+          {/* File Input */}
+          <div className="flex items-center gap-2">
+            <Input
+              id="image"
+              type="file"
+              accept="image/*"
+              onChange={handleUploadImage}
+              disabled={isLoading || uploading}
+              className="cursor-pointer"
+            />
+            {uploading && (
+              <Loader2 className="h-4 w-4 animate-spin text-gray-500" />
+            )}
+          </div>
+        </div>
+
         {/* Current Values Info */}
         <div className="bg-gray-700 p-3 rounded-md border border-gray-700">
           <h4 className="text-sm font-medium text-white mb-2">
@@ -235,7 +342,10 @@ const EditSubcategory = ({
             variant={"secondary"}
             type="submit"
             disabled={
-              isLoading || isFetchingCategories || categories.length === 0
+              isLoading ||
+              isFetchingCategories ||
+              categories.length === 0 ||
+              uploading
             }
           >
             {isLoading ? (

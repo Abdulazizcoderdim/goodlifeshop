@@ -102,19 +102,23 @@ export type Subcategory = {
   name: string;
   slug: string;
   categoryId: string;
+  description: string;
   products: IProduct[]; // Agar Product tipi mavjud bo‘lsa
   createdAt: string;
   updatedAt: string;
   category: Category;
+  imageUrl: string;
 };
 
 export type Category = {
   id: string;
   name: string;
   slug: string;
+  description: string;
   subcategories: Subcategory[];
   products: IProduct[]; // Agar Product tipi mavjud bo‘lsa
   createdAt: string;
   updatedAt: string;
+  imageUrl: string;
   _count: { products: number; subcategories: number };
 };

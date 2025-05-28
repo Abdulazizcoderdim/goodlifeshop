@@ -90,17 +90,21 @@ model Variant {
 }
 
 model Category {
-  id            String        @id @default(auto()) @map("_id") @db.ObjectId
-  name          String
-  slug          String        @unique
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  name     String
+  slug     String @unique
+  imageUrl String
+
   subcategories Subcategory[]
   products      Product[]
 }
 
 model Subcategory {
-  id   String @id @default(auto()) @map("_id") @db.ObjectId
-  name String
-  slug String @unique
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  slug        String @unique
+  description String
+  imageUrl    String
 
   category   Category  @relation(fields: [categoryId], references: [id])
   categoryId String

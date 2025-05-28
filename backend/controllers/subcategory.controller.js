@@ -61,7 +61,7 @@ class SubCategoryController {
   }
   async create(req, res, next) {
     try {
-      const { name, categoryId } = req.body;
+      const { name, categoryId, description, imageUrl } = req.body;
 
       const slug = await generateSubcategorySlug(name);
 
@@ -69,6 +69,8 @@ class SubCategoryController {
         data: {
           name,
           slug,
+          description,
+          imageUrl,
           category: {
             connect: {
               id: categoryId,
@@ -91,12 +93,14 @@ class SubCategoryController {
   async update(req, res, next) {
     try {
       const { id } = req.params;
-      const { name, categoryId } = req.body;
+      const { name, categoryId, description, imageUrl } = req.body;
 
       const subcategory = await prisma.subcategory.update({
         where: { id },
         data: {
           name,
+          description,
+          imageUrl,
           category: {
             connect: {
               id: categoryId,

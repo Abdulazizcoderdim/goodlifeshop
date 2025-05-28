@@ -9,6 +9,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useImageUploader } from "@/hooks/useImageUploader";
 import api from "@/http/axios";
 import type { Category } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -25,6 +26,7 @@ const categorySchema = z.object({
     .min(2, "Category name must be at least 2 characters")
     .max(50, "Category name cannot exceed 50 characters")
     .trim(),
+  imageUrl: z.string().url({ message: "Неверный URL изображения" }),
 });
 
 type CategoryFormData = z.infer<typeof categorySchema>;
@@ -41,26 +43,24 @@ const EditCategoryAdmin = ({
   onSuccess,
 }: EditCategoryAdminProps) => {
   const [isLoading, setIsLoading] = useState(false);
+  const { uploadImage, uploading } = useImageUploader();
 
   const form = useForm<CategoryFormData>({
     resolver: zodResolver(categorySchema),
     defaultValues: {
       name: defaultValues.name || "",
+      imageUrl: defaultValues.imageUrl || "",
     },
   });
 
   useEffect(() => {
     form.reset({
       name: defaultValues.name || "",
+      imageUrl: defaultValues.imageUrl || "",
     });
   }, [defaultValues, form]);
 
   const onSubmit = async (data: CategoryFormData) => {
-    if (data.name === defaultValues.name) {
-      toast.error("No changes were made to the category");
-      return;
-    }
-
     setIsLoading(true);
 
     try {
@@ -97,8 +97,18 @@ const EditCategoryAdmin = ({
     setIsEditModalOpen(false);
   };
 
-  const currentName = form.watch("name");
-  const hasChanges = currentName !== defaultValues.name;
+  const handleUploadImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const url = await uploadImage(file);
+    if (url) {
+      form.setValue("imageUrl", url);
+      toast.success("Изображение успешно загружено");
+    } else {
+      toast.error("Failed to upload image");
+    }
+  };
 
   return (
     <Modal isOpen={true} onClose={handleClose} title="Edit Category">
@@ -123,6 +133,25 @@ const EditCategoryAdmin = ({
                 </FormItem>
               )}
             />
+            <FormField
+              control={form.control}
+              name="imageUrl"
+              render={() => (
+                <FormItem>
+                  <FormLabel>Category Image</FormLabel>
+                  <FormControl>
+                    <Input
+                      onChange={handleUploadImage}
+                      type="file"
+                      accept="image/*"
+                      disabled={isLoading}
+                      className="w-full"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
             <div className="flex justify-end space-x-2 pt-4">
               <Button
@@ -136,7 +165,7 @@ const EditCategoryAdmin = ({
               <Button
                 type="submit"
                 variant={"secondary"}
-                disabled={isLoading || !form.formState.isValid || !hasChanges}
+                disabled={isLoading || uploading}
                 className="min-w-[100px]"
               >
                 {isLoading ? (
@@ -158,6 +187,18 @@ const EditCategoryAdmin = ({
             Category Information:
           </h4>
           <div className="space-y-1 text-sm text-white dark:text-blue-200">
+            <p>
+              <span className="font-medium">Image:</span> {defaultValues.name}
+            </p>
+            {defaultValues.imageUrl && (
+              <div className="">
+                <img
+                  src={form.getValues("imageUrl") || defaultValues.imageUrl}
+                  width={150}
+                  alt=""
+                />
+              </div>
+            )}
             <p>
               <span className="font-medium">ID:</span> {defaultValues.id}
             </p>

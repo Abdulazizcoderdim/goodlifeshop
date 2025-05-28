@@ -66,7 +66,7 @@ class CategoriesController {
 
   async createCategory(req, res, next) {
     try {
-      const { name } = req.body;
+      const { name, imageUrl } = req.body;
 
       const slug = await generateCategorySlug(name);
 
@@ -74,6 +74,7 @@ class CategoriesController {
         data: {
           name,
           slug,
+          imageUrl,
         },
       });
 
@@ -89,12 +90,13 @@ class CategoriesController {
   async updateCategory(req, res, next) {
     try {
       const { id } = req.params;
-      const { name } = req.body;
+      const { name, imageUrl } = req.body;
 
       const category = await prisma.category.update({
         where: { id },
         data: {
           name,
+          imageUrl,
         },
       });
 

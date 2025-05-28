@@ -151,7 +151,14 @@ const SubcategoryTableAdmin = ({
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td className="px-6 py-4 whitespace-nowrap flex items-center gap-3">
+                    <img
+                      src={
+                        category.imageUrl || "https://via.placeholder.com/40"
+                      }
+                      alt="Product"
+                      className="size-10 rounded-full object-cover"
+                    />
                     <div className="text-sm text-gray-300">{category.name}</div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
