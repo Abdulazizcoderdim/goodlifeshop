@@ -16,6 +16,7 @@ interface BrandItem {
   image: string;
   description: string;
   buttonText: string;
+  path: string;
 }
 
 const brendData: BrandItem[] = [
@@ -27,6 +28,7 @@ const brendData: BrandItem[] = [
     description:
       "Лучшие кухонные ножи, посуда и аксессуары для приготовления любимых блюд – готовьте так, как Вам нравится.",
     buttonText: "ZWILLING",
+    path: "/catalog/zwilling",
   },
   {
     id: 2,
@@ -36,6 +38,7 @@ const brendData: BrandItem[] = [
     description:
       "Сделайте каждое Ваше блюдо превосходным в культовой чугунной посуде из Франции.",
     buttonText: "STAUB",
+    path: "/catalog/posuda/formy-dlya-zapekaniya-staub",
   },
   {
     id: 3,
@@ -44,6 +47,7 @@ const brendData: BrandItem[] = [
     image: "/b3.webp",
     description: "BALLARINI – семейный стиль с 1889 года. Сделано в Италии",
     buttonText: "BALLARINI",
+    path: "/formy-dlya-zapekaniya-staub",
   },
 ];
 

@@ -36,6 +36,9 @@ import NewProductAdd from "@/components/admin-panel/add-product/NewProductAdd";
 import CategoryAdmin from "@/pages/categoryadmin/CategoryAdmin";
 import SubcategoryPageAdmin from "@/pages/admin-panel/subcategory/SubcategoryPageAdmin";
 import { SearchPage } from "@/components/admin-panel/search/SearchPage";
+import BrandZwilling from "@/pages/brands/BrandZwilling";
+import BrandStaub from "@/pages/brands/BrandStaub";
+import BrandBallarini from "@/pages/brands/BrandBallarini";
 
 export const router = createBrowserRouter([
   {
@@ -57,6 +60,18 @@ export const router = createBrowserRouter([
       {
         path: "search",
         element: <SearchPage />,
+      },
+      {
+        path: "catalog/zwilling",
+        element: <BrandZwilling />,
+      },
+      {
+        path: "catalog/staub",
+        element: <BrandStaub />,
+      },
+      {
+        path: "catalog/ballarini",
+        element: <BrandBallarini />,
       },
       {
         path: "/personal",

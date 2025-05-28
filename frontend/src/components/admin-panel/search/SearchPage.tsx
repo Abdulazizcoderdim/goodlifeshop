@@ -18,6 +18,7 @@ export const SearchPage = () => {
   const query = searchParams.get("search");
   const [products, setProducts] = useState<IProduct[]>([]);
   const [loading, setLoading] = useState(false);
+  const [sortOrder, setSortOrder] = useState<string | undefined>(undefined);
   const [pagination, setPagination] = useState({
     number: 1,
     size: 10,
@@ -26,15 +27,17 @@ export const SearchPage = () => {
   });
 
   useEffect(() => {
-    fetchProducts(pagination.number);
-  }, [query]);
+    fetchProducts(pagination.number, sortOrder);
+  }, [query, sortOrder]);
 
-  const fetchProducts = async (page = 1) => {
+  const fetchProducts = async (page = 1, sort?: string) => {
     if (!query) return;
     setLoading(true);
     try {
       const res = await api.get(
-        `/products?search=${query}&page=${page}&size=${pagination.size}`
+        `/products?search=${query}&page=${page}&size=${pagination.size}${
+          sort ? `&sortBy=price&sortOrder=${sort}` : ""
+        }`
       );
       setProducts(res.data.content);
       setPagination(res.data.pagination);
@@ -70,7 +73,12 @@ export const SearchPage = () => {
 
         <div className="sm:mt-10 mt-5">
           <div className="flex items-center gap-5">
-            <Select>
+            <Select
+              onValueChange={(value) => {
+                setSortOrder(value);
+                fetchProducts(pagination.number, value);
+              }}
+            >
               <SelectTrigger className="w-[180px]">
                 <SelectValue className="uppercase" placeholder="Цена:" />
               </SelectTrigger>
