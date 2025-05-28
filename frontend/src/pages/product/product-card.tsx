@@ -1,5 +1,11 @@
 import { useState } from "react";
-import { Heart, ChevronLeft, ChevronRight } from "lucide-react";
+import {
+  Heart,
+  ChevronLeft,
+  ChevronRight,
+  ShoppingBag,
+  Plus,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
@@ -15,14 +21,16 @@ import "swiper/css/navigation";
 // @ts-expect-error: Swiper CSS modules do not provide type declarations
 import "swiper/css/pagination";
 import type { IProduct } from "@/types";
+import { useStore } from "@/store/useStore";
+import { toast } from "sonner";
 
 interface ProductCardProps {
   product: IProduct;
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
-  const [isFavorite, setIsFavorite] = useState(false);
   const [swiper, setSwiper] = useState<SwiperType | null>(null);
+  const { toggleFavorite, addToCart, isFavorite, isInCart } = useStore();
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat("ru-RU", {
@@ -39,32 +47,50 @@ export default function ProductCard({ product }: ProductCardProps) {
     ));
   };
 
+  const handleToggleFavorite = () => {
+    toggleFavorite(product);
+    toast.success(
+      isFavorite(product.id)
+        ? "Товар добавлен в избранное"
+        : "Товар удален из избранного"
+    );
+  };
+
+  const handleAddToCart = () => {
+    if (!isInCart(product.id)) {
+      addToCart({ ...product, quantity: 1 });
+      toast.success("Товар добавлен в корзину");
+    } else {
+      toast.info("Товар уже в корзине");
+    }
+  };
+
   return (
     <Card className="group relative bg-white border border-gray-200 hover:shadow-lg transition-shadow duration-200">
       <CardContent className="p-0">
         {/* Discount Badge */}
-        {product.discount > 0 && (
+        {product.discountPercentage > 0 && (
           <Badge
             variant="outline"
             className="absolute top-3 left-3 z-10 bg-white border-red-500 text-red-500 text-xs px-2 py-1"
           >
-            -{product.discount}%
+            -{product.discountPercentage}%
           </Badge>
         )}
 
         {/* Favorite Button */}
-        <Button
-          variant="ghost"
-          size="icon"
-          className="absolute top-3 right-3 z-10 h-8 w-8 bg-white/80 hover:bg-white"
-          onClick={() => setIsFavorite(!isFavorite)}
+        <button
+          className="absolute top-2 right-2 z-10 p-2 bg-white rounded-full shadow-sm hover:shadow-md transition-shadow"
+          onClick={handleToggleFavorite}
         >
           <Heart
-            className={`h-4 w-4 ${
-              isFavorite ? "fill-red-500 text-red-500" : "text-gray-400"
+            className={`h-5 w-5 transition-colors ${
+              isFavorite(product.id)
+                ? "fill-red-500 text-red-500"
+                : "text-gray-400"
             }`}
           />
-        </Button>
+        </button>
 
         {/* Product Image Slider */}
         <div className="relative aspect-square bg-gray-50">
@@ -122,33 +148,32 @@ export default function ProductCard({ product }: ProductCardProps) {
           </h3>
 
           {/* Rating */}
-          <div className="flex items-center mb-4">
-            {renderStars(product.rating)}
-          </div>
+          <div className="flex items-center mb-4">{renderStars(0)}</div>
 
           {/* Price */}
           <div className="flex items-center justify-between">
             <div className="flex flex-col">
-              {product.discount > 0 && (
+              {product.discountPercentage > 0 && (
                 <span className="text-xs text-gray-400 line-through">
-                  {formatPrice(product.originalPrice)} {product.currency}
+                  {formatPrice(product.price)} {product.price}
                 </span>
               )}
               <span className="text-sm font-semibold text-gray-900">
-                {formatPrice(product.currentPrice)} {product.currency}
+                {formatPrice(product.price)} {product.price}
               </span>
             </div>
 
             {/* Cart Quantity Badge */}
-            {product.cartQuantity > 0 && (
-              <div className="relative">
-                <div className="w-6 h-6 bg-red-500 rounded-full flex items-center justify-center">
-                  <span className="text-white text-xs font-medium">
-                    {product.cartQuantity}
-                  </span>
-                </div>
-              </div>
-            )}
+            <button
+              className="relative flex cursor-pointer items-center justify-center w-10 h-10 "
+              onClick={handleAddToCart}
+              title="Добавить в корзину"
+            >
+              <ShoppingBag size={20} />
+              <span className="plusSymbol absolute top-1 font-bold h-5 w-5 right-0 bg-red-500 rounded-full flex items-center justify-center">
+                <Plus className="h-3 w-3 text-white" />
+              </span>
+            </button>
           </div>
         </div>
       </CardContent>

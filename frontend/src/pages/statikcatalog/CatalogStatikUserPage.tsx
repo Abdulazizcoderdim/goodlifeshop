@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import CatalogNames from "../catalog/CatalogNames";
 import Brend from "@/components/home/brend";
 import Category from "@/components/home/category";
+import ProductCatalog from "../product/ProductCatalog";
 
 const CatalogStatikUserPage = () => {
   return (
@@ -32,6 +33,8 @@ const CatalogStatikUserPage = () => {
           </p>
           <Category />
           <Brend />
+          
+          <ProductCatalog />
         </div>
       </div>
     </div>

@@ -18,14 +18,14 @@ export default function ProductItem({
   const handleToggleFavorite = () => {
     toggleFavorite(product);
     toast.success(
-      isFavorite(parseInt(product.id))
+      isFavorite(product.id)
         ? "Товар добавлен в избранное"
         : "Товар удален из избранного"
     );
   };
 
   const handleAddToCart = () => {
-    if (!isInCart(parseInt(product.id))) {
+    if (!isInCart(product.id)) {
       addToCart({ ...product, quantity: 1 });
       toast.success("Товар добавлен в корзину");
     } else {
@@ -44,14 +44,14 @@ export default function ProductItem({
           className="absolute top-2 right-2 z-10 p-2 bg-white rounded-full shadow-sm hover:shadow-md transition-shadow"
           onClick={handleToggleFavorite}
           aria-label={
-            isFavorite(parseInt(product.id))
+            isFavorite(product.id)
               ? "Remove from favorites"
               : "Add to favorites"
           }
         >
           <Heart
             className={`h-5 w-5 transition-colors ${
-              isFavorite(parseInt(product.id))
+              isFavorite(product.id)
                 ? "fill-red-500 text-red-500"
                 : "text-gray-400"
             }`}

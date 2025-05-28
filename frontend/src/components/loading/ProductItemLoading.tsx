@@ -24,9 +24,6 @@ export default function ProductItemLoading() {
         <Skeleton className="h-6 w-20" />
         <div className="relative w-10 h-10">
           <Skeleton className="h-full w-full rounded-full" />
-          <span className="plusSymbol absolute top-1 right-0 h-5 w-5 bg-red-500 rounded-full flex items-center justify-center">
-            <Skeleton className="h-3 w-3 rounded-full" />
-          </span>
         </div>
       </div>
     </div>
