@@ -179,7 +179,8 @@ const CategoryTableAdmin = ({
                       <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-800 text-blue-100">
                         {category.subcategories
                           .map((sub) => sub.name)
-                          .join(", ")}
+                          .join(", ")
+                          .slice(0, 20)}...
                       </span>
                     ) : (
                       <p>Нет подкатегорий</p>

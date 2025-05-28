@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input";
 import { useImageUploader } from "@/hooks/useImageUploader";
 import api from "@/http/axios";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2 } from "lucide-react";
+import { Loader2, X } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -44,6 +44,7 @@ const CategoryAddAdmin = ({
   onCategoryAdded,
 }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
   const { uploadImage, uploading } = useImageUploader();
 
   const form = useForm<CategoryFormData>({
@@ -53,6 +54,7 @@ const CategoryAddAdmin = ({
       imageUrl: "",
     },
   });
+  const currentImageUrl = form.watch("imageUrl");
 
   const onSubmit = async (data: CategoryFormData) => {
     setIsLoading(true);
@@ -96,12 +98,24 @@ const CategoryAddAdmin = ({
 
     if (!file) return;
 
+    // Create preview URL
+    const previewUrl = URL.createObjectURL(file);
+    setImagePreview(previewUrl);
+
     const url = await uploadImage(file);
     if (url) {
       form.setValue("imageUrl", url);
       toast.success("Изображение успешно загружено");
     } else {
       toast.error("Failed to upload image");
+    }
+  };
+
+  const handleRemoveImage = () => {
+    form.setValue("imageUrl", "");
+    if (imagePreview) {
+      URL.revokeObjectURL(imagePreview);
+      setImagePreview(null);
     }
   };
 
@@ -128,6 +142,26 @@ const CategoryAddAdmin = ({
                 </FormItem>
               )}
             />
+
+            {/* Image Preview */}
+            {(imagePreview || currentImageUrl) && (
+              <div className="relative">
+                <img
+                  src={imagePreview || currentImageUrl || ""}
+                  alt="Preview"
+                  className="h-40 w-full object-contain rounded-md border"
+                />
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  className="absolute top-2 right-2 bg-white/90 hover:bg-white"
+                  onClick={handleRemoveImage}
+                >
+                  <X className="h-4 w-4 text-red-500" />
+                </Button>
+              </div>
+            )}
             <FormField
               control={form.control}
               name="imageUrl"

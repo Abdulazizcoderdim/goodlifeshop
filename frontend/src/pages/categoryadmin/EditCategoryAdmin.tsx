@@ -199,7 +199,7 @@ const EditCategoryAdmin = ({
                 />
               </div>
             )}
-            <p>
+            {/* <p>
               <span className="font-medium">ID:</span> {defaultValues.id}
             </p>
             {defaultValues.createdAt && (
@@ -207,7 +207,7 @@ const EditCategoryAdmin = ({
                 <span className="font-medium">Created:</span>{" "}
                 {new Date(defaultValues.createdAt).toLocaleDateString()}
               </p>
-            )}
+            )} */}
             {defaultValues.updatedAt && (
               <p>
                 <span className="font-medium">Last Updated:</span>{" "}

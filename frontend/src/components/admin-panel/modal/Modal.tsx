@@ -19,7 +19,7 @@ const Modal = ({ isOpen, onClose, title, children }: ModalProps) => {
             <X size={24} />
           </button>
         </div>
-        <div className="p-4 overflow-auto h-[600px]">{children}</div>
+        <div className="p-4 overflow-auto min-h-[600px]">{children}</div>
       </div>
     </div>
   );

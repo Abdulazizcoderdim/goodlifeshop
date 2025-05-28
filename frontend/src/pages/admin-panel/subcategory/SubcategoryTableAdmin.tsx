@@ -129,14 +129,17 @@ const SubcategoryTableAdmin = ({
             <thead>
               <tr>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                  #
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                   Subcategory Name
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                  SubCategory description
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                   Category Name
                 </th>
-                {/* <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                  Subcategorys
-                </th> */}
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                   Actions
                 </th>
@@ -144,13 +147,16 @@ const SubcategoryTableAdmin = ({
             </thead>
 
             <tbody className="divide-y divide-gray-700">
-              {filteredSubCategory.map((category) => (
+              {filteredSubCategory.map((category, i) => (
                 <motion.tr
                   key={category.id}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.3 }}
                 >
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                    {i + 1}
+                  </td>
                   <td className="px-6 py-4 whitespace-nowrap flex items-center gap-3">
                     <img
                       src={
@@ -162,9 +168,11 @@ const SubcategoryTableAdmin = ({
                     <div className="text-sm text-gray-300">{category.name}</div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
+                    {category.description.slice(0, 20) + "..."}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
                     {category.category.name}
                   </td>
-
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
                     <button
                       onClick={() => handleEdit(category)}

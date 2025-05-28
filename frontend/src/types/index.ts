@@ -114,7 +114,6 @@ export type Category = {
   id: string;
   name: string;
   slug: string;
-  description: string;
   subcategories: Subcategory[];
   products: IProduct[]; // Agar Product tipi mavjud bo‘lsa
   createdAt: string;
