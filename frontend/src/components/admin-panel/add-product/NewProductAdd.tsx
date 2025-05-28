@@ -34,6 +34,7 @@ const productSchema = z.object({
   series: z.string().optional(),
   originCountry: z.string().optional(),
   price: z.number().min(0, "Цена должна быть положительной"),
+  discountPercentage: z.number().optional(),
   color: z.string().optional(),
   dishwasherSafe: z.boolean().default(false),
   batteryRequired: z.boolean().default(false),
@@ -147,6 +148,7 @@ const NewProductAdd = () => {
       series: "",
       originCountry: "",
       price: 0,
+      discountPercentage: 0,
       color: "",
       dishwasherSafe: false,
       batteryRequired: false,
@@ -193,21 +195,11 @@ const NewProductAdd = () => {
     const fetchData = async () => {
       setIsLoadingData(true);
       try {
-        const token = localStorage.getItem("accessToken");
-
         const categoriesResponse = await api.get<CategoriesResponse>(
-          "/categories",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
+          "/categories"
         );
 
-        if (
-          categoriesResponse.data.success &&
-          categoriesResponse.data.content
-        ) {
+        if (categoriesResponse.data.content) {
           setCategories(categoriesResponse.data.content);
         }
       } catch (error) {
@@ -338,6 +330,7 @@ const NewProductAdd = () => {
         series: data.series || "",
         originCountry: data.originCountry || "",
         price: Number(data.price),
+        discountPercentage: Number(data.discountPercentage) || 0,
         color: data.color || "",
         dishwasherSafe: data.dishwasherSafe,
         batteryRequired: data.batteryRequired,
@@ -532,7 +525,7 @@ const NewProductAdd = () => {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-3 gap-4">
+                <div className="grid grid-cols-4 gap-4">
                   <div>
                     <Label htmlFor="originCountry">Страна происхождения</Label>
                     <Input
@@ -559,6 +552,24 @@ const NewProductAdd = () => {
                     {errors.price && (
                       <p className="text-sm text-red-400 mt-1">
                         {errors.price.message}
+                      </p>
+                    )}
+                  </div>
+
+                  <div>
+                    <Label htmlFor="discountPercentage">Процент скидки</Label>
+                    <Input
+                      id="discountPercentage"
+                      type="number"
+                      step="0.01"
+                      {...register("discountPercentage", {
+                        valueAsNumber: true,
+                      })}
+                      className="mt-1 bg-gray-700 border-gray-600 text-white"
+                    />
+                    {errors.discountPercentage && (
+                      <p className="text-sm text-red-400 mt-1">
+                        {errors.discountPercentage.message}
                       </p>
                     )}
                   </div>

@@ -40,26 +40,27 @@ model RefreshToken {
 }
 
 model Product {
-  id              String      @id @default(auto()) @map("_id") @db.ObjectId
-  title           String
-  slug            String      @unique
-  description     String?
-  article         String // Артикул: 53001-001
-  brand           String // Бренд: Zwilling
-  series          String // Серия: ZWILLING ENFINIGY
-  originCountry   String // Страна происхождения: КИТАЙ
-  price           Float
-  color           String?
-  quantity        Int         @default(0)
-  sold            Int         @default(0)
-  dimensions      Dimensions? // nested object
-  dishwasherSafe  Boolean? // posudomoyka
-  batteryRequired Boolean?
-  characteristics Json? // характеристика: flexible
-  variants        Variant[] // ranglar yoki boshqa variantlar
-  images          String[] // product images
-  createdAt       DateTime    @default(now())
-  updatedAt       DateTime    @updatedAt
+  id                 String      @id @default(auto()) @map("_id") @db.ObjectId
+  title              String
+  slug               String      @unique
+  description        String?
+  article            String // Артикул: 53001-001
+  brand              String // Бренд: Zwilling
+  series             String // Серия: ZWILLING ENFINIGY
+  originCountry      String // Страна происхождения: КИТАЙ
+  discountPercentage Float?
+  price              Float
+  color              String?
+  quantity           Int         @default(0)
+  sold               Int         @default(0)
+  dimensions         Dimensions? // nested object
+  dishwasherSafe     Boolean? // posudomoyka
+  batteryRequired    Boolean?
+  characteristics    Json? // характеристика: flexible
+  variants           Variant[] // ranglar yoki boshqa variantlar
+  images             String[] // product images
+  createdAt          DateTime    @default(now())
+  updatedAt          DateTime    @updatedAt
 
   category      Category?    @relation(fields: [categoryId], references: [id])
   categoryId    String?

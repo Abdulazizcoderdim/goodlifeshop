@@ -1,7 +1,6 @@
 import prisma from "../config/prisma.client.js";
 import { BaseError } from "../errors/base.error.js";
 import generateCategorySlug from "../shared/generateCategorySlug.js";
-import generateUniqueSlug from "../shared/generateSlug.js";
 
 class CategoriesController {
   async getAllCategories(req, res, next) {

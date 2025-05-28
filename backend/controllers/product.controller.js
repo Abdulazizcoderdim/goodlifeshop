@@ -115,6 +115,7 @@ class ProductController {
         price,
         categoryId,
         color,
+        discountPercentage,
         dishwasherSafe,
         batteryRequired,
         characteristics,
@@ -139,22 +140,18 @@ class ProductController {
           series,
           originCountry,
           price,
+          discountPercentage,
           category: {
             connect: {
               id: categoryId,
             },
           },
-
           color,
           dishwasherSafe,
           batteryRequired,
           characteristics,
-
-          // nested type
           dimensions,
-          // product images
           images,
-          // product variants
           variants: {
             create: variants,
           },
@@ -184,6 +181,7 @@ class ProductController {
         series,
         originCountry,
         price,
+        discountPercentage,
         categoryId,
         color,
         dishwasherSafe,
@@ -217,6 +215,7 @@ class ProductController {
           series,
           originCountry,
           price,
+          discountPercentage,
           categoryId: categoryId, // handle undefined
           color,
           dishwasherSafe,

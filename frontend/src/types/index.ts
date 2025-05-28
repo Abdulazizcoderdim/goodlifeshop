@@ -14,7 +14,7 @@ export interface IProduct {
   sold: number;
   createdAt: string;
   updatedAt: string;
-
+  discountPercentage: number;
   images: string[]; // URL'lar
 
   characteristics: {

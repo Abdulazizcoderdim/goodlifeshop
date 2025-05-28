@@ -29,6 +29,7 @@ interface FormData {
   series: string;
   originCountry: string;
   price: number;
+  discountPercentage: number;
   color: string;
   dishwasherSafe: boolean;
   batteryRequired: boolean;
@@ -138,7 +139,7 @@ const EditProductForm = () => {
           }),
         ]);
 
-        if (productResponse.data.success && productResponse.data.content) {
+        if (productResponse.data.content) {
           const productData = productResponse.data.content;
           setProduct(productData);
 
@@ -160,6 +161,7 @@ const EditProductForm = () => {
             originCountry: productData.originCountry,
             price: productData.price,
             color: productData.color,
+            discountPercentage: productData.discountPercentage,
             dishwasherSafe: productData.dishwasherSafe,
             batteryRequired: productData.batteryRequired,
             dimensions: productData.dimensions,
@@ -173,10 +175,7 @@ const EditProductForm = () => {
           });
         }
 
-        if (
-          categoriesResponse.data.success &&
-          categoriesResponse.data.content
-        ) {
+        if (categoriesResponse.data.content) {
           setCategories(categoriesResponse.data.content);
         }
       } catch (error) {
@@ -289,6 +288,7 @@ const EditProductForm = () => {
         series: data.series,
         originCountry: data.originCountry,
         price: Number(data.price),
+        discountPercentage: Number(data.discountPercentage),
         color: data.color,
         dishwasherSafe: data.dishwasherSafe,
         batteryRequired: data.batteryRequired,
@@ -477,7 +477,7 @@ const EditProductForm = () => {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-3 gap-4">
+                  <div className="grid grid-cols-4 gap-4">
                     <div>
                       <Label htmlFor="originCountry">
                         Страна происхождения
@@ -508,6 +508,24 @@ const EditProductForm = () => {
                       {errors.price && (
                         <p className="text-sm text-red-400 mt-1">
                           {errors.price.message}
+                        </p>
+                      )}
+                    </div>
+
+                    <div>
+                      <Label htmlFor="discountPercentage">Процент скидки</Label>
+                      <Input
+                        id="discountPercentage"
+                        type="number"
+                        step="0.01"
+                        {...register("discountPercentage", {
+                          valueAsNumber: true,
+                        })}
+                        className="mt-1 bg-gray-700 border-gray-600 text-white"
+                      />
+                      {errors.discountPercentage && (
+                        <p className="text-sm text-red-400 mt-1">
+                          {errors.discountPercentage.message}
                         </p>
                       )}
                     </div>
