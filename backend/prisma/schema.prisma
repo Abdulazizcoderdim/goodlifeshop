@@ -63,9 +63,9 @@ model Product {
   updatedAt          DateTime    @updatedAt
 
   category      Category?    @relation(fields: [categoryId], references: [id])
-  categoryId    String?
+  categoryId    String?      @db.ObjectId
   subcategory   Subcategory? @relation(fields: [subcategoryId], references: [id])
-  subcategoryId String?
+  subcategoryId String?      @db.ObjectId
 }
 
 type Dimensions {
@@ -87,7 +87,7 @@ model Variant {
   images  String[] // variant-specific images
 
   product   Product @relation(fields: [productId], references: [id])
-  productId String
+  productId String  @db.ObjectId
 }
 
 model Category {
@@ -108,6 +108,6 @@ model Subcategory {
   imageUrl    String
 
   category   Category  @relation(fields: [categoryId], references: [id])
-  categoryId String
+  categoryId String    @db.ObjectId
   products   Product[]
 }

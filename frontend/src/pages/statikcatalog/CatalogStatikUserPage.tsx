@@ -28,10 +28,17 @@ import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
 import { Skeleton } from "@/components/ui/skeleton";
 
-interface ISeries {
-  series: string;
-  count: number;
-}
+type PriceRange = {
+  label: string;
+  min: number;
+  max: number;
+};
+
+const priceRanges: PriceRange[] = [
+  { label: "До 10 000 (379)", min: 0, max: 10000 },
+  { label: "От 10 000 до 20 000 (177)", min: 10000, max: 20000 },
+  { label: "От 20 000 до 95 500 (129)", min: 20000, max: 95500 },
+];
 
 const CatalogStatikUserPage = () => {
   const [pagination, setPagination] = useState({
@@ -43,6 +50,14 @@ const CatalogStatikUserPage = () => {
   const [loading, setLoading] = useState(false);
   const [products, setProducts] = useState<IProduct[]>([]);
   const [sortOrder, setSortOrder] = useState<string>("asc");
+  const [openSearchBar, setOpenSearchBar] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+
+  const handleChange = (index: number) => {
+    setSelectedIndex(index);
+    const range = priceRanges[index];
+    console.log(range.min, range.max);
+  };
 
   useEffect(() => {
     fetchProducts(pagination.number, sortOrder);
@@ -64,18 +79,10 @@ const CatalogStatikUserPage = () => {
   };
 
   const { data, isLoading, error } = useSWR("/categories", fetcher);
-  const {
-    data: series,
-    isLoading: isLoadingSeries,
-    error: errorSeries,
-  } = useSWR("/products/series", fetcher);
 
-  if (error || errorSeries) {
+  if (error) {
     console.error("Category error:", error);
-    console.error("Series error:", errorSeries);
   }
-
-  console.log("serie>>>>>>>>>>>",series);
 
   return (
     <div className="custom-container pb-10">
@@ -140,7 +147,10 @@ const CatalogStatikUserPage = () => {
                     </Select>
 
                     <div className="hidden md:flex items-center gap-2">
-                      <Sheet>
+                      <Sheet
+                        onOpenChange={setOpenSearchBar}
+                        open={openSearchBar}
+                      >
                         <SheetTrigger asChild>
                           <Button
                             variant="outline"
@@ -178,7 +188,7 @@ const CatalogStatikUserPage = () => {
                                   </ul>
                                 </AccordionContent>
                               </AccordionItem>
-                              <AccordionItem value="item-2">
+                              {/* <AccordionItem value="item-2">
                                 <AccordionTrigger>Серия</AccordionTrigger>
                                 <AccordionContent>
                                   <ul>
@@ -199,12 +209,23 @@ const CatalogStatikUserPage = () => {
                               <AccordionItem value="item-3">
                                 <AccordionTrigger>Бренд</AccordionTrigger>
                                 <AccordionContent>Бренд</AccordionContent>
-                              </AccordionItem>
+                              </AccordionItem> */}
                               <AccordionItem value="item-4">
                                 <AccordionTrigger>Цена</AccordionTrigger>
                                 <AccordionContent>
-                                  Yes. It&apos;s animated by default, but you
-                                  can disable it if you prefer.
+                                  {priceRanges.map((range, index) => (
+                                    <label
+                                      key={index}
+                                      className="flex items-center gap-2 mb-2"
+                                    >
+                                      <input
+                                        type="checkbox"
+                                        checked={selectedIndex === index}
+                                        onChange={() => handleChange(index)}
+                                      />
+                                      {range.label}
+                                    </label>
+                                  ))}
                                 </AccordionContent>
                               </AccordionItem>
                             </Accordion>
@@ -217,6 +238,7 @@ const CatalogStatikUserPage = () => {
                                 результаты ({pagination.totalElements})
                               </Button>
                               <Button
+                                onClick={() => window.location.reload()}
                                 variant={"outline"}
                                 className="uppercase rounded-none"
                               >
@@ -227,7 +249,7 @@ const CatalogStatikUserPage = () => {
                         </SheetContent>
                       </Sheet>
 
-                      <Button
+                      {/* <Button
                         variant="outline"
                         className="bg-gray-100 border-gray-300 text-gray-700 hover:bg-gray-200"
                       >
@@ -238,8 +260,9 @@ const CatalogStatikUserPage = () => {
                         className="bg-gray-100 border-gray-300 text-gray-700 hover:bg-gray-200"
                       >
                         Бренд
-                      </Button>
+                      </Button> */}
                       <Button
+                        onClick={() => setOpenSearchBar(true)}
                         variant="outline"
                         className="bg-gray-100 border-gray-300 text-gray-700 hover:bg-gray-200"
                       >
@@ -249,6 +272,7 @@ const CatalogStatikUserPage = () => {
                   </div>
 
                   <Button
+                    onClick={() => setOpenSearchBar(true)}
                     variant="outline"
                     className="bg-gray-100 border-gray-300 text-gray-700 gap-2"
                   >

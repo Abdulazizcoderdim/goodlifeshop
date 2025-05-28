@@ -132,6 +132,52 @@ class CategoriesController {
       next(error);
     }
   }
+
+  async getCategorySlug(req, res, next) {
+    try {
+      const { slug } = req.params;
+      const { page = 1, size = 10 } = req.query;
+
+      const pageNumber = parseInt(page);
+      const pageSize = parseInt(size);
+      const skip = (pageNumber - 1) * pageSize;
+
+      const category = await prisma.category.findUnique({
+        where: { slug: slug },
+        include: {
+          subcategories: true,
+        },
+      });
+
+      if (!category) return next(BaseError.BadRequest("Category not found"));
+
+      const [products, totalElements] = await Promise.all([
+        prisma.product.findMany({
+          where: { categoryId: category.id },
+          skip,
+          take: pageSize,
+        }),
+        prisma.product.count({
+          where: { categoryId: category.id },
+        }),
+      ]);
+
+      const totalPages = Math.ceil(totalElements / pageSize);
+
+      res.json({
+        category: category,
+        content: products,
+        pagination: {
+          number: pageNumber,
+          size: pageSize,
+          totalElements,
+          totalPages,
+        },
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 export default new CategoriesController();
