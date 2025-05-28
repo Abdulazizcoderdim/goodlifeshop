@@ -324,7 +324,7 @@ const EditProductForm = () => {
       if (response.data.content) {
         toast.success("Product updated successfully");
         // Navigate back or to product list
-        // navigate("/products");
+        navigate(-1);
       }
     } catch (error) {
       console.error("Error updating product:", error);
