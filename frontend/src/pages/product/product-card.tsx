@@ -138,7 +138,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         {/* Product Info */}
         <div className="p-4">
           {/* Brand */}
-          <div className="text-xs text-gray-500 uppercase tracking-wide mb-2">
+          <div className="text-xs text-start text-gray-500 uppercase tracking-wide mb-2">
             {product.brand}
           </div>
 
@@ -149,7 +149,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                 `/catalog/${product.category.slug}/${product.category.subcategories[0].slug}/${product.slug}`
               )
             }
-            className="text-sm cursor-pointer font-medium text-gray-900 mb-3 line-clamp-2 leading-tight"
+            className="text-sm text-start cursor-pointer font-medium text-gray-900 mb-3 line-clamp-2 leading-tight"
           >
             {product.title}
           </h3>

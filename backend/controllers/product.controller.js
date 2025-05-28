@@ -333,6 +333,27 @@ class ProductController {
       next(error);
     }
   }
+
+  async getSeries(req, res, next) {
+    try {
+      const seriesCounts = await prisma.product.groupBy({
+        by: ["series"],
+        _count: {
+          series: true,
+        },
+      });
+
+      const formatted = seriesCounts.map((item) => ({
+        series: item.series,
+        count: item._count.series,
+      }));
+
+      res.json(formatted);
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  }
 }
 
 export default new ProductController();

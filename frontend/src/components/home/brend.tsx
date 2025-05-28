@@ -8,6 +8,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 // @ts-expect-error: Swiper CSS modules do not provide type declarations
 import "swiper/css/pagination";
+import { useNavigate } from "react-router-dom";
 
 interface BrandItem {
   id: number;
@@ -38,7 +39,7 @@ const brendData: BrandItem[] = [
     description:
       "Сделайте каждое Ваше блюдо превосходным в культовой чугунной посуде из Франции.",
     buttonText: "STAUB",
-    path: "/catalog/posuda/formy-dlya-zapekaniya-staub",
+    path: "/catalog/staub",
   },
   {
     id: 3,
@@ -47,11 +48,13 @@ const brendData: BrandItem[] = [
     image: "/b3.webp",
     description: "BALLARINI – семейный стиль с 1889 года. Сделано в Италии",
     buttonText: "BALLARINI",
-    path: "/formy-dlya-zapekaniya-staub",
+    path: "/catalog/ballarini",
   },
 ];
 
 const Brend = () => {
+  const navigate = useNavigate();
+
   return (
     <section className="sm:py-16 py-8 custom-container">
       <h2 className="text-3xl font-bold text-center mb-12">БРЕНДЫ</h2>
@@ -59,7 +62,11 @@ const Brend = () => {
       {/* Desktop View */}
       <div className="hidden md:grid grid-cols-1 md:grid-cols-3 gap-6">
         {brendData.map((brand) => (
-          <div key={brand.id} className="relative overflow-hidden group">
+          <div
+            onClick={() => navigate(brand.path)}
+            key={brand.id}
+            className="relative overflow-hidden group cursor-pointer"
+          >
             <div className="relative min-h-72 w-full">
               <img
                 src={brand.image || "/placeholder.svg?height=320&width=400"}

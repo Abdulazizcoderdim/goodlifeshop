@@ -11,5 +11,6 @@ router.get("/slug/:slug", productController.getOneBySlug);
 router.put("/:id", authMiddleware, productController.update);
 router.delete("/:id", authMiddleware, productController.delete);
 router.get("/:productId/variants", productController.getVariants);
+router.get("/series", productController.getSeries);
 
 export default router;

@@ -7,12 +7,7 @@ import ProductItemLoading from "@/components/loading/ProductItemLoading";
 import ProductCard from "./product-card";
 import type { IProduct } from "@/types";
 
-const filterCategories = [
-  { label: "Категория", active: false },
-  { label: "Серия", active: false },
-  { label: "Бренд", active: false },
-  { label: "Цена", active: false },
-];
+
 
 export default function ProductCatalog() {
   const { data, error, isLoading } = useSWR("/products", fetcher);
