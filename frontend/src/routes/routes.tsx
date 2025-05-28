@@ -35,6 +35,7 @@ import EditProductForm from "@/components/admin-panel/edit-product/EditProductFo
 import NewProductAdd from "@/components/admin-panel/add-product/NewProductAdd";
 import CategoryAdmin from "@/pages/categoryadmin/CategoryAdmin";
 import SubcategoryPageAdmin from "@/pages/admin-panel/subcategory/SubcategoryPageAdmin";
+import { SearchPage } from "@/components/admin-panel/search/SearchPage";
 
 export const router = createBrowserRouter([
   {
@@ -52,6 +53,10 @@ export const router = createBrowserRouter([
       {
         path: "personal/cart",
         element: <CartPage />,
+      },
+      {
+        path: "search",
+        element: <SearchPage />,
       },
       {
         path: "/personal",

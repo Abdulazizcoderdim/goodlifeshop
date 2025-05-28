@@ -47,7 +47,15 @@ class ProductController {
           where,
           include: {
             variants: true,
-            category: true,
+            category: {
+              include: {
+                subcategories: {
+                  select: {
+                    slug: true,
+                  },
+                },
+              },
+            },
           },
           orderBy: {
             [sortBy]: sortOrder,

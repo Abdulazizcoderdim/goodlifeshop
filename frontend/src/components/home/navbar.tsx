@@ -50,6 +50,12 @@ const Navbar = () => {
     toast.success("Вы вышли из аккаунта");
   };
 
+  const handleSearch = () => {
+    if (searchQuery.trim()) {
+      navigate(`/search?search=${encodeURIComponent(searchQuery)}`);
+    }
+  };
+
   const handleOPenBar = (tab: string) => {
     if (tab === "contact") {
       return;
@@ -144,18 +150,22 @@ const Navbar = () => {
                   </h1>
                   <header className="w-full bg-white text-black mt-5">
                     <div className="container mx-auto px-4 py-4 border-b">
-                      <div className="relative">
+                      <form onSubmit={handleSearch} className="relative">
                         <input
+                          name="search"
                           type="text"
                           placeholder="Название продукта, артикул, категория или другое"
                           className="w-full py-2 px-4 pr-10 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400"
                           value={searchQuery}
                           onChange={(e) => setSearchQuery(e.target.value)}
                         />
-                        <button className="absolute right-3 top-1/2 -translate-y-1/2">
+                        <button
+                          type="submit"
+                          className="absolute right-3 top-1/2 -translate-y-1/2"
+                        >
                           <Search className="h-5 w-5 text-white" />
                         </button>
-                      </div>
+                      </form>
                     </div>
 
                     <div className="container mx-auto px-4 py-4">

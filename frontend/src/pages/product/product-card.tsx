@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   Heart,
   ChevronLeft,
@@ -11,7 +10,6 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
-import type { Swiper as SwiperType } from "swiper";
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
@@ -23,14 +21,15 @@ import "swiper/css/pagination";
 import type { IProduct } from "@/types";
 import { useStore } from "@/store/useStore";
 import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 interface ProductCardProps {
   product: IProduct;
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
-  const [swiper, setSwiper] = useState<SwiperType | null>(null);
   const { toggleFavorite, addToCart, isFavorite, isInCart } = useStore();
+  const navigate = useNavigate();
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat("ru-RU", {
@@ -40,6 +39,7 @@ export default function ProductCard({ product }: ProductCardProps) {
   };
 
   const renderStars = (rating: number) => {
+    console.log(rating);
     return Array.from({ length: 5 }, (_, index) => (
       <span key={index} className="text-yellow-400 text-sm">
         ☆
@@ -96,7 +96,6 @@ export default function ProductCard({ product }: ProductCardProps) {
         <div className="relative aspect-square bg-gray-50">
           <Swiper
             modules={[Navigation]}
-            onSwiper={setSwiper}
             navigation={{
               prevEl: `.prev-${product.id}`,
               nextEl: `.next-${product.id}`,
@@ -106,6 +105,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             {product.images.map((image, index) => (
               <SwiperSlide key={index}>
                 <img
+                  loading="lazy"
                   src={image || "/placeholder.svg"}
                   alt={`${product.title} - изображение ${index + 1}`}
                   className="w-full h-full object-cover"
@@ -120,14 +120,14 @@ export default function ProductCard({ product }: ProductCardProps) {
               <Button
                 variant="ghost"
                 size="icon"
-                className={`prev-${product.id} absolute left-2 top-1/2 -translate-y-1/2 z-10 h-8 w-8 bg-white/80 hover:bg-white opacity-0 group-hover:opacity-100 transition-opacity`}
+                className={`prev-${product.id} absolute left-2 top-1/2 -translate-y-1/2 z-10 h-8 w-8 bg-white/80 border hover:bg-white opacity-0 group-hover:opacity-100 transition-opacity`}
               >
                 <ChevronLeft className="h-4 w-4" />
               </Button>
               <Button
                 variant="ghost"
                 size="icon"
-                className={`next-${product.id} absolute right-2 top-1/2 -translate-y-1/2 z-10 h-8 w-8 bg-white/80 hover:bg-white opacity-0 group-hover:opacity-100 transition-opacity`}
+                className={`next-${product.id} absolute right-2 top-1/2 -translate-y-1/2 z-10 h-8 w-8 bg-white/80 border hover:bg-white opacity-0 group-hover:opacity-100 transition-opacity`}
               >
                 <ChevronRight className="h-4 w-4" />
               </Button>
@@ -143,7 +143,14 @@ export default function ProductCard({ product }: ProductCardProps) {
           </div>
 
           {/* Title */}
-          <h3 className="text-sm font-medium text-gray-900 mb-3 line-clamp-2 leading-tight">
+          <h3
+            onClick={() =>
+              navigate(
+                `/catalog/${product.category.slug}/${product.category.subcategories[0].slug}/${product.slug}`
+              )
+            }
+            className="text-sm cursor-pointer font-medium text-gray-900 mb-3 line-clamp-2 leading-tight"
+          >
             {product.title}
           </h3>
 
