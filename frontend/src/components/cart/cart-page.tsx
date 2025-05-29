@@ -52,7 +52,7 @@ export default function CartPage() {
       setCartItems([]);
       setLoading(false);
     }
-  }, [cart]);
+  }, []);
 
   const handleQuantityChange = (productId: string, quantityChange: number) => {
     const currentItem = cartItems.find((item) => item.productId === productId);
@@ -340,8 +340,11 @@ export default function CartPage() {
               >
                 Очистить корзину
               </button>
-              <Button className="w-full sm:w-auto px-8 sm:px-16 py-5 sm:py-6 bg-red-500 hover:bg-red-600 cursor-pointer text-white rounded-none font-normal text-base">
-                ОФОРМИТЬ ЗАКАЗ
+              <Button
+                asChild
+                className="w-full sm:w-auto px-8 sm:px-16 py-5 sm:py-6 bg-red-500 hover:bg-red-600 cursor-pointer text-white rounded-none font-normal text-base"
+              >
+                <Link to={"/personal/order/make"}>ОФОРМИТЬ ЗАКАЗ</Link>
               </Button>
             </div>
           </>

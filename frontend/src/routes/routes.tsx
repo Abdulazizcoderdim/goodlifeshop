@@ -3,16 +3,16 @@ import Layout from "../layout/layout";
 import HomePage from "../components/home/home-page";
 import NotFound from "../components/NotFound";
 import CartPage from "@/components/cart/cart-page";
-import Terms from "@/pages/help/Terms";
-import Agreement from "@/pages/help/Agreement";
-import Politika from "@/pages/help/Politika";
-import PersonalAgree from "@/pages/help/PersonalAgree";
-import Policies from "@/pages/help/Policies";
-import Returns from "@/pages/help/Returns";
-import Delivery from "@/pages/help/Delivery";
+// import Terms from "@/pages/help/Terms";
+// import Agreement from "@/pages/help/Agreement";
+// import Politika from "@/pages/help/Politika";
+// import PersonalAgree from "@/pages/help/PersonalAgree";
+// import Policies from "@/pages/help/Policies";
+// import Returns from "@/pages/help/Returns";
+// import Delivery from "@/pages/help/Delivery";
 import Kontakty from "@/pages/help/Kontakty";
-import ContactForm from "@/pages/help/ContactForm";
-import Sout from "@/pages/help/Sout";
+// import ContactForm from "@/pages/help/ContactForm";
+// import Sout from "@/pages/help/Sout";
 import HereToHelp from "@/pages/help/HereToHelp";
 import Personal from "@/pages/personal/Personal";
 import Orders from "@/pages/personal/Orders";
@@ -39,6 +39,7 @@ import { SearchPage } from "@/components/admin-panel/search/SearchPage";
 import BrandZwilling from "@/pages/brands/BrandZwilling";
 import BrandStaub from "@/pages/brands/BrandStaub";
 import BrandBallarini from "@/pages/brands/BrandBallarini";
+import OrderMake from "@/pages/order/OrderMake";
 
 export const router = createBrowserRouter([
   {
@@ -96,36 +97,40 @@ export const router = createBrowserRouter([
         ],
       },
       {
+        path: "/personal/order/make",
+        element: <OrderMake />,
+      },
+      {
         path: "here_to_help",
         element: <HereToHelp />,
         children: [
           {
             path: "terms-and-conditions",
-            element: <Terms />,
+            element: <Kontakty />,
           },
           {
             path: "user-agreement",
-            element: <Agreement />,
+            element: <Kontakty />,
           },
           {
             path: "politika",
-            element: <Politika />,
+            element: <Kontakty />,
           },
           {
             path: "personal-agree",
-            element: <PersonalAgree />,
+            element: <Kontakty />,
           },
           {
             path: "policies",
-            element: <Policies />,
+            element: <Kontakty />,
           },
           {
             path: "returns",
-            element: <Returns />,
+            element: <Kontakty />,
           },
           {
             path: "delivery",
-            element: <Delivery />,
+            element: <Kontakty />,
           },
           {
             path: "kontakty",
@@ -133,11 +138,11 @@ export const router = createBrowserRouter([
           },
           {
             path: "contact-form",
-            element: <ContactForm />,
+            element: <Kontakty />,
           },
           {
             path: "sout",
-            element: <Sout />,
+            element: <Kontakty />,
           },
         ],
       },

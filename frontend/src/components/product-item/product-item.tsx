@@ -3,6 +3,7 @@ import { toast } from "sonner";
 import type { IProduct } from "../../types";
 import { useStore } from "../../store/useStore";
 import isNew from "@/lib/IsNew";
+import { useNavigate } from "react-router-dom";
 
 interface ProductProps {
   product: IProduct;
@@ -14,6 +15,7 @@ export default function ProductItem({
   isNewProduct = false,
 }: ProductProps) {
   const { toggleFavorite, addToCart, isFavorite, isInCart } = useStore();
+  const navigate = useNavigate();
 
   const handleToggleFavorite = () => {
     toggleFavorite(product);
@@ -66,6 +68,11 @@ export default function ProductItem({
         )}
         <div className="relative cursor-pointer h-64 w-full flex items-center justify-center p-4 bg-white">
           <img
+            onClick={() =>
+              navigate(
+                `/catalog/${product.category.slug}/${product.category.subcategories[0].slug}/${product.slug}`
+              )
+            }
             src={product.images?.[0] ?? "/placeholder.svg?height=256&width=256"}
             alt={"Product"}
             className="object-contain h-full max-h-56 w-auto transform group-hover:scale-105 transition-transform duration-300"
@@ -76,7 +83,14 @@ export default function ProductItem({
         <h3 className="text-sm font-bold text-gray-800 line-clamp-1">
           {product.brand}
         </h3>
-        <p className="text-sm text-gray-600 mt-1 line-clamp-2">
+        <p
+          onClick={() =>
+            navigate(
+              `/catalog/${product.category.slug}/${product.category.subcategories[0].slug}/${product.slug}`
+            )
+          }
+          className="text-sm text-gray-600 mt-1 line-clamp-2"
+        >
           {product.title}
         </p>
       </div>

@@ -22,7 +22,6 @@ interface FavoriteItem {
 
 interface CartItem {
   productId: string;
-  product: IProduct;
   quantity: number;
 }
 
@@ -71,10 +70,7 @@ export const useStore = create<OptimizedStoreState>()(
             };
           } else {
             return {
-              cart: [
-                ...state.cart,
-                { productId: product.id, product, quantity: 1 },
-              ],
+              cart: [...state.cart, { productId: product.id, quantity: 1 }],
             };
           }
         });

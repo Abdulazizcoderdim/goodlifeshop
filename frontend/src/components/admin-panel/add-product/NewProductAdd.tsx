@@ -76,10 +76,11 @@ const productSchema = z.object({
   characteristics: z
     .array(
       z.object({
-        key: z.string().min(1, "Название характеристики обязательно"),
+        key: z.string().optional(),
         value: z
           .union([z.string(), z.number(), z.boolean()])
-          .transform((val) => String(val)),
+          .transform((val) => String(val))
+          .optional(),
       })
     )
     .default([]),
@@ -671,7 +672,6 @@ const NewProductAdd = () => {
                     <Input
                       id="productWeight"
                       type="number"
-                      step="0.1"
                       {...register("dimensions.productWeight", {
                         valueAsNumber: true,
                       })}
