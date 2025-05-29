@@ -21,6 +21,7 @@ import { useImageUploader } from "@/hooks/useImageUploader";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import api from "@/http/axios";
+import type { Category, IProductVariant } from "@/types";
 
 // Zod validation schema
 const productSchema = z.object({
@@ -85,8 +86,8 @@ const productSchema = z.object({
     )
     .default([]),
   category: z.object({
-    id: z.string().min(1, "Категория обязательна"),
-    name: z.string().min(1, "Название категории обязательно"),
+    id: z.string(),
+    name: z.string(),
   }),
   variants: z
     .array(
@@ -100,23 +101,46 @@ const productSchema = z.object({
     .default([]),
 });
 
-type FormData = z.infer<typeof productSchema>;
-
-interface Category {
-  id: string;
-  name: string;
-  slug: string;
-  subcategories: {
-    id: string;
-    name: string;
-    slug: string;
-    categoryId: string;
-  }[];
-}
+// type FormData = z.infer<typeof productSchema>;
 
 interface CategoriesResponse {
   success: boolean;
   content: Category[];
+}
+
+interface ProductDimensions {
+  productWeight?: number;
+  productHeight?: number;
+  productWidth?: number;
+  productLength?: number;
+  packageHeight?: number;
+  packageWidth?: number;
+  packageLength?: number;
+  productVolume?: number;
+}
+
+interface Characteristic {
+  key?: string;
+  value?: string; // transform orqali stringga aylantirilgan
+}
+
+export interface FormData {
+  title: string;
+  description?: string;
+  article?: string;
+  brand?: string;
+  series?: string;
+  originCountry?: string;
+  price: number;
+  discountPercentage?: number;
+  color?: string;
+  dishwasherSafe?: boolean; // default false
+  batteryRequired?: boolean; // default false
+  dimensions: ProductDimensions;
+  images: string[];
+  characteristics: Characteristic[];
+  category: Category;
+  variants: IProductVariant[];
 }
 
 const NewProductAdd = () => {
@@ -139,8 +163,7 @@ const NewProductAdd = () => {
     setValue,
     getValues,
     trigger,
-  } = useForm<FormData>({
-    // @ts-expect-error - as
+  } = useForm({
     resolver: zodResolver(productSchema),
     defaultValues: {
       title: "",
