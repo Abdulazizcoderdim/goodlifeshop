@@ -297,8 +297,6 @@ const CatalogStatikUserPage = () => {
                   ))}
             </div>
           </div>
-
-          {/* <ProductCatalog /> */}
         </div>
       </div>
     </div>

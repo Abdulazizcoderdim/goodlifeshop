@@ -36,8 +36,8 @@ const productSchema = z.object({
   price: z.number().min(0, "Цена должна быть положительной"),
   discountPercentage: z.number().optional(),
   color: z.string().optional(),
-  dishwasherSafe: z.boolean().default(false),
-  batteryRequired: z.boolean().default(false),
+  dishwasherSafe: z.boolean().default(false).optional(),
+  batteryRequired: z.boolean().default(false).optional(),
   dimensions: z.object({
     productWeight: z
       .number()
@@ -140,6 +140,7 @@ const NewProductAdd = () => {
     getValues,
     trigger,
   } = useForm<FormData>({
+    // @ts-expect-error - as
     resolver: zodResolver(productSchema),
     defaultValues: {
       title: "",
@@ -318,7 +319,7 @@ const NewProductAdd = () => {
       // Convert form data to API format
       const characteristics: Record<string, unknown> = {};
       data.characteristics.forEach(({ key, value }) => {
-        if (key.trim()) {
+        if (key !== undefined && key.trim()) {
           characteristics[key] = value;
         }
       });
@@ -409,7 +410,6 @@ const NewProductAdd = () => {
           Закрыть
         </Button>
       </div>
-
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 w-full">
         <Tabs defaultValue="basic" className="w-full">
           <TabsList className="grid w-full grid-cols-5 bg-gray-800 border-gray-700">

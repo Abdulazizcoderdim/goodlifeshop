@@ -1,4 +1,3 @@
-import React from "react";
 
 const PersonalAgree = () => {
   return <div>PersonalAgree</div>;

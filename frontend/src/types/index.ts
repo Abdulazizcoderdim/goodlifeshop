@@ -22,14 +22,14 @@ export interface IProduct {
   };
 
   dimensions: {
-    productWeight: number;
-    productHeight: number;
-    productWidth: number;
-    productLength: number;
-    packageHeight: number;
-    packageWidth: number;
-    packageLength: number;
-    productVolume: number;
+    productWeight?: number;
+    productHeight?: number;
+    productWidth?: number;
+    productLength?: number;
+    packageHeight?: number;
+    packageWidth?: number;
+    packageLength?: number;
+    productVolume?: number;
   };
   category: {
     id: string;
@@ -41,8 +41,8 @@ export interface IProduct {
         name: string;
         slug: string;
         categoryId: string;
-        imageUrl: string;
-        description: string;
+        imageUrl?: string;
+        description?: string;
       }
     ];
   };
