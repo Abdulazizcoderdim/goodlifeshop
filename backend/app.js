@@ -33,6 +33,9 @@ app.use("/api/categories", categoriesRoute);
 app.use("/api/brands", brandsRoute);
 app.use("/api/subcategories", subCategoryRoute);
 app.use("/api/users", usersRoute);
+app.get("/api/health", (req, res) => {
+  res.status(200).send("OK");
+});
 
 app.use(errorMiddleware);
 

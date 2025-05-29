@@ -1,4 +1,5 @@
 import Sidebar from "@/components/admin-panel/common/Sidebar";
+import KeepAlive from "@/components/KeepAlive";
 import { useAuthStore } from "@/hooks/useAuthStore";
 import AuthProvider from "@/provider/auth-provider";
 import { UserRole } from "@/types";
@@ -24,6 +25,8 @@ const LayoutAdmin = () => {
         <Outlet />
       </div>
       <Toaster position="top-center" />
+
+      <KeepAlive />
     </AuthProvider>
   );
 };
