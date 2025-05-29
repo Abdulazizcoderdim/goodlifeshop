@@ -105,6 +105,11 @@ export default function ProductCard({ product }: ProductCardProps) {
             {product.images.map((image, index) => (
               <SwiperSlide key={index}>
                 <img
+                  onClick={() =>
+                    navigate(
+                      `/catalog/${product.category.slug}/${product.category.subcategories[0].slug}/${product.slug}`
+                    )
+                  }
                   loading="lazy"
                   src={image || "/placeholder.svg"}
                   alt={`${product.title} - изображение ${index + 1}`}

@@ -102,6 +102,14 @@ const CatalogUserPage = () => {
     }
   };
 
+  if (loading) {
+    return (
+      <div className="text-center h-screen flex justify-center animate-pulse items-center text-lg custom-container py-10">
+        Loading...
+      </div>
+    );
+  }
+
   return (
     <div className="custom-container">
       {/* catloglar */}
@@ -110,8 +118,14 @@ const CatalogUserPage = () => {
       <div className="pt-10 pb-5">
         {/* path url */}
         <div className="flex items-center gap-3">
-          <Link to={"/"}>Главная</Link>/<Link to={"/catalog"}>Каталог</Link>/
-          <p>{categorys?.name}</p>
+          <Link to={"/"} className="uppercase">
+            Главная
+          </Link>
+          /
+          <Link to={"/catalog"} className="uppercase">
+            Каталог
+          </Link>
+          /<p>{categorys?.name}</p>
         </div>
 
         <div className="w-full bg-red-100 mt-5">

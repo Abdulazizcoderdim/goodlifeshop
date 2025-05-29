@@ -92,7 +92,10 @@ const CatalogStatikUserPage = () => {
       <div className="pt-10 pb-5 max-md:hidden">
         {/* path url */}
         <div className="flex items-center gap-3">
-          <Link to={"/"}>Главная</Link>/<p>Каталог</p>
+          <Link to={"/"} className="uppercase">
+            Главная
+          </Link>
+          /<p className="uppercase">Каталог</p>
         </div>
       </div>
       {/* banner */}

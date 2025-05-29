@@ -154,6 +154,18 @@ class CategoriesController {
       const [products, totalElements] = await Promise.all([
         prisma.product.findMany({
           where: { categoryId: category.id },
+          include: {
+            category: {
+              include: {
+                subcategories: {
+                  select: {
+                    name: true,
+                    slug: true,
+                  },
+                },
+              },
+            },
+          },
           skip,
           take: pageSize,
         }),

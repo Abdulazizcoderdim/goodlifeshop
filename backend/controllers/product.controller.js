@@ -290,6 +290,11 @@ class ProductController {
         where: { slug },
         include: {
           variants: true,
+          category: {
+            include: {
+              subcategories: true,
+            },
+          },
         },
       });
 

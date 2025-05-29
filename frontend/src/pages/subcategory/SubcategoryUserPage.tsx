@@ -63,6 +63,14 @@ const SubcategoryUserPage = () => {
     }
   };
 
+  if (loading) {
+    return (
+      <div className="text-center h-screen flex justify-center animate-pulse items-center text-lg custom-container py-10">
+        Loading...
+      </div>
+    );
+  }
+
   return (
     <div className="custom-container">
       {/* catloglar */}
@@ -71,9 +79,18 @@ const SubcategoryUserPage = () => {
       <div className="pt-10 pb-5 max-md:hidden">
         {/* path url */}
         <div className="flex items-center gap-3">
-          <Link to={"/"}>Главная</Link>/<Link to={"/catalog"}>Каталог</Link>/
-          <Link to={`/catalog/${categorys?.slug}`}>{categorys?.name}</Link>/
-          <p>{filterName()?.name}</p>
+          <Link to={"/"} className="uppercase">
+            Главная
+          </Link>
+          /
+          <Link to={"/catalog"} className="uppercase">
+            Каталог
+          </Link>
+          /
+          <Link to={`/catalog/${categorys?.slug}`} className="uppercase">
+            {categorys?.name}
+          </Link>
+          /<p className="uppercase">{filterName()?.name}</p>
         </div>
       </div>
 
@@ -124,7 +141,7 @@ const SubcategoryUserPage = () => {
           <ProductItemLoading />
         </div>
       ) : (
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-5">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-5 mb-5">
           {products.map((product) => (
             <div key={product.id}>
               <ProductCard product={product} />

@@ -41,6 +41,8 @@ export interface IProduct {
         name: string;
         slug: string;
         categoryId: string;
+        imageUrl: string;
+        description: string;
       }
     ];
   };
