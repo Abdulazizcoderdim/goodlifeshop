@@ -50,9 +50,8 @@ export default function Footer() {
                 </h3>
               </div>
               <div className="space-y-2 text-sm">
-                <p>ОФИЦИАЛЬНЫЙ МАГАЗИН ZWILLING В РОССИИ</p>
-                <p>БЕСПЛАТНАЯ ДОСТАВКА ПО МОСКВЕ ОТ 5000 РУБ</p>
-                <p>БЕСПЛАТНАЯ ДОСТАВКА ПО РФ ОТ 10000 РУБ</p>
+                <p>БЕСПЛАТНАЯ ДОСТАВКА ПО РЕСПУБЛИКЕ БЕЛАРУСЬ ОТ 200 РУБ</p>
+                <p>БЕСПЛАТНАЯ ДОСТАВКА ПО г. МИНСКУ </p>
                 <p>ГАРАНТИЯ КАЧЕСТВА</p>
               </div>
             </div>
@@ -219,7 +218,10 @@ export default function Footer() {
               <h3 className="font-bold uppercase text-lg">ЭТО ИНТЕРЕСНО</h3>
               <ul className="space-y-2 text-sm">
                 <li>
-                  <Link to="#" className="hover:underline">
+                  <Link
+                    to="/culinary-world/o-kompanii"
+                    className="hover:underline"
+                  >
                     ИСТОРИЯ БРЕНДА
                   </Link>
                 </li>

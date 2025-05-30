@@ -40,6 +40,8 @@ import BrandZwilling from "@/pages/brands/BrandZwilling";
 import BrandStaub from "@/pages/brands/BrandStaub";
 import BrandBallarini from "@/pages/brands/BrandBallarini";
 import OrderMake from "@/pages/order/OrderMake";
+import BrandHistory from "@/pages/brands/BrandHistory";
+import UseCare from "@/pages/brands/use-care";
 
 export const router = createBrowserRouter([
   {
@@ -99,6 +101,14 @@ export const router = createBrowserRouter([
       {
         path: "/personal/order/make",
         element: <OrderMake />,
+      },
+      {
+        path: "/culinary-world/o-kompanii",
+        element: <BrandHistory />,
+      },
+      {
+        path: "/culinary-world/use-care",
+        element: <UseCare />,
       },
       {
         path: "here_to_help",
