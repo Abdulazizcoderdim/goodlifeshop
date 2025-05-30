@@ -183,62 +183,6 @@ export default function BrandHistory() {
               {data.map((item, i) => (
                 <BrendNewsCard key={i} item={item} />
               ))}
-              {/* Innovation Card */}
-              {/* <div className="group cursor-pointer">
-                <div className="relative overflow-hidden rounded-lg mb-4">
-                  <img
-                    src="https://zwilling.ru/upload/resize_cache/iblock/b7f/300_210_2/ew0pe1xtjdmc0n7uzb6m11nh1py1c3d9.webp"
-                    alt="BALLARINI Innovation"
-                    width={400}
-                    height={300}
-                    className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105"
-                  />
-                </div>
-                <div className="flex items-center justify-between">
-                  <h3 className="text-lg font-semibold text-gray-900">
-                    BALLARINI - ИННОВАЦИИ
-                  </h3>
-                  <ChevronRight className="h-5 w-5 text-gray-400 group-hover:text-gray-600 transition-colors" />
-                </div>
-              </div> */}
-
-              {/* Production Card */}
-              {/* <div className="group cursor-pointer">
-                <div className="relative overflow-hidden rounded-lg mb-4">
-                  <img
-                    src="https://zwilling.ru/upload/resize_cache/iblock/a56/300_210_2/bhxna32mst3wryizzzgwywdxfx3sydgh.webp"
-                    alt="BALLARINI Production"
-                    width={400}
-                    height={300}
-                    className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105"
-                  />
-                </div>
-                <div className="flex items-center justify-between">
-                  <h3 className="text-lg font-semibold text-gray-900">
-                    BALLARINI - ПРОИЗВОДСТВО
-                  </h3>
-                  <ChevronRight className="h-5 w-5 text-gray-400 group-hover:text-gray-600 transition-colors" />
-                </div>
-              </div> */}
-
-              {/* Goals Card */}
-              {/* <div className="group cursor-pointer">
-                <div className="relative overflow-hidden rounded-lg mb-4">
-                  <img
-                    src="https://zwilling.ru/upload/resize_cache/iblock/7e7/300_210_2/t71flryobfo2j5qofleohkr8605u850x.webp"
-                    alt="BALLARINI Goals"
-                    width={400}
-                    height={300}
-                    className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105"
-                  />
-                </div>
-                <div className="flex items-center justify-between">
-                  <h3 className="text-lg font-semibold text-gray-900">
-                    BALLARINI - НАШИ ЦЕЛИ
-                  </h3>
-                  <ChevronRight className="h-5 w-5 text-gray-400 group-hover:text-gray-600 transition-colors" />
-                </div>
-              </div> */}
             </div>
           </div>
         </div>

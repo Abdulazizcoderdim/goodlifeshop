@@ -42,6 +42,8 @@ import BrandBallarini from "@/pages/brands/BrandBallarini";
 import OrderMake from "@/pages/order/OrderMake";
 import BrandHistory from "@/pages/brands/BrandHistory";
 import UseCare from "@/pages/brands/use-care";
+import VdokhnovlyayushchieRetsept from "@/pages/brands/vdokhnovlyayushchie-retsept";
+import VdokhnovlyayushchieRetseptSlug from "@/pages/brands/slugs/VdokhnovlyayushchieRetseptSlug";
 
 export const router = createBrowserRouter([
   {
@@ -109,6 +111,14 @@ export const router = createBrowserRouter([
       {
         path: "/culinary-world/use-care",
         element: <UseCare />,
+      },
+      {
+        path: "/culinary-world/vdokhnovlyayushchie-retsepty",
+        element: <VdokhnovlyayushchieRetsept />,
+      },
+      {
+        path: "/culinary-world/vdokhnovlyayushchie-retsepty/:slug",
+        element: <VdokhnovlyayushchieRetseptSlug />,
       },
       {
         path: "here_to_help",
