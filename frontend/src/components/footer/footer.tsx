@@ -35,8 +35,8 @@ export default function Footer() {
                 </Link>
               </div>
               <div className="space-y-1 text-sm">
-                <p>8 (495)724-85-98</p>
-                <p>8 (800)600-47-36</p>
+                <p>+375296276521</p>
+                <p>+375296276521</p>
                 <p>ПН-ПТ: 10:00-18:00</p>
               </div>
             </div>
