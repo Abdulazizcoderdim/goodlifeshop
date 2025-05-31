@@ -43,7 +43,7 @@ const SubcategoryPageAdmin = () => {
 
   return (
     <div className="flex-1 overflow-auto relative z-10">
-      <Header title="Category" />
+      <Header title="Подкатегория" />
 
       <main className="max-w-7xl mx-auto py-6 px-4 lg:px-8">
         {/* STATS */}
@@ -54,13 +54,13 @@ const SubcategoryPageAdmin = () => {
           transition={{ duration: 1 }}
         >
           <StatCard
-            name="Total Categorys"
+            name="Всего подкатегория"
             icon={Zap}
             value={pagination.totalElements}
             color="#6366F1"
           />
           <StatCard
-            name="New Categorys"
+            name="Новые подкатегория"
             icon={Users}
             value={pagination.totalElements}
             color="#8B5CF6"

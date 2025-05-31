@@ -131,19 +131,19 @@ const UsersPage = () => {
           transition={{ duration: 1 }}
         >
           <StatCard
-            name="Total Users"
+            name="Всего пользователей"
             icon={UsersIcon}
             value={pagination.totalElements.toLocaleString()}
             color="#6366F1"
           />
           <StatCard
-            name="New Users Today"
+            name="Новые пользователи сегодня"
             icon={UserPlus}
             value={newUsersToday.toLocaleString()}
             color="#10B981"
           />
           <StatCard
-            name="Active Users"
+            name="Активные пользователи"
             icon={UserCheck}
             value={newUsersToday.toLocaleString()}
             color="#F59E0B"

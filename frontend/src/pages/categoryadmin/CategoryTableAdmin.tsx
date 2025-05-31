@@ -137,6 +137,9 @@ const CategoryTableAdmin = ({
             <thead>
               <tr>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                  #
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                   Name
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
@@ -152,13 +155,16 @@ const CategoryTableAdmin = ({
             </thead>
 
             <tbody className="divide-y divide-gray-700">
-              {filteredCategory.map((category) => (
+              {filteredCategory.map((category, i) => (
                 <motion.tr
                   key={category.id}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.3 }}
                 >
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    {i + 1 + (pagination.number - 1) * pagination.size}
+                  </td>
                   <td className="px-6 py-4 whitespace-nowrap flex gap-2 items-center text-sm">
                     <img
                       src={
@@ -180,7 +186,8 @@ const CategoryTableAdmin = ({
                         {category.subcategories
                           .map((sub) => sub.name)
                           .join(", ")
-                          .slice(0, 20)}...
+                          .slice(0, 20)}
+                        ...
                       </span>
                     ) : (
                       <p>Нет подкатегорий</p>

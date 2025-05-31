@@ -155,7 +155,7 @@ const SubcategoryTableAdmin = ({
                   transition={{ duration: 0.3 }}
                 >
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                    {i + 1}
+                    {i + 1 + (pagination.number - 1) * pagination.size}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap flex items-center gap-3">
                     <img

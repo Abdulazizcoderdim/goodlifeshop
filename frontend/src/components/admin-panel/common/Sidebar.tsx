@@ -12,26 +12,31 @@ import { Link, useLocation } from "react-router-dom";
 
 const SIDEBAR_ITEMS = [
   {
-    name: "Overview",
+    name: "Обзор",
     icon: BarChart2,
     color: "#6366f1",
     href: "/admin-panel/",
   },
   {
-    name: "Products",
+    name: "Продукты",
     icon: ShoppingBag,
     color: "#8B5CF6",
     href: "/admin-panel/products",
   },
-  { name: "Users", icon: Users, color: "#EC4899", href: "/admin-panel/users" },
   {
-    name: "Category",
+    name: "Пользователи",
+    icon: Users,
+    color: "#EC4899",
+    href: "/admin-panel/users",
+  },
+  {
+    name: "Категория",
     icon: CalendarCheck,
     color: "#10B981",
     href: "/admin-panel/category",
   },
   {
-    name: "Subcategory",
+    name: "Подкатегория",
     icon: SquaresSubtract,
     color: "#19D981",
     href: "/admin-panel/subcategory",

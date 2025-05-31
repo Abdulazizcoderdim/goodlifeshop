@@ -54,13 +54,13 @@ const CategoryAdmin = () => {
           transition={{ duration: 1 }}
         >
           <StatCard
-            name="Total Categorys"
+            name="Всего категорий"
             icon={Zap}
             value={pagination.totalElements}
             color="#6366F1"
           />
           <StatCard
-            name="New Categorys"
+            name="Новые категории"
             icon={Users}
             value={pagination.totalElements}
             color="#8B5CF6"
