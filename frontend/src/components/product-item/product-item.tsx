@@ -99,7 +99,7 @@ export default function ProductItem({
           {formatPrice(product.price)} ₽
         </span>
         <button
-          className="relative flex cursor-pointer items-center justify-center w-10 h-10 "
+          className="relative flex cursor-pointer items-center justify-center w-10 h-10"
           onClick={handleAddToCart}
           title="Добавить в корзину"
         >
