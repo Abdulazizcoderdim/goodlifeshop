@@ -27,7 +27,9 @@ const ProductUserPage = () => {
   const [loading, setLoading] = useState(false);
   const [quantity, setQuantity] = useState(2);
   const navigate = useNavigate();
-  // const [selectedColor, setSelectedColor] = useState("white");
+  const [selectedColor, setSelectedColor] = useState<string | null | undefined>(
+    null
+  );
   const { toggleFavorite, isFavorite, isInCart, addToCart } = useStore();
 
   const handleToggleFavorite = () => {
@@ -118,7 +120,11 @@ const ProductUserPage = () => {
     {} as Record<string, string>
   );
 
-  console.log(formatted);
+  const selectedVariant = product?.variants.find(
+    (variant) => variant.id === selectedColor
+  );
+
+  const imagesProduct = selectedVariant?.images || product?.images;
 
   return (
     <div className="">
@@ -163,9 +169,10 @@ const ProductUserPage = () => {
             pagination={{ clickable: true }}
             className="w-full aspect-square rounded-lg overflow-hidden"
           >
-            {product?.images.map((image, index) => (
+            {imagesProduct?.map((image, index) => (
               <SwiperSlide key={index}>
                 <img
+                  loading="lazy"
                   src={image || "/placeholder.svg"}
                   alt={`Product image ${index + 1}`}
                   className="w-full h-full object-cover"
@@ -175,7 +182,6 @@ const ProductUserPage = () => {
           </Swiper>
 
           {/* Custom Navigation Buttons */}
-
           {product?.images && product?.images?.length > 1 && (
             <button className="swiper-button-prev-custom absolute left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white/80 rounded-full flex items-center justify-center shadow-md hover:bg-white transition-colors">
               <ChevronLeft className="w-5 h-5 text-gray-600" />
@@ -208,22 +214,23 @@ const ProductUserPage = () => {
           </div>
 
           {/* Color Selection */}
-          {/* <div className="space-y-3">
+          <div className="space-y-3">
             <div className="flex space-x-3">
-              {colors.map((color) => (
-                <button
-                  key={color.id}
-                  onClick={() => setSelectedColor(color.id)}
-                  className={`w-12 h-12 rounded border-2 ${
-                    selectedColor === color.id
-                      ? "border-gray-400"
-                      : "border-gray-200"
-                  }`}
-                  style={{ backgroundColor: color.color }}
-                />
-              ))}
+              {product?.variants &&
+                product?.variants.map((color) => (
+                  <button
+                    key={color.id}
+                    onClick={() => setSelectedColor(color?.id)}
+                    className={`w-12 h-12 rounded border-2 ${
+                      selectedColor === color.id
+                        ? "border-black"
+                        : "border-gray-200"
+                    }`}
+                    style={{ backgroundColor: color.color }}
+                  />
+                ))}
             </div>
-          </div> */}
+          </div>
 
           {/* Quantity and Add to Cart */}
           <div className="flex items-center justify-between space-x-4">
