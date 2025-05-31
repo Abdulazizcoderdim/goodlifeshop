@@ -59,7 +59,7 @@ const ProductsPage = () => {
 
   return (
     <div className="flex-1 overflow-auto relative z-10">
-      <Header title="Products" />
+      <Header title="Продукты" />
 
       <main className="max-w-7xl mx-auto py-6 px-4 lg:px-8">
         {/* STATS */}
@@ -70,19 +70,19 @@ const ProductsPage = () => {
           transition={{ duration: 1 }}
         >
           <StatCard
-            name="Total Products"
+            name="Всего продуктов"
             icon={Package}
             value={pagination.totalElements}
             color="#6366F1"
           />
           <StatCard
-            name="New Products"
+            name="Новые продукты"
             icon={TrendingUp}
             value={filterTodayAddProduct()}
             color="#10B981"
           />
           <StatCard
-            name="Settings"
+            name="Настройки"
             icon={Settings}
             value={
               <button

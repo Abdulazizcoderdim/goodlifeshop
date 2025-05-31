@@ -32,7 +32,7 @@ const OverviewPage = () => {
             color="#8B5CF6"
           />
           <StatCard
-            name="Total Products"
+            name="Всего продуктов"
             icon={ShoppingBag}
             value="567"
             color="#EC4899"

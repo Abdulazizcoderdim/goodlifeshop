@@ -66,7 +66,7 @@ const CategoryAdmin = () => {
             color="#8B5CF6"
           />
           <StatCard
-            name="Settings"
+            name="Настройки"
             icon={Settings}
             value={
               <button
