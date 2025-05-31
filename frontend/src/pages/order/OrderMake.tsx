@@ -51,6 +51,26 @@ const OrderMake = () => {
     }
   }, []);
 
+  const DELIVERY_FEE = 0; // agar keyinchalik yetkazib berish pulli bo‘lsa, bu yerda o'zgartirasiz
+  const VAT_RATE = 0.2; // 20% НДС
+
+  const calculatePriceDetails = () => {
+    const totalPrice = cartItems.reduce((total, item) => {
+      const price = item.product?.price || 0;
+      return total + price * item.quantity;
+    }, 0);
+
+    const vatAmount = totalPrice * (VAT_RATE / (1 + VAT_RATE)); // NDS ni umumiy summadan ajratib olish
+    const finalTotal = totalPrice + DELIVERY_FEE;
+
+    return {
+      totalPrice,
+      vatAmount,
+      deliveryFee: DELIVERY_FEE,
+      finalTotal,
+    };
+  };
+
   return (
     <div className="bg-gray">
       <div className="custom-container pb-5">
@@ -171,20 +191,43 @@ const OrderMake = () => {
             <div className="border-t border-t-red-500 sm:p-4 p-2">
               <div className="flex text-lg font-bold border-b py-3 items-center justify-between">
                 <h1>Общая стоимость</h1>
-                <p>35 500.00</p>
+                <p>
+                  {calculatePriceDetails().totalPrice.toLocaleString("ru-RU")} ₽
+                </p>
               </div>
 
               <div className="flex mt-5 items-center justify-between">
                 <p>НДС (20%, включен в цену):</p>
-                <p>5 916.67</p>
+                <p>
+                  {calculatePriceDetails()
+                    .vatAmount.toFixed(2)
+                    .toLocaleString()}{" "}
+                  ₽
+                </p>
               </div>
+
               <div className="flex mt-5 items-center justify-between">
                 <p>Доставка:</p>
-                <p className="text-green-500">бесплатно</p>
+                <p
+                  className={
+                    calculatePriceDetails().deliveryFee === 0
+                      ? "text-green-500"
+                      : ""
+                  }
+                >
+                  {calculatePriceDetails().deliveryFee === 0
+                    ? "бесплатно"
+                    : `${calculatePriceDetails().deliveryFee.toLocaleString(
+                        "ru-RU"
+                      )} ₽`}
+                </p>
               </div>
+
               <div className="flex mt-5 items-center justify-between">
                 <p>Итого:</p>
-                <p>35 500.00</p>
+                <p>
+                  {calculatePriceDetails().finalTotal.toLocaleString("ru-RU")} ₽
+                </p>
               </div>
 
               <Button

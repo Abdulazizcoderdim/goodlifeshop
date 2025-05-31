@@ -159,25 +159,25 @@ export default function Footer() {
               <h3 className="font-bold uppercase text-lg">МОЙ ZWILLING</h3>
               <ul className="space-y-2 text-sm">
                 <li>
-                  <Link to="#" className="hover:underline">
+                  <Link to="/personal" className="hover:underline">
                     ЛИЧНЫЙ КАБИНЕТ
                   </Link>
                 </li>
                 <li>
-                  <Link to="#" className="hover:underline">
+                  <Link to="/personal/orders" className="hover:underline">
                     ТЕКУЩИЕ ЗАКАЗЫ
                   </Link>
                 </li>
                 <li>
-                  <Link to="#" className="hover:underline">
+                  <Link to="/personal/private" className="hover:underline">
                     ЛИЧНЫЕ ДАННЫЕ
                   </Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link to="#" className="hover:underline">
                     АДРЕСА МАГАЗИНОВ
                   </Link>
-                </li>
+                </li> */}
               </ul>
             </div>
 
@@ -186,27 +186,27 @@ export default function Footer() {
               <h3 className="font-bold uppercase text-lg">ПОМОЩЬ</h3>
               <ul className="space-y-2 text-sm">
                 <li>
-                  <Link to="#" className="hover:underline">
+                  <Link to="/here_to_help/kontakty" className="hover:underline">
                     ВОЗВРАТ И ОБМЕН
                   </Link>
                 </li>
                 <li>
-                  <Link to="#" className="hover:underline">
+                  <Link to="/here_to_help/kontakty" className="hover:underline">
                     ДОСТАВКА
                   </Link>
                 </li>
                 <li>
-                  <Link to="#" className="hover:underline">
+                  <Link to="/here_to_help/kontakty" className="hover:underline">
                     ОБРАТНАЯ СВЯЗЬ
                   </Link>
                 </li>
                 <li>
-                  <Link to="#" className="hover:underline">
+                  <Link to="/here_to_help/kontakty" className="hover:underline">
                     КОНТАКТЫ
                   </Link>
                 </li>
                 <li>
-                  <Link to="#" className="hover:underline">
+                  <Link to="/here_to_help/kontakty" className="hover:underline">
                     ОЦЕНКА УСЛОВИЙ ТРУДА
                   </Link>
                 </li>
@@ -243,29 +243,32 @@ export default function Footer() {
               <h3 className="font-bold uppercase text-lg">НАШИ БРЕНДЫ</h3>
               <ul className="space-y-2 text-sm">
                 <li>
-                  <Link to="#" className="hover:underline">
+                  <Link to="/catalog/zwilling" className="hover:underline">
                     ZWILLING
                   </Link>
                 </li>
                 <li>
-                  <Link to="#" className="hover:underline">
+                  <Link to="/catalog/staub" className="hover:underline">
                     STAUB
                   </Link>
                 </li>
                 <li>
-                  <Link to="#" className="hover:underline">
+                  <Link to="/catalog/ballarini" className="hover:underline">
                     BALLARINI
                   </Link>
                 </li>
               </ul>
-              <div className="mt-6">
-                <p className="text-sm">РАЗРАБОТЧИК САЙТА</p>
+              <div
+                className="mt-6"
+                onClick={() => window.open("https://www.vedita.ru", "_blank")}
+              >
+                <p className="text-sm cursor-pointer">РАЗРАБОТЧИК САЙТА</p>
                 <img
                   src="/veda.svg?height=30&width=80"
                   alt="Developer Logo"
                   width={80}
                   height={30}
-                  className="mt-2"
+                  className="mt-2 cursor-pointer"
                 />
               </div>
             </div>
