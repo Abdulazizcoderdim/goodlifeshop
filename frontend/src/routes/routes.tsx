@@ -44,6 +44,9 @@ import BrandHistory from "@/pages/brands/BrandHistory";
 import UseCare from "@/pages/brands/use-care";
 import VdokhnovlyayushchieRetsept from "@/pages/brands/vdokhnovlyayushchie-retsept";
 import VdokhnovlyayushchieRetseptSlug from "@/pages/brands/slugs/VdokhnovlyayushchieRetseptSlug";
+import UseCareSlug from "@/pages/brands/slugs/UseCareSlug";
+import BrandHistorySlug from "@/pages/brands/slugs/BrandHistorySlug";
+import CulinarWorld from "@/pages/brands/CulinarWorld";
 
 export const router = createBrowserRouter([
   {
@@ -109,8 +112,20 @@ export const router = createBrowserRouter([
         element: <BrandHistory />,
       },
       {
+        path: "/culinary-world/o-kompanii/:slug",
+        element: <BrandHistorySlug />,
+      },
+      {
+        path: "culinary-world",
+        element: <CulinarWorld />,
+      },
+      {
         path: "/culinary-world/use-care",
         element: <UseCare />,
+      },
+      {
+        path: "/culinary-world/use-care/:slug",
+        element: <UseCareSlug />,
       },
       {
         path: "/culinary-world/vdokhnovlyayushchie-retsepty",

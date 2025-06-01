@@ -98,7 +98,9 @@ export default function VdokhnovlyayushchieRetsept() {
           <nav className="text-sm text-gray-600">
             <span>ГЛАВНАЯ</span>
             <span className="mx-2">/</span>
-            <span>МИР КУЛИНАРИИ</span>
+            <Link to="/culinary-world/" className="cursor-pointer">
+              МИР КУЛИНАРИИ
+            </Link>
             <span className="mx-2">/</span>
             <span className="text-gray-900 uppercase">
               Вдохновляющие рецепты

@@ -44,7 +44,9 @@ export default function UseCare() {
           <nav className="text-sm text-gray-600">
             <span>ГЛАВНАЯ</span>
             <span className="mx-2">/</span>
-            <span>МИР КУЛИНАРИИ</span>
+            <Link to="/culinary-world/" className="cursor-pointer">
+              МИР КУЛИНАРИИ
+            </Link>
             <span className="mx-2">/</span>
             <span className="text-gray-900 uppercase">
               Использование и уход
@@ -119,12 +121,12 @@ export default function UseCare() {
             <div className="flex justify-end mb-6">
               <div className="flex items-center gap-2 text-sm">
                 <span className="text-gray-600">ПОКАЗЫВАТЬ ПО:</span>
-                <Select defaultValue="12">
+                <Select defaultValue="3">
                   <SelectTrigger className="w-20 h-8">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent defaultValue={"12"}>
-                    <SelectItem value="12">12</SelectItem>
+                  <SelectContent defaultValue={"3"}>
+                    <SelectItem value="3">3</SelectItem>
                     {/* <SelectItem value="24">24</SelectItem> */}
                     {/* <SelectItem value="48">48</SelectItem> */}
                   </SelectContent>

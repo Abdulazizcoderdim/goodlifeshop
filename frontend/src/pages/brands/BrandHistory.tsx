@@ -33,54 +33,54 @@ const data = [
       "https://zwilling.ru/upload/resize_cache/iblock/7e7/300_210_2/t71flryobfo2j5qofleohkr8605u850x.webp",
     link: "/culinary-world/o-kompanii/ballarini-purpose",
   },
-  {
-    title: "BALLARINI - НАСЛЕДИЕ",
-    imageUrl:
-      "https://zwilling.ru/upload/resize_cache/iblock/899/300_210_2/8fj9su5rbxjbichx79e1irdkpgvuif3y.webp",
-    link: "/culinary-world/o-kompanii/ballarini-heritage",
-  },
-  {
-    title: "STAUB - МИРОВОЙ БРЕНД",
-    imageUrl:
-      "https://zwilling.ru/upload/resize_cache/iblock/b33/300_210_2/eypbur51moy0v17psj6ga9upuw051v29.webp",
-    link: "/culinary-world/o-kompanii/staub-world",
-  },
-  {
-    title: "STAUB - ЧУГУННЫЕ КОКОТЫ",
-    imageUrl:
-      "https://zwilling.ru/upload/resize_cache/iblock/ea7/300_210_2/fkpvf3ongjq3liyhkf4jv713aqzkmmlt.webp",
-    link: "/culinary-world/o-kompanii/staub-cocotte",
-  },
-  {
-    title: "STAUB - АССОРТИМЕНТ",
-    imageUrl:
-      "https://zwilling.ru/upload/resize_cache/iblock/8ae/300_210_2/mcwbv028hcjs2q2hvylk5lcwp830jkog.webp",
-    link: "/culinary-world/o-kompanii/staub-assortement",
-  },
-  {
-    title: "STAUB - СДЕЛАНО ВО ФРАНЦИИ",
-    imageUrl:
-      "https://zwilling.ru/upload/resize_cache/iblock/426/300_210_2/i8k76rsk60epbkuxpjfw9k03dg382sic.webp",
-    link: "/culinary-world/o-kompanii/staub-made-in-france",
-  },
-  {
-    title: "ZWILLING ENFINIGY",
-    imageUrl:
-      "https://zwilling.ru/upload/resize_cache/iblock/f3f/300_210_2/8jhk3tru09w6e05r2j3ay3hdc9xb02hc.webp",
-    link: "/culinary-world/o-kompanii/zwilling-enfinigy",
-  },
-  {
-    title: "ZWILLING FRESH&SAVE",
-    imageUrl:
-      "https://zwilling.ru/upload/resize_cache/iblock/f3f/300_210_2/8jhk3tru09w6e05r2j3ay3hdc9xb02hc.webp",
-    link: "/culinary-world/o-kompanii/zwilling-fresh-save",
-  },
-  {
-    title: "ZWILLING - КАЧЕСТВО",
-    imageUrl:
-      "https://zwilling.ru/upload/resize_cache/iblock/dc2/300_210_2/cv6nnl0bei46qbyyh36icw015w4srz9c.webp",
-    link: "/culinary-world/o-kompanii/zwilling-quality",
-  },
+  // {
+  //   title: "BALLARINI - НАСЛЕДИЕ",
+  //   imageUrl:
+  //     "https://zwilling.ru/upload/resize_cache/iblock/899/300_210_2/8fj9su5rbxjbichx79e1irdkpgvuif3y.webp",
+  //   link: "/culinary-world/o-kompanii/ballarini-heritage",
+  // },
+  // {
+  //   title: "STAUB - МИРОВОЙ БРЕНД",
+  //   imageUrl:
+  //     "https://zwilling.ru/upload/resize_cache/iblock/b33/300_210_2/eypbur51moy0v17psj6ga9upuw051v29.webp",
+  //   link: "/culinary-world/o-kompanii/staub-world",
+  // },
+  // {
+  //   title: "STAUB - ЧУГУННЫЕ КОКОТЫ",
+  //   imageUrl:
+  //     "https://zwilling.ru/upload/resize_cache/iblock/ea7/300_210_2/fkpvf3ongjq3liyhkf4jv713aqzkmmlt.webp",
+  //   link: "/culinary-world/o-kompanii/staub-cocotte",
+  // },
+  // {
+  //   title: "STAUB - АССОРТИМЕНТ",
+  //   imageUrl:
+  //     "https://zwilling.ru/upload/resize_cache/iblock/8ae/300_210_2/mcwbv028hcjs2q2hvylk5lcwp830jkog.webp",
+  //   link: "/culinary-world/o-kompanii/staub-assortement",
+  // },
+  // {
+  //   title: "STAUB - СДЕЛАНО ВО ФРАНЦИИ",
+  //   imageUrl:
+  //     "https://zwilling.ru/upload/resize_cache/iblock/426/300_210_2/i8k76rsk60epbkuxpjfw9k03dg382sic.webp",
+  //   link: "/culinary-world/o-kompanii/staub-made-in-france",
+  // },
+  // {
+  //   title: "ZWILLING ENFINIGY",
+  //   imageUrl:
+  //     "https://zwilling.ru/upload/resize_cache/iblock/f3f/300_210_2/8jhk3tru09w6e05r2j3ay3hdc9xb02hc.webp",
+  //   link: "/culinary-world/o-kompanii/zwilling-enfinigy",
+  // },
+  // {
+  //   title: "ZWILLING FRESH&SAVE",
+  //   imageUrl:
+  //     "https://zwilling.ru/upload/resize_cache/iblock/f3f/300_210_2/8jhk3tru09w6e05r2j3ay3hdc9xb02hc.webp",
+  //   link: "/culinary-world/o-kompanii/zwilling-fresh-save",
+  // },
+  // {
+  //   title: "ZWILLING - КАЧЕСТВО",
+  //   imageUrl:
+  //     "https://zwilling.ru/upload/resize_cache/iblock/dc2/300_210_2/cv6nnl0bei46qbyyh36icw015w4srz9c.webp",
+  //   link: "/culinary-world/o-kompanii/zwilling-quality",
+  // },
 ];
 
 export default function BrandHistory() {
@@ -92,7 +92,9 @@ export default function BrandHistory() {
           <nav className="text-sm text-gray-600">
             <span>ГЛАВНАЯ</span>
             <span className="mx-2">/</span>
-            <span>МИР КУЛИНАРИИ</span>
+            <Link to="/culinary-world/" className="cursor-pointer">
+              МИР КУЛИНАРИИ
+            </Link>
             <span className="mx-2">/</span>
             <span className="text-gray-900">ИСТОРИЯ БРЕНДА</span>
           </nav>
@@ -149,7 +151,7 @@ export default function BrandHistory() {
                 <AccordionTrigger>ФИЛЬТР</AccordionTrigger>
                 <AccordionContent>
                   <div className="text-sm text-gray-600">
-                    <p>Выбрано: 11</p>
+                    <p>Выбрано: 3</p>
                     <button className="text-blue-600 hover:underline mt-1">
                       Показать
                     </button>
@@ -165,12 +167,12 @@ export default function BrandHistory() {
             <div className="flex justify-end mb-6">
               <div className="flex items-center gap-2 text-sm">
                 <span className="text-gray-600">ПОКАЗЫВАТЬ ПО:</span>
-                <Select defaultValue="12">
+                <Select defaultValue="3">
                   <SelectTrigger className="w-20 h-8">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent defaultValue={"12"}>
-                    <SelectItem value="12">12</SelectItem>
+                  <SelectContent defaultValue={"3"}>
+                    <SelectItem value="3">3</SelectItem>
                     {/* <SelectItem value="24">24</SelectItem> */}
                     {/* <SelectItem value="48">48</SelectItem> */}
                   </SelectContent>

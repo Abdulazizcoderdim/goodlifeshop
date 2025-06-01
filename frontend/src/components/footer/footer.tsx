@@ -226,12 +226,18 @@ export default function Footer() {
                   </Link>
                 </li>
                 <li>
-                  <Link to="#" className="hover:underline">
+                  <Link
+                    to="/culinary-world/vdokhnovlyayushchie-retsepty"
+                    className="hover:underline"
+                  >
                     ВДОХНОВЛЯЮЩИЕ РЕЦЕПТЫ
                   </Link>
                 </li>
                 <li>
-                  <Link to="#" className="hover:underline">
+                  <Link
+                    to="/culinary-world/use-care"
+                    className="hover:underline"
+                  >
                     ИСПОЛЬЗОВАНИЕ И УХОД
                   </Link>
                 </li>
