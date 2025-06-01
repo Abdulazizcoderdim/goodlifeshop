@@ -210,7 +210,7 @@ const CatalogUserPage = () => {
                               />
                             </div>
                           </div>
-                          <h3 className="text-center font-bold text-sm md:text-base mt-2">
+                          <h3 className="text-center uppercase font-bold text-sm md:text-base mt-2">
                             {item.name}
                           </h3>
                           <p className="text-center text-xs">
