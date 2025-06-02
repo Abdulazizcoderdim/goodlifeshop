@@ -96,7 +96,7 @@ const CatalogUserPage = () => {
       case "aksessuary":
         return "/n3.png";
       case "mir-krasoty":
-        return "n4.png";
+        return "/n4.png";
       case "tehnika":
         return "/n5.png";
       case "hranenie":

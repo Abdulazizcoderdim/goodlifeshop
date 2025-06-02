@@ -332,7 +332,7 @@ const ProductUserPage = () => {
                 </AccordionTrigger>
                 <AccordionContent className="pb-4 text-gray-600">
                   <div className="space-y-2">
-                    <div className={`flex bg-gray-100 `}>
+                    <div className={`flex bg-[#F2F0EE]`}>
                       <div className="w-1/2 px-4 py-3 text-sm font-medium text-gray-700 border-r border-gray-200">
                         Артикул:
                       </div>
@@ -348,7 +348,7 @@ const ProductUserPage = () => {
                         {product?.brand}
                       </div>
                     </div>
-                    <div className={`flex bg-gray-100 `}>
+                    <div className={`flex bg-[#F2F0EE]`}>
                       <div className="w-1/2 px-4 py-3 text-sm font-medium text-gray-700 border-r border-gray-200">
                         Серия:
                       </div>
@@ -382,7 +382,7 @@ const ProductUserPage = () => {
                         <div
                           key={index}
                           className={`flex ${
-                            index % 2 === 0 ? "bg-gray-100" : "bg-white"
+                            index % 2 === 0 ? "bg-[#F2F0EE]" : "bg-white"
                           }`}
                         >
                           <div className="w-1/2 px-4 py-3 text-sm font-medium text-gray-700 border-r border-gray-200">
@@ -405,7 +405,7 @@ const ProductUserPage = () => {
                         <div
                           key={index}
                           className={`flex ${
-                            index % 2 === 0 ? "bg-gray-100" : "bg-white"
+                            index % 2 === 0 ? "bg-[#F2F0EE]" : "bg-white"
                           }`}
                         >
                           <div className="w-1/2 px-4 py-3 text-sm font-medium text-gray-700 border-r border-gray-200">
