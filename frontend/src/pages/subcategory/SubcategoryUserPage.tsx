@@ -35,70 +35,64 @@ const SubcategoryUserPage = () => {
   const [sortOrder, setSortOrder] = useState<string>("asc");
 
   useEffect(() => {
-    fetchProductsBySlug(pagination.number, sortOrder);
-  }, [category, sortOrder]);
+    if (subcategory) {
+      fetchProductsBySlug(pagination.number, sortOrder);
+    }
+  }, [subcategory, category, sortOrder]);
 
-  const fetchProductsBySlug = async (page: number, sortOrder?: string) => {
+  const fetchProductsBySlug = async (page: number, sortOrder = "asc") => {
     try {
       setLoading(true);
       const res = await api.get(
-        `/categories/${category}?page=${page}&size=${pagination.size}&sortBy=price&sortOrder=${sortOrder}`
+        `/subcategories/slug/${subcategory}?page=${page}&size=${pagination.size}&sortBy=price&sortOrder=${sortOrder}`
       );
 
-      console.log(res);
-
-      setProducts(res.data.content);
-      setPagination(res.data.pagination);
-      setCategorys(res.data.category);
+      const fetchedProducts = res.data.content || [];
+      setProducts(fetchedProducts);
+      setPagination(res.data.pagination || pagination);
+      setCategorys(fetchedProducts[0]?.category || null);
     } catch (error) {
-      console.log(error);
+      console.error("Xatolik:", error);
     } finally {
       setLoading(false);
     }
   };
 
-  const filterName = () => {
-    if (categorys) {
-      return categorys.subcategories.find((item) => item.slug === subcategory);
-    }
-  };
-
-  if (loading) {
-    return (
-      <div className="text-center h-screen flex justify-center animate-pulse items-center text-lg custom-container py-10">
-        Loading...
-      </div>
-    );
-  }
+  const firstProduct = products[0];
+  const subcategoryInfo = firstProduct?.subcategory;
 
   return (
     <div className="custom-container">
-      {/* catloglar */}
       <CatalogNames />
-      {/* contents */}
+
       <div className="pt-10 pb-5 max-md:hidden">
-        {/* path url */}
         <div className="flex items-center gap-3">
-          <Link to={"/"} className="uppercase">
+          <Link to="/" className="uppercase">
             Главная
-          </Link>
+          </Link>{" "}
           /
-          <Link to={"/catalog"} className="uppercase">
+          <Link to="/catalog" className="uppercase">
             Каталог
-          </Link>
+          </Link>{" "}
           /
-          <Link to={`/catalog/${categorys?.slug}`} className="uppercase">
-            {categorys?.name}
-          </Link>
-          /<p className="uppercase">{filterName()?.name}</p>
+          {categorys && (
+            <>
+              <Link to={`/catalog/${categorys.slug}`} className="uppercase">
+                {categorys.name}
+              </Link>{" "}
+              /
+            </>
+          )}
+          <p className="uppercase">{subcategoryInfo?.name || "..."}</p>
         </div>
       </div>
 
-      {/* contents */}
       <div className="mt-10">
         <div className="flex flex-col gap-5 justify-center text-center">
-          <h1 className="uppercase text-3xl font-bold">{filterName()?.name}</h1>
-          <p className="text-sm">{filterName()?.description}</p>
+          <h1 className="uppercase text-3xl font-bold">
+            {subcategoryInfo?.name || "Подкатегория"}
+          </h1>
+          <p className="text-sm">{subcategoryInfo?.description || ""}</p>
         </div>
       </div>
 
@@ -115,11 +109,7 @@ const SubcategoryUserPage = () => {
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
-                <SelectItem
-                  defaultValue={"asc"}
-                  value="asc"
-                  className="uppercase"
-                >
+                <SelectItem value="asc" className="uppercase">
                   Цена: по возрастанию
                 </SelectItem>
                 <SelectItem value="desc" className="uppercase">
@@ -128,7 +118,7 @@ const SubcategoryUserPage = () => {
               </SelectGroup>
             </SelectContent>
           </Select>
-          <p className="">
+          <p>
             Показывать{" "}
             <span className="font-normal text-gray-600">
               ({products.length})
@@ -136,9 +126,14 @@ const SubcategoryUserPage = () => {
           </p>
         </div>
       </div>
+
       {loading ? (
-        <div className="max-w-60 w-full mt-5">
-          <ProductItemLoading />
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-5 mb-5">
+          {Array.from({ length: 4 }, (_, index) => (
+            <div key={index}>
+              <ProductItemLoading />
+          </div>
+          ))}
         </div>
       ) : (
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-5 mb-5">

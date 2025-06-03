@@ -24,20 +24,17 @@ import { useImageUploader } from "@/hooks/useImageUploader";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import api from "@/http/axios";
-import type { Category, IProductVariant } from "@/types";
+import type { Category, IProductVariant, Subcategory } from "@/types";
 
 // Zod validation schema
 const productSchema = z.object({
-  title: z
-    .string()
-    .min(1, "Название обязательно")
-    .max(255, "Название слишком длинное"),
+  title: z.string().min(1, "Требуется имя").max(255, "Имя слишком длинное."),
   description: z.string().optional(),
   article: z.string().optional(),
   brand: z.string().optional(),
   series: z.string().optional(),
   originCountry: z.string().optional(),
-  price: z.number().min(0, "Цена должна быть положительной"),
+  price: z.number().min(0, "Цена должна быть положительной."),
   discountPercentage: z.number().optional(),
   color: z.string().optional(),
   dishwasherSafe: z.boolean().default(false).optional(),
@@ -45,15 +42,15 @@ const productSchema = z.object({
   dimensions: z.object({
     productWeight: z
       .number()
-      .min(0, "Вес должен быть положительным")
+      .min(0, "Вес должен быть положительным.")
       .optional(),
     productHeight: z
       .number()
-      .min(0, "Высота должна быть положительной")
+      .min(0, "Высота должна быть положительной.")
       .optional(),
     productWidth: z
       .number()
-      .min(0, "Ширина должна быть положительной")
+      .min(0, "Ширина должна быть положительной.")
       .optional(),
     productLength: z
       .number()
@@ -61,22 +58,22 @@ const productSchema = z.object({
       .optional(),
     packageHeight: z
       .number()
-      .min(0, "Высота упаковки должна быть положительной")
+      .min(0, "Высота упаковки должна быть положительной.")
       .optional(),
     packageWidth: z
       .number()
-      .min(0, "Ширина упаковки должна быть положительной")
+      .min(0, "Ширина упаковки должна быть положительной.")
       .optional(),
     packageLength: z
       .number()
-      .min(0, "Длина упаковки должна быть положительной")
+      .min(0, "Длина пакета должна быть положительной.")
       .optional(),
     productVolume: z
       .number()
-      .min(0, "Объем должен быть положительным")
+      .min(0, "Громкость должна быть положительной.")
       .optional(),
   }),
-  images: z.array(z.string().url("Неверный URL изображения")).default([]),
+  images: z.array(z.string().url("Неверный адрес изображения")).default([]),
   characteristics: z
     .array(
       z.object({
@@ -91,20 +88,27 @@ const productSchema = z.object({
   category: z.object({
     id: z.string(),
     name: z.string(),
+    subcategories: z.array(
+      z.object({
+        id: z.string(),
+        name: z.string(),
+      })
+    ),
   }),
+  subcategoryId: z.string().min(1, "Требуется выбор подкатегории."),
   variants: z
     .array(
       z.object({
         color: z.string().optional(),
-        price: z.number().min(0, "Цена варианта должна быть положительной"),
+        price: z.number().min(0, "Цена опциона должна быть положительной"),
         inStock: z.boolean().default(true),
-        images: z.array(z.string().url("Неверный URL изображения")).default([]),
+        images: z
+          .array(z.string().url("Неверный адрес изображения"))
+          .default([]),
       })
     )
     .default([]),
 });
-
-// type FormData = z.infer<typeof productSchema>;
 
 interface CategoriesResponse {
   success: boolean;
@@ -124,7 +128,7 @@ interface ProductDimensions {
 
 interface Characteristic {
   key?: string;
-  value?: string; // transform orqali stringga aylantirilgan
+  value?: string;
 }
 
 export interface FormData {
@@ -137,12 +141,13 @@ export interface FormData {
   price: number;
   discountPercentage?: number;
   color?: string;
-  dishwasherSafe?: boolean; // default false
-  batteryRequired?: boolean; // default false
+  dishwasherSafe?: boolean;
+  batteryRequired?: boolean;
   dimensions: ProductDimensions;
   images: string[];
   characteristics: Characteristic[];
   category: Category;
+  subcategoryId: string;
   variants: IProductVariant[];
 }
 
@@ -154,6 +159,9 @@ const NewProductAdd = () => {
     [key: string]: boolean;
   }>({});
   const [categories, setCategories] = useState<Category[]>([]);
+  const [availableSubcategories, setAvailableSubcategories] = useState<
+    Subcategory[]
+  >([]);
 
   const { uploadImage } = useImageUploader();
 
@@ -166,7 +174,7 @@ const NewProductAdd = () => {
     setValue,
     getValues,
     trigger,
-  } = useForm({
+  } = useForm<FormData>({
     resolver: zodResolver(productSchema),
     defaultValues: {
       title: "",
@@ -195,11 +203,14 @@ const NewProductAdd = () => {
       category: {
         id: "",
         name: "",
+        subcategories: [],
       },
+      subcategoryId: "",
       variants: [],
     },
   });
 
+  // Field arrays
   const {
     fields: characteristicFields,
     append: appendCharacteristic,
@@ -223,16 +234,13 @@ const NewProductAdd = () => {
     const fetchData = async () => {
       setIsLoadingData(true);
       try {
-        const categoriesResponse = await api.get<CategoriesResponse>(
-          "/categories"
-        );
-
-        if (categoriesResponse.data.content) {
-          setCategories(categoriesResponse.data.content);
+        const { data } = await api.get<CategoriesResponse>("/categories");
+        if (data.content) {
+          setCategories(data.content);
         }
       } catch (error) {
-        console.error("Error fetching data:", error);
-        toast.error("Failed to load categories. Please try again.");
+        console.error("Не удалось загрузить данные:", error);
+        toast.error("Невозможно загрузить категории. Попробуйте еще раз.");
       } finally {
         setIsLoadingData(false);
       }
@@ -240,6 +248,22 @@ const NewProductAdd = () => {
 
     fetchData();
   }, []);
+
+  // Watch category changes and update subcategories
+  useEffect(() => {
+    const subscription = watch((value, { name }) => {
+      if (name === "category.id" && value.category?.id) {
+        const selectedCategory = categories.find(
+          (cat) => cat.id === value.category.id
+        );
+        if (selectedCategory) {
+          setAvailableSubcategories(selectedCategory.subcategories || []);
+          setValue("subcategoryId", "");
+        }
+      }
+    });
+    return () => subscription.unsubscribe();
+  }, [watch, categories, setValue]);
 
   const handleImageUpload = async (file: File, index: number) => {
     setUploadingImages((prev) => ({ ...prev, [index]: true }));
@@ -252,10 +276,10 @@ const NewProductAdd = () => {
         newImages[index] = imageUrl;
         setValue("images", newImages);
         await trigger("images");
-        toast.success("Image uploaded successfully");
+        toast.success("Изображение успешно загружено");
       }
     } catch (error) {
-      toast.error("Failed to upload image");
+      toast.error("Не удалось загрузить изображение.");
       console.error(error);
     } finally {
       setUploadingImages((prev) => ({ ...prev, [index]: false }));
@@ -289,7 +313,7 @@ const NewProductAdd = () => {
         newVariants[variantIndex].images[imageIndex] = imageUrl;
         setValue("variants", newVariants);
         await trigger(`variants.${variantIndex}.images`);
-        toast.success("Variant image uploaded successfully");
+        toast.success("Вариант изображения успешно загружен");
       }
     } catch (error) {
       toast.error("Failed to upload variant image");
@@ -349,6 +373,7 @@ const NewProductAdd = () => {
           characteristics[key] = value;
         }
       });
+      console.log(data);
 
       const submitData = {
         title: data.title,
@@ -375,6 +400,7 @@ const NewProductAdd = () => {
         images: data.images.filter((url) => url.trim()),
         characteristics,
         categoryId: data.category.id,
+        subcategoryId: data.subcategoryId,
         variants: data.variants.map((variant) => ({
           ...variant,
           price: Number(variant.price),
@@ -413,7 +439,7 @@ const NewProductAdd = () => {
         <div className="flex items-center justify-center min-h-[400px]">
           <div className="text-center">
             <Loader2 className="w-8 h-8 animate-spin mx-auto mb-4" />
-            <p className="text-gray-600">Loading product data...</p>
+            <p className="text-gray-600">Загрузка данных о продукте...</p>
           </div>
         </div>
       </div>
@@ -628,8 +654,12 @@ const NewProductAdd = () => {
                         setValue("category", {
                           id: selectedCategory.id,
                           name: selectedCategory.name,
+                          subcategories: selectedCategory.subcategories || [],
                         });
-                        trigger("category");
+                        setAvailableSubcategories(
+                          selectedCategory.subcategories || []
+                        );
+                        setValue("subcategoryId", "");
                       }
                     }}
                   >
@@ -651,6 +681,46 @@ const NewProductAdd = () => {
                   {errors.category?.id && (
                     <p className="text-sm text-red-400 mt-1">
                       {errors.category.id.message}
+                    </p>
+                  )}
+                </div>
+
+                <div>
+                  <Label htmlFor="subcategoryId">Подкатегория *</Label>
+                  <Select
+                    value={watch("subcategoryId")}
+                    onValueChange={(value) => setValue("subcategoryId", value)}
+                    disabled={
+                      !watch("category.id") ||
+                      availableSubcategories.length === 0
+                    }
+                  >
+                    <SelectTrigger className="mt-1 bg-gray-700 border-gray-600 text-white">
+                      <SelectValue
+                        placeholder={
+                          !watch("category.id")
+                            ? "Сначала выберите категорию"
+                            : availableSubcategories.length === 0
+                            ? "Подкатегория не существует"
+                            : "Выберите подкатегорию"
+                        }
+                      />
+                    </SelectTrigger>
+                    <SelectContent className="bg-gray-800 border-gray-700 text-white">
+                      {availableSubcategories.map((subcategory) => (
+                        <SelectItem
+                          key={subcategory.id}
+                          value={subcategory.id}
+                          className="hover:bg-gray-700"
+                        >
+                          {subcategory.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  {errors.subcategoryId && (
+                    <p className="text-sm text-red-400 mt-1">
+                      {errors.subcategoryId.message}
                     </p>
                   )}
                 </div>

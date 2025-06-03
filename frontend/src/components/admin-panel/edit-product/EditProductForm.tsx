@@ -21,6 +21,19 @@ import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
 import api from "@/http/axios";
 
+interface Subcategory {
+  id: string;
+  name: string;
+  slug: string;
+  categoryId: string;
+  description?: string;
+  products?: IProduct[];
+  createdAt?: string;
+  updatedAt?: string;
+  category?: Category;
+  imageUrl?: string;
+}
+
 interface FormData {
   title: string;
   description: string;
@@ -48,7 +61,9 @@ interface FormData {
   category: {
     id: string;
     name: string;
+    subcategories: Subcategory[];
   };
+  subcategoryId: string;
   variants: IProductVariant[];
 }
 
@@ -86,7 +101,9 @@ const EditProductForm = () => {
   }>({});
   const [categories, setCategories] = useState<Category[]>([]);
   const [product, setProduct] = useState<IProduct | null>(null);
-
+  const [availableSubcategories, setAvailableSubcategories] = useState<
+    Category["subcategories"]
+  >([]);
   const { uploadImage } = useImageUploader();
 
   const {
@@ -143,6 +160,8 @@ const EditProductForm = () => {
           const productData = productResponse.data.content;
           setProduct(productData);
 
+          console.log(productData, "asasas");
+
           // Convert characteristics object to array for form handling
           const characteristicsArray = Object.entries(
             productData.characteristics || {}
@@ -150,6 +169,10 @@ const EditProductForm = () => {
             key,
             value,
           }));
+
+          const productCategory = categoriesResponse.data.content.find(
+            (cat) => cat.id === productData.category.id
+          );
 
           // Reset form with fetched data
           reset({
@@ -170,9 +193,15 @@ const EditProductForm = () => {
             category: {
               id: productData.category.id,
               name: productData.category.name,
+              subcategories: productCategory?.subcategories || [],
             },
+            subcategoryId: productData.subcategoryId || "",
             variants: productData.variants,
           });
+
+          if (productCategory) {
+            setAvailableSubcategories(productCategory.subcategories);
+          }
         }
 
         if (categoriesResponse.data.content) {
@@ -305,6 +334,7 @@ const EditProductForm = () => {
         images: data.images.filter((url) => url.trim()),
         characteristics,
         categoryId: data.category.id,
+        subcategoryId: data.subcategoryId,
         variants: data.variants.map((variant) => ({
           ...variant,
           price: Number(variant.price),
@@ -333,6 +363,21 @@ const EditProductForm = () => {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    const subscription = watch((value, { name }) => {
+      if (name === "category.id" && value.category?.id) {
+        const selectedCategory = categories.find(
+          (cat) => cat.id === value?.category?.id
+        );
+        if (selectedCategory) {
+          setAvailableSubcategories(selectedCategory.subcategories || []);
+          setValue("subcategoryId", "");
+        }
+      }
+    });
+    return () => subscription.unsubscribe();
+  }, [watch, categories, setValue]);
 
   const handleGoBack = () => {
     navigate(-1); // Go back to the previous page
@@ -541,7 +586,7 @@ const EditProductForm = () => {
                   </div>
 
                   <div>
-                    <Label htmlFor="category">Категория</Label>
+                    <Label htmlFor="category">Kategoriya *</Label>
                     <Select
                       value={watch("category.id")}
                       onValueChange={(value) => {
@@ -552,12 +597,24 @@ const EditProductForm = () => {
                           setValue("category", {
                             id: selectedCategory.id,
                             name: selectedCategory.name,
+                            subcategories: selectedCategory.subcategories.map(
+                              (subcategory) => ({
+                                id: subcategory.id,
+                                name: subcategory.name,
+                                slug: subcategory.slug,
+                                categoryId: subcategory.categoryId,
+                              })
+                            ),
                           });
+                          setAvailableSubcategories(
+                            selectedCategory.subcategories || []
+                          );
+                          setValue("subcategoryId", "");
                         }
                       }}
                     >
                       <SelectTrigger className="mt-1 bg-gray-700 border-gray-600 text-white">
-                        <SelectValue placeholder="Выберите категорию" />
+                        <SelectValue placeholder="Kategoriyani tanlang" />
                       </SelectTrigger>
                       <SelectContent className="bg-gray-800 border-gray-700 text-white">
                         {categories.map((category) => (
@@ -571,6 +628,53 @@ const EditProductForm = () => {
                         ))}
                       </SelectContent>
                     </Select>
+                    {errors.category?.id && (
+                      <p className="text-sm text-red-400 mt-1">
+                        {errors.category.id.message}
+                      </p>
+                    )}
+                  </div>
+
+                  <div>
+                    <Label htmlFor="subcategoryId">Subkategoriya *</Label>
+                    <Select
+                      value={watch("subcategoryId")}
+                      onValueChange={(value) =>
+                        setValue("subcategoryId", value)
+                      }
+                      disabled={
+                        !watch("category.id") ||
+                        availableSubcategories.length === 0
+                      }
+                    >
+                      <SelectTrigger className="mt-1 bg-gray-700 border-gray-600 text-white">
+                        <SelectValue
+                          placeholder={
+                            !watch("category.id")
+                              ? "Avval kategoriyani tanlang"
+                              : availableSubcategories.length === 0
+                              ? "Subkategoriya mavjud emas"
+                              : "Subkategoriyani tanlang"
+                          }
+                        />
+                      </SelectTrigger>
+                      <SelectContent className="bg-gray-800 border-gray-700 text-white">
+                        {availableSubcategories.map((subcategory) => (
+                          <SelectItem
+                            key={subcategory.id}
+                            value={subcategory.id}
+                            className="hover:bg-gray-700"
+                          >
+                            {subcategory.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    {errors.subcategoryId && (
+                      <p className="text-sm text-red-400 mt-1">
+                        {errors.subcategoryId.message}
+                      </p>
+                    )}
                   </div>
 
                   <div className="flex gap-6">

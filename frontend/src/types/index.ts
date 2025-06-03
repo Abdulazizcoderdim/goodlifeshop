@@ -46,7 +46,15 @@ export interface IProduct {
       }
     ];
   };
-
+  subcategory: {
+    id: string;
+    name: string;
+    slug: string;
+    categoryId: string;
+    imageUrl?: string;
+    description?: string;
+  };
+  subcategoryId: string;
   variants: IProductVariant[];
   isNew?: boolean; // optional if used
   quantity?: number;

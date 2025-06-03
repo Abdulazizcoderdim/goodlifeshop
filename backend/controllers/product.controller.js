@@ -92,7 +92,11 @@ class ProductController {
         where: { id },
         include: {
           variants: true,
-          category: true,
+          category: {
+            include: {
+              subcategories: true,
+            },
+          },
         },
       });
 
@@ -122,6 +126,7 @@ class ProductController {
         originCountry,
         price,
         categoryId,
+        subcategoryId,
         color,
         discountPercentage,
         dishwasherSafe,
@@ -149,6 +154,11 @@ class ProductController {
           originCountry,
           price,
           discountPercentage,
+          subcategory: {
+            connect: {
+              id: subcategoryId,
+            },
+          },
           category: {
             connect: {
               id: categoryId,
@@ -192,6 +202,7 @@ class ProductController {
         discountPercentage,
         categoryId,
         color,
+        subcategoryId,
         dishwasherSafe,
         batteryRequired,
         characteristics,
@@ -225,6 +236,7 @@ class ProductController {
           price,
           discountPercentage,
           categoryId: categoryId, // handle undefined
+          subcategoryId,
           color,
           dishwasherSafe,
           batteryRequired,

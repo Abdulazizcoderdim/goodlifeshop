@@ -5,6 +5,7 @@ import subcategoryController from "../controllers/subcategory.controller.js";
 const router = express.Router();
 
 router.get("/", subcategoryController.getAll);
+router.get("/slug/:slug", subcategoryController.getOneBySlug);
 router.get("/:id", subcategoryController.getOne);
 router.post("/", authMiddleware, subcategoryController.create);
 router.put("/:id", authMiddleware, subcategoryController.update);

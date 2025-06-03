@@ -142,6 +142,60 @@ class SubCategoryController {
       next(error);
     }
   }
+
+  async getOneBySlug(req, res, next) {
+    try {
+      const { slug } = req.params;
+      const { page = 1, size = 10 } = req.query;
+
+      const pageNumber = parseInt(page);
+      const pageSize = parseInt(size);
+      const skip = (pageNumber - 1) * pageSize;
+
+      // Slug orqali subcategoryni topamiz
+      const subcategory = await prisma.subcategory.findUnique({
+        where: { slug },
+      });
+
+      if (!subcategory) {
+        return next(BaseError.BadRequest("Subcategory not found"));
+      }
+
+      const [products, totalElements] = await Promise.all([
+        prisma.product.findMany({
+          where: {
+            subcategoryId: subcategory.id,
+          },
+          include: {
+            subcategory: true,
+            category: true,
+            variants: true,
+          },
+          skip,
+          take: pageSize,
+        }),
+        prisma.product.count({
+          where: {
+            subcategoryId: subcategory.id,
+          },
+        }),
+      ]);
+
+      const totalPages = Math.ceil(totalElements / pageSize);
+
+      res.json({
+        content: products,
+        pagination: {
+          number: pageNumber,
+          size: pageSize,
+          totalElements,
+          totalPages,
+        },
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 export default new SubCategoryController();

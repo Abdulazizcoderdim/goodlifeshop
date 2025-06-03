@@ -164,16 +164,20 @@ const AddNewSubCategory = ({
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={handleClose} title="Add New Subcategory">
+    <Modal
+      isOpen={isOpen}
+      onClose={handleClose}
+      title="Добавить новую подкатегорию"
+    >
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         {/* Category Selection */}
         <div className="space-y-2">
-          <Label htmlFor="categoryId">Parent Category *</Label>
+          <Label htmlFor="categoryId">Родительская категория *</Label>
           {isFetchingCategories ? (
             <div className="flex items-center justify-center p-3 border rounded-md">
               <Loader2 className="h-4 w-4 animate-spin mr-2" />
               <span className="text-sm text-gray-500">
-                Loading categories...
+                Загрузка категорий...
               </span>
             </div>
           ) : (
@@ -189,7 +193,7 @@ const AddNewSubCategory = ({
               <SelectContent>
                 {categories.length === 0 ? (
                   <div className="p-2 text-sm text-gray-500">
-                    No categories available
+                    Нет доступных категорий
                   </div>
                 ) : (
                   categories.map((category) => (
@@ -214,20 +218,22 @@ const AddNewSubCategory = ({
 
         {/* Subcategory Name */}
         <div className="space-y-2">
-          <Label htmlFor="name">Subcategory Name *</Label>
+          <Label htmlFor="name">Название подкатегории *</Label>
           <Input
             id="name"
             type="text"
             placeholder="Enter subcategory name"
             {...register("name", {
-              required: "Subcategory name is required",
+              required: "Требуется название подкатегории",
               minLength: {
                 value: 2,
-                message: "Subcategory name must be at least 2 characters",
+                message:
+                  "Название подкатегории должно содержать не менее 2 символов.",
               },
               maxLength: {
                 value: 100,
-                message: "Subcategory name must not exceed 100 characters",
+                message:
+                  "Название подкатегории не должно превышать 100 символов.",
               },
             })}
             className={errors.name ? "border-red-500" : ""}
@@ -243,7 +249,7 @@ const AddNewSubCategory = ({
           <Label htmlFor="description">Subcategory Description *</Label>
           <Textarea
             id="description"
-            placeholder="Enter subcategory description"
+            placeholder="Введите описание подкатегории"
             {...register("description")}
             className={errors.description ? "border-red-500" : ""}
             disabled={isLoading}
@@ -255,7 +261,7 @@ const AddNewSubCategory = ({
 
         {/* Subcategory Image */}
         <div className="space-y-2">
-          <Label htmlFor="image">Subcategory Image *</Label>
+          <Label htmlFor="image">Подкатегория Изображение *</Label>
 
           {/* Image Preview */}
           {(imagePreview || currentImageUrl) && (
@@ -320,10 +326,10 @@ const AddNewSubCategory = ({
             {isLoading ? (
               <>
                 <Loader2 className="h-4 w-4 animate-spin mr-2" />
-                Adding...
+                Добавление...
               </>
             ) : (
-              "Add Subcategory"
+              "Добавить подкатегорию"
             )}
           </Button>
         </div>
