@@ -488,13 +488,13 @@ const ProductUserPage = () => {
                     (item, index: number) => (
                       <SwiperSlide
                         key={index}
-                        className="py-4 bg-white rounded-md min-h-72"
+                        className="py-4 px-2 bg-white rounded-md min-h-96"
                       >
                         <Link
                           to={`/catalog/${product?.category?.slug}/${item.slug}`}
                           className="flex flex-col gap-3 items-center group transition-transform group"
                         >
-                          <div className="rounded-md p-4 mb-3 w-full flex items-center justify-center h-[160px]">
+                          <div className="rounded-md h-full p-4 mb-3 w-full flex items-center justify-center">
                             <div className="relative flex justify-center w-full h-full group-hover:scale-105 transition-all duration-200">
                               <img
                                 src={item?.imageUrl || "/placeholder.svg"}

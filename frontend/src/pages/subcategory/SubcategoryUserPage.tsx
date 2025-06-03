@@ -61,6 +61,8 @@ const SubcategoryUserPage = () => {
   const firstProduct = products[0];
   const subcategoryInfo = firstProduct?.subcategory;
 
+  console.log(products);
+
   return (
     <div className="custom-container">
       <CatalogNames />
@@ -132,7 +134,7 @@ const SubcategoryUserPage = () => {
           {Array.from({ length: 4 }, (_, index) => (
             <div key={index}>
               <ProductItemLoading />
-          </div>
+            </div>
           ))}
         </div>
       ) : (

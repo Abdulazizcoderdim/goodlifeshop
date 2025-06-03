@@ -70,7 +70,11 @@ export default function ProductItem({
           <img
             onClick={() =>
               navigate(
-                `/catalog/${product.category.slug}/${product.category.subcategories[0].slug}/${product.slug}`
+                `/catalog/${product.category.slug}/${
+                  product.category.subcategories?.[0]?.slug
+                    ? product.category.subcategories[0].slug
+                    : product.subcategory.slug
+                }/${product.slug}`
               )
             }
             src={product.images?.[0] ?? "/placeholder.svg?height=256&width=256"}
@@ -86,7 +90,11 @@ export default function ProductItem({
         <p
           onClick={() =>
             navigate(
-              `/catalog/${product.category.slug}/${product.category.subcategories[0].slug}/${product.slug}`
+              `/catalog/${product.category.slug}/${
+                product.category.subcategories?.[0]?.slug
+                  ? product.category.subcategories[0].slug
+                  : product.subcategory.slug
+              }/${product.slug}`
             )
           }
           className="text-sm text-gray-600 mt-1 line-clamp-2"

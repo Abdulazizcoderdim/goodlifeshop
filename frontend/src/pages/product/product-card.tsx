@@ -107,7 +107,11 @@ export default function ProductCard({ product }: ProductCardProps) {
                 <img
                   onClick={() =>
                     navigate(
-                      `/catalog/${product.category.slug}/${product.category.subcategories[0].slug}/${product.slug}`
+                      `/catalog/${product.category.slug}/${
+                        product.category.subcategories?.[0]?.slug
+                          ? product.category.subcategories[0].slug
+                          : product.subcategory.slug
+                      }/${product.slug}`
                     )
                   }
                   loading="lazy"
@@ -151,7 +155,11 @@ export default function ProductCard({ product }: ProductCardProps) {
           <h3
             onClick={() =>
               navigate(
-                `/catalog/${product.category.slug}/${product.category.subcategories[0].slug}/${product.slug}`
+                `/catalog/${product.category.slug}/${
+                  product.category.subcategories?.[0]?.slug
+                    ? product.category.subcategories[0].slug
+                    : product.subcategory.slug
+                }/${product.slug}`
               )
             }
             className="text-sm text-start cursor-pointer font-medium text-gray-900 mb-3 line-clamp-2 leading-tight"
