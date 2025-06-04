@@ -162,7 +162,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                 }/${product.slug}`
               )
             }
-            className="text-sm text-start cursor-pointer font-medium text-gray-900 mb-3 line-clamp-2 leading-tight"
+            className="text-sm uppercase text-start cursor-pointer font-medium text-gray-900 mb-3 line-clamp-2 leading-tight"
           >
             {product.title}
           </h3>

@@ -401,21 +401,22 @@ const ProductUserPage = () => {
                       Размеры
                     </h1>
                     {Object.entries(formatted || {}).map(
-                      ([key, value], index) => (
-                        <div
-                          key={index}
-                          className={`flex ${
-                            index % 2 === 0 ? "bg-[#F2F0EE]" : "bg-white"
-                          }`}
-                        >
-                          <div className="w-1/2 px-4 py-3 text-sm font-medium text-gray-700 border-r border-gray-200">
-                            {key}
+                      ([key, value], index) =>
+                        value && (
+                          <div
+                            key={index}
+                            className={`flex ${
+                              index % 2 === 0 ? "bg-[#F2F0EE]" : "bg-white"
+                            }`}
+                          >
+                            <div className="w-1/2 px-4 py-3 text-sm font-medium text-gray-700 border-r border-gray-200">
+                              {key}
+                            </div>
+                            <div className="w-1/2 px-4 py-3 text-sm text-gray-900">
+                              {value as number | boolean | string}
+                            </div>
                           </div>
-                          <div className="w-1/2 px-4 py-3 text-sm text-gray-900">
-                            {value as number | boolean | string}
-                          </div>
-                        </div>
-                      )
+                        )
                     )}
                   </div>
                 </AccordionContent>

@@ -97,7 +97,7 @@ export default function ProductItem({
               }/${product.slug}`
             )
           }
-          className="text-sm text-gray-600 mt-1 line-clamp-2"
+          className="text-sm uppercase text-gray-600 mt-1 line-clamp-2"
         >
           {product.title}
         </p>
