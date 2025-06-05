@@ -182,12 +182,12 @@ const ProductUserPage = () => {
           </Swiper>
 
           {/* Custom Navigation Buttons */}
-          {product?.images && product?.images?.length > 1 && (
+          {imagesProduct && imagesProduct?.length > 1 && (
             <button className="swiper-button-prev-custom absolute left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white/80 rounded-full flex items-center justify-center shadow-md hover:bg-white transition-colors">
               <ChevronLeft className="w-5 h-5 text-gray-600" />
             </button>
           )}
-          {product?.images && product?.images?.length > 1 && (
+          {imagesProduct && imagesProduct?.length > 1 && (
             <button className="swiper-button-next-custom absolute right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white/80 rounded-full flex items-center justify-center shadow-md hover:bg-white transition-colors">
               <ChevronRight className="w-5 h-5 text-gray-600" />
             </button>
