@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/select";
 import ProductItemLoading from "@/components/loading/ProductItemLoading";
 import ProductCard from "../product/product-card";
+import { Button } from "@/components/ui/button";
 
 interface Categories {
   id: number;
@@ -46,19 +47,28 @@ const CatalogUserPage = () => {
   const [sortOrder, setSortOrder] = useState<string>("asc");
 
   useEffect(() => {
-    fetchProductsBySlug(pagination.number, sortOrder);
+    if (category) {
+      fetchProductsBySlug(pagination.number, sortOrder);
+    }
   }, [category, sortOrder]);
 
-  const fetchProductsBySlug = async (page: number, sortOrder?: string) => {
+  const fetchProductsBySlug = async (
+    page: number,
+    sortOrder?: string,
+    append = false
+  ) => {
     try {
       setLoading(true);
       const res = await api.get(
         `/categories/${category}?page=${page}&size=${pagination.size}&sortBy=price&sortOrder=${sortOrder}`
       );
 
-      console.log(res);
+      const fetchedProducts = res.data.content || [];
 
-      setProducts(res.data.content);
+      setProducts((prev) =>
+        append ? [...prev, ...fetchedProducts] : fetchedProducts
+      );
+
       setPagination(res.data.pagination);
       setCategorys(res.data.category);
     } catch (error) {
@@ -292,6 +302,18 @@ const CatalogUserPage = () => {
             ))}
           </div>
         )}
+
+        <div className="flex justify-center py-5">
+          <Button
+            className="rounded-none"
+            disabled={loading || pagination.number + 1 >= pagination.totalPages}
+            onClick={() =>
+              fetchProductsBySlug(pagination.number + 1, sortOrder, true)
+            }
+          >
+            {loading ? "Загрузка..." : "Загрузить еще"}
+          </Button>
+        </div>
       </div>
     </div>
   );

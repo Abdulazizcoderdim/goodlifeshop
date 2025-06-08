@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/select";
 import ProductItemLoading from "@/components/loading/ProductItemLoading";
 import ProductCard from "../product/product-card";
+import { Button } from "@/components/ui/button";
 
 interface Categories {
   id: number;
@@ -38,9 +39,13 @@ const SubcategoryUserPage = () => {
     if (subcategory) {
       fetchProductsBySlug(pagination.number, sortOrder);
     }
-  }, [subcategory, category, sortOrder]);
+  }, [subcategory, sortOrder, category]);
 
-  const fetchProductsBySlug = async (page: number, sortOrder = "asc") => {
+  const fetchProductsBySlug = async (
+    page: number,
+    sortOrder = "asc",
+    append = false
+  ) => {
     try {
       setLoading(true);
       const res = await api.get(
@@ -48,8 +53,16 @@ const SubcategoryUserPage = () => {
       );
 
       const fetchedProducts = res.data.content || [];
-      setProducts(fetchedProducts);
+
+      // Agar append true bo‘lsa, mavjud mahsulotlar ro‘yxatiga qo‘shib boradi
+      setProducts((prev) =>
+        append ? [...prev, ...fetchedProducts] : fetchedProducts
+      );
+
+      // Pagination holatini yangilash
       setPagination(res.data.pagination || pagination);
+
+      // Kategoriyani o‘rnatish
       setCategorys(fetchedProducts[0]?.category || null);
     } catch (error) {
       console.error("Xatolik:", error);
@@ -144,6 +157,20 @@ const SubcategoryUserPage = () => {
               <ProductCard product={product} />
             </div>
           ))}
+        </div>
+      )}
+
+      {products.length > 0 && (
+        <div className="flex justify-center py-5">
+          <Button
+            className="rounded-none"
+            disabled={loading || pagination.number + 1 >= pagination.totalPages}
+            onClick={() =>
+              fetchProductsBySlug(pagination.number + 1, sortOrder, true)
+            }
+          >
+            {loading ? "Загрузка..." : "Загрузить еще"}
+          </Button>
         </div>
       )}
     </div>

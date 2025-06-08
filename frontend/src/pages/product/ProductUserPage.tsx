@@ -426,7 +426,7 @@ const ProductUserPage = () => {
         </div>
       </div>
 
-      <div className="bg-gray">
+      <div className="bg-gray mt-5">
         <div className=" custom-container">
           <h1 className="w-full text-center py-8 uppercase sm:text-2xl text-lg font-bold">
             Похожие товары
