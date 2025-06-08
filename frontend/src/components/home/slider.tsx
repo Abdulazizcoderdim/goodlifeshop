@@ -13,7 +13,8 @@ import "swiper/css/pagination";
 const slides = [
   {
     id: 1,
-    image: "/slider.webp",
+    image:
+      "https://zwilling.ru/upload/uf/0d5/p88md45heq9yy7m21nx5bg3tzan0kupj.webp",
     title: "НАСЛАЖДАЙТЕСЬ НОВОЙ УНИВЕРСАЛЬНОСТЬЮ",
     description:
       "От обжаривания до запекания: со сковородой ZWILLING Joy Plus вам понадобится только одна сковорода на кухне.",

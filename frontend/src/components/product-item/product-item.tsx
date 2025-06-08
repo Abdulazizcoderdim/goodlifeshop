@@ -84,7 +84,7 @@ export default function ProductItem({
         </div>
       </div>
       <div className="flex-grow p-4 cursor-pointer">
-        <h3 className="text-sm font-bold text-gray-800 line-clamp-1">
+        <h3 className="text-sm uppercase text-gray-600 line-clamp-1">
           {product.brand}
         </h3>
         <p
@@ -97,13 +97,13 @@ export default function ProductItem({
               }/${product.slug}`
             )
           }
-          className="text-sm uppercase text-gray-600 mt-1 line-clamp-2"
+          className="text-sm font-bold uppercase text-gray-800 mt-1 line-clamp-2"
         >
           {product.title}
         </p>
       </div>
       <div className="flex items-center justify-between p-4 pt-0">
-        <span className="text-lg font-bold text-gray-900">
+        <span className="text-sm font-medium text-gray-900">
           {formatPrice(product.price)} ₽
         </span>
         <button
