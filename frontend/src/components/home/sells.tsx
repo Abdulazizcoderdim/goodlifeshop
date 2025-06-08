@@ -30,11 +30,11 @@ const Sells = ({
         </p>
       </div>
       <div className="flex mt-5 max-lg:flex-col gap-5 justify-between w-full">
-        <div className="lg:w-1/2 flex max-md:flex-col gap-3">
+        <div className="lg:w-1/2 grid md:grid-cols-3 max-md:grid-cols-1 gap-3">
           {loading
             ? [...Array(3)].map((_, i) => <ProductItemLoading key={i} />)
             : filterProducts().map((item, i) => (
-                <div key={i}>
+                <div className="" key={i}>
                   <ProductItem product={item} />
                 </div>
               ))}
