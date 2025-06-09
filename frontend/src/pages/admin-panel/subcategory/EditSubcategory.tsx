@@ -241,18 +241,7 @@ const EditSubcategory = ({
           <Textarea
             id="description"
             placeholder="Enter subcategory description"
-            {...register("description", {
-              required: "Description is required",
-              minLength: {
-                value: 10,
-                message: "Description must be at least 10 characters",
-              },
-              maxLength: {
-                value: 500,
-                message: "Description must not exceed 500 characters",
-              },
-            })}
-            className={errors.description ? "border-red-500" : ""}
+            {...register("description")}
             disabled={isLoading}
           />
           {errors.description && (
