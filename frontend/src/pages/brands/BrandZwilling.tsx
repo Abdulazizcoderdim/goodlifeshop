@@ -9,6 +9,7 @@ const BrandZwilling = () => {
           autoPlay={true}
           loop={true}
           className="w-full"
+          muted
         >
           <source
             src="https://zwilling.ru/upload/iblock/867/5o2rth78gd5yttzobsgi1791pfmvca3k.mp4"

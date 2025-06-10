@@ -10,6 +10,7 @@ const BrandStaub = () => {
           autoPlay={true}
           loop={true}
           className="w-full"
+          muted
         >
           <source
             src="https://zwilling.ru/upload/iblock/d1a/6k5rq680tiif8lilwjf02zqfvkaxniu4.mp4"

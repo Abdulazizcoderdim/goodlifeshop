@@ -10,6 +10,7 @@ const BrandBallarini = () => {
           autoPlay={true}
           loop={true}
           className="w-full"
+          muted
         >
           <source
             src="https://zwilling.ru/upload/iblock/dfc/ne02vr118a1hw576vbq23jcrh7xmiyb4.mp4"
