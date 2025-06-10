@@ -4,8 +4,8 @@ import userController from "../controllers/user.controller.js";
 
 const router = express.Router();
 
-router.get("/", userController.getAll);
-router.get("/:id", userController.getOne);
+router.get("/", authMiddleware, userController.getAll);
+router.get("/:id", authMiddleware, userController.getOne);
 router.post("/", authMiddleware, userController.create);
 router.put("/:id", authMiddleware, userController.update);
 router.delete("/:id", authMiddleware, userController.delete);
