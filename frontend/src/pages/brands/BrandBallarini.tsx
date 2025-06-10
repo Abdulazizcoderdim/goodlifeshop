@@ -21,7 +21,7 @@ const BrandBallarini = () => {
 
       <div className="flex justify-center text-center flex-col mt-10">
         <div className="flex justify-center">
-          <img src="/s1.webp" className="h-16" alt="" />
+          <img loading="lazy" src="/s1.webp" className="h-16" alt="" />
         </div>
         <h1 className="mt-10 md:text-3xl text-lg font-bold">
           Каталог товаров BALLARINI
@@ -29,6 +29,7 @@ const BrandBallarini = () => {
         <div className="flex items-center gap-5 w-full justify-center sm:mt-10 mt-5">
           <div className="flex flex-col gap-3">
             <img
+              loading="lazy"
               src="https://zwilling.ru/upload/uf/6d2/hkr6frxe5zfj0ws1xo93a51cp61qaw9a.webp"
               alt=""
               className="w-60"
@@ -39,6 +40,7 @@ const BrandBallarini = () => {
           </div>
           <div className="flex flex-col gap-3">
             <img
+              loading="lazy"
               src="https://zwilling.ru/upload/uf/14e/2s466n85pas6tio090qo4cahc86h4iup.webp"
               alt=""
               className="w-60"
@@ -53,6 +55,7 @@ const BrandBallarini = () => {
       <div className="flex max-md:flex-col justify-between md:mt-20 mt-10">
         <div className="md:w-1/2">
           <img
+            loading="lazy"
             src="https://zwilling.ru/upload/brands/ballarini/articles/BAL_BLP_Brand_MAIN_2100x1400px-768.webp"
             alt=""
           />
@@ -75,6 +78,7 @@ const BrandBallarini = () => {
       <div className="flex flex-row-reverse max-md:flex-col justify-between">
         <div className="md:w-1/2">
           <img
+            loading="lazy"
             src="https://zwilling.ru/upload/iblock/d83/6eyhw2rfjw705rhl8byjvg4x0gu9rjm1.webp"
             alt=""
           />
@@ -95,6 +99,7 @@ const BrandBallarini = () => {
       <div className="flex max-md:flex-col justify-between">
         <div className="md:w-1/2">
           <img
+            loading="lazy"
             src="https://zwilling.ru/upload/iblock/982/p4qdk9wgg4vejyh6qkk67cv81hnxmm53.webp"
             alt=""
           />
@@ -117,6 +122,7 @@ const BrandBallarini = () => {
       <div className="flex flex-row-reverse max-md:flex-col justify-between">
         <div className="md:w-1/2">
           <img
+            loading="lazy"
             src="https://zwilling.ru/upload/iblock/bc1/7cyf9jrcjj6sab6dselrnmexsfvz7vpy.webp"
             alt=""
           />

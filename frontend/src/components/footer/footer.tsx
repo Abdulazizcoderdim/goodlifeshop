@@ -67,6 +67,7 @@ export default function Footer() {
               <div className="flex gap-2">
                 <div className="bg-white rounded shadow-sm">
                   <img
+                    loading="lazy"
                     src="/visa.png"
                     alt="Mastercard"
                     width={45}
@@ -76,6 +77,7 @@ export default function Footer() {
                 </div>
                 <div className="bg-white rounded shadow-sm">
                   <img
+                    loading="lazy"
                     src="/visa2.png"
                     alt="Visa"
                     width={45}
@@ -85,6 +87,7 @@ export default function Footer() {
                 </div>
                 <div className="bg-white rounded shadow-sm">
                   <img
+                    loading="lazy"
                     src="/mir.png"
                     alt="MIR"
                     width={45}
@@ -265,6 +268,7 @@ export default function Footer() {
               >
                 <p className="text-sm cursor-pointer">РАЗРАБОТЧИК САЙТА</p>
                 <img
+                  loading="lazy"
                   src="/veda.svg?height=30&width=80"
                   alt="Developer Logo"
                   width={80}

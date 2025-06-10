@@ -120,6 +120,7 @@ const VdokhnovlyayushchieRetseptSlug = () => {
     <div className="bg-gray">
       <div className="h-96 px-4">
         <img
+          loading="lazy"
           className="object-cover w-full h-96"
           src={render()?.imgUrl || ""}
           alt=""

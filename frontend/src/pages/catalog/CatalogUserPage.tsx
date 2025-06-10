@@ -143,7 +143,12 @@ const CatalogUserPage = () => {
         </div>
 
         <div className="w-full mt-5">
-          <img src={renderImg()} className="object-contain" alt="" />
+          <img
+            loading="lazy"
+            src={renderImg()}
+            className="object-contain"
+            alt=""
+          />
         </div>
 
         <div className="md:mt-20 mt-10">
@@ -214,6 +219,7 @@ const CatalogUserPage = () => {
                           <div className="rounded-md p-4 mb-3 w-full flex items-center justify-center h-[160px]">
                             <div className="relative flex justify-center w-full h-full group-hover:scale-105 transition-all duration-200">
                               <img
+                                loading="lazy"
                                 src={item.imageUrl || "/placeholder.svg"}
                                 alt={item.name}
                                 className="object-cover max-w-32 w-full"

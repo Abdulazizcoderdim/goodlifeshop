@@ -100,7 +100,12 @@ const CatalogStatikUserPage = () => {
       </div>
       {/* banner */}
       <div className="max-md:pt-5">
-        <img src="/catalog.webp" className="w-full mb-10" alt="" />
+        <img
+          loading="lazy"
+          src="/catalog.webp"
+          className="w-full mb-10"
+          alt=""
+        />
         <div className="space-y-3 text-center w-full">
           <h1 className="text-2xl font-bold uppercase">
             Каталог товаров ZWILLING

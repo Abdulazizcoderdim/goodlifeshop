@@ -12,6 +12,7 @@ const CategoryProduct = () => {
             {/* Image container with overlay */}
             <div className="relative rounded-lg">
               <img
+                loading="lazy"
                 src={product.image || "/placeholder.svg"}
                 alt={product.name}
                 className="object-cover w-full rounded-lg group-hover:scale-105 transition-all duration-300"

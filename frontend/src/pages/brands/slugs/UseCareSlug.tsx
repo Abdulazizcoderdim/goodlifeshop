@@ -78,6 +78,7 @@ const UseCareSlug = () => {
     <div className="bg-gray">
       <div className="h-96 px-4">
         <img
+          loading="lazy"
           className="object-cover w-full h-96"
           src={render()?.imgUrl || ""}
           alt=""
@@ -120,6 +121,7 @@ const UseCareSlug = () => {
 
             <div className="flex max-md:flex-col gap-4">
               <img
+                loading="lazy"
                 className="md:w-1/2"
                 src={topic.content[0].imageUrl}
                 alt=""

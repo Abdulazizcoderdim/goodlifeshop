@@ -4,6 +4,7 @@ const CulinarWorld = () => {
   return (
     <div className="bg-gray">
       <img
+        loading="lazy"
         src="https://zwilling.ru/upload/iblock/c74/f3pqtfb73t3nt2beh4plb3wupuc8cqe4.jpg"
         className="w-full"
         alt=""

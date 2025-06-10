@@ -20,7 +20,7 @@ const BrandZwilling = () => {
 
       <div className="flex justify-center text-center flex-col mt-10">
         <div className="flex justify-center">
-          <img src="/zwilling.webp" className="h-16" alt="" />
+          <img loading="lazy" src="/zwilling.webp" className="h-16" alt="" />
         </div>
         <h1 className="mt-10 md:text-3xl text-lg uppercase font-normal">
           Каталог товаров ZWILLING
@@ -30,7 +30,7 @@ const BrandZwilling = () => {
 
         <div className="flex max-md:flex-col justify-between gap-5">
           <div className="md:w-1/2">
-            <img src="/zw1.webp" alt="" />
+            <img loading="lazy" src="/zw1.webp" alt="" />
           </div>
           <div className="flex md:w-1/2 text-center space-y-4 flex-col justify-center">
             <h1 className="md:text-3xl text-lg font-normal">
@@ -45,7 +45,7 @@ const BrandZwilling = () => {
         </div>
         <div className="flex flex-row-reverse mt-5 max-md:flex-col justify-between gap-5">
           <div className="md:w-1/2">
-            <img src="/zw2.webp" alt="" />
+            <img loading="lazy" src="/zw2.webp" alt="" />
           </div>
           <div className="flex md:w-1/2 text-center space-y-4 flex-col justify-center">
             <h1 className="md:text-3xl text-lg font-normal">
@@ -64,7 +64,7 @@ const BrandZwilling = () => {
         </div>
         <div className="flex  mt-5 max-md:flex-col justify-between gap-5 mb-10">
           <div className="md:w-1/2">
-            <img src="/zw3.webp" alt="" />
+            <img loading="lazy" src="/zw3.webp" alt="" />
           </div>
           <div className="flex md:w-1/2 text-center space-y-4 flex-col justify-center">
             <h1 className="md:text-3xl text-lg font-normal">

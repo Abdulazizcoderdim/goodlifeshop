@@ -21,6 +21,7 @@ const BrendNewsCard = ({ item, key }: Props) => {
     >
       <div className="relative overflow-hidden rounded-lg mb-4">
         <img
+          loading="lazy"
           src={item.imageUrl}
           alt="BALLARINI Production"
           width={400}

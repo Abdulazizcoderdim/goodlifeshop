@@ -193,6 +193,7 @@ const EditCategoryAdmin = ({
             {defaultValues.imageUrl && (
               <div className="">
                 <img
+                  loading="lazy"
                   src={form.getValues("imageUrl") || defaultValues.imageUrl}
                   width={150}
                   alt=""

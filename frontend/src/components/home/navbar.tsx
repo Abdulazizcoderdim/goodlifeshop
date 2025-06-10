@@ -114,6 +114,7 @@ const Navbar = () => {
               </SheetContent>
             </Sheet>
             <img
+              loading="lazy"
               onClick={() => navigate("/")}
               className="sm:w-32 w-20 cursor-pointer h-10 object-contain"
               src="https://zwilling.ru/local/templates/zwilling/images/new-header/ZWILLING-Culinary-World.png"

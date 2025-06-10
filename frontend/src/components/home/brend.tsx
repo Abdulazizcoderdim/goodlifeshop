@@ -69,6 +69,7 @@ const Brend = () => {
           >
             <div className="relative min-h-72 w-full">
               <img
+                loading="lazy"
                 src={brand.image || "/placeholder.svg?height=320&width=400"}
                 alt={brand.name}
                 className="object-cover"

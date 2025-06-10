@@ -1051,6 +1051,7 @@ const NewProductAdd = () => {
                     {imageUrl && (
                       <div className="w-20 h-20 border rounded-lg overflow-hidden border-gray-700">
                         <img
+                          loading="lazy"
                           src={imageUrl || "/placeholder.svg"}
                           alt={`Товар ${index + 1}`}
                           className="w-full h-full object-cover"

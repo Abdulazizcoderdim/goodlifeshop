@@ -257,6 +257,7 @@ const EditSubcategory = ({
           {(imagePreview || currentImageUrl) && (
             <div className="relative">
               <img
+                loading="lazy"
                 src={imagePreview || currentImageUrl || ""}
                 alt="Preview"
                 className="h-40 w-full object-contain rounded-md border"

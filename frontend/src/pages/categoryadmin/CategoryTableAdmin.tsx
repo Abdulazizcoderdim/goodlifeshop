@@ -167,6 +167,7 @@ const CategoryTableAdmin = ({
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap flex gap-2 items-center text-sm">
                     <img
+                      loading="lazy"
                       src={
                         category.imageUrl || "https://via.placeholder.com/40"
                       }

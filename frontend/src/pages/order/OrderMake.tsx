@@ -106,6 +106,7 @@ const OrderMake = () => {
                     <div className="col-span-1 sm:col-span-6 flex gap-4 sm:gap-6 mb-4 sm:mb-0">
                       <div className="w-16 h-24 relative flex-shrink-0">
                         <img
+                          loading="lazy"
                           src={product.images[0] || "/placeholder.svg"}
                           alt={product.title}
                           className="object-contain w-full h-full"

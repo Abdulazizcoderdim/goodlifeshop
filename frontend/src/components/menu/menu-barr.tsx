@@ -132,6 +132,7 @@ const MenuBarr = ({
                   <p className="text-xs text-gray-300">{item.desc}</p>
                 </div>
                 <img
+                  loading="lazy"
                   src={item.icon}
                   alt={item.title}
                   className="w-7 h-7 object-contain"
@@ -153,6 +154,7 @@ const MenuBarr = ({
                   {item.title}
                 </p>
                 <img
+                  loading="lazy"
                   src={item.icon}
                   alt={item.title}
                   className="w-7 h-7 object-contain"
@@ -176,6 +178,7 @@ const MenuBarr = ({
     <div className="h-full">
       <SheetHeader>
         <img
+          loading="lazy"
           onClick={() => setCurrentSection(null)} // Sheetni yopish uchun
           className="sm:w-32 w-20 cursor-pointer h-10 object-contain"
           src="https://zwilling.ru/local/templates/zwilling/images/new-header/ZWILLING-Culinary-World.png"

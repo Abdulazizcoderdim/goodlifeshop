@@ -41,6 +41,7 @@ const Sells = ({
         </div>
         <div className="relative lg:w-1/2 w-full h-full">
           <img
+            loading="lazy"
             src="/bg.webp"
             alt="Background"
             className="w-full h-full object-cover"

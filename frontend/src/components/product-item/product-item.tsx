@@ -68,6 +68,7 @@ export default function ProductItem({
         )}
         <div className="relative cursor-pointer h-64 w-full flex items-center justify-center p-4 bg-white">
           <img
+            loading="lazy"
             onClick={() =>
               navigate(
                 `/catalog/${product.category.slug}/${

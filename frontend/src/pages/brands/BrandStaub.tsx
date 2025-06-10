@@ -21,7 +21,7 @@ const BrandStaub = () => {
 
       <div className="flex justify-center text-center flex-col mt-10">
         <div className="flex justify-center">
-          <img src="/s1.webp" className="h-16" alt="" />
+          <img loading="lazy" src="/s1.webp" className="h-16" alt="" />
         </div>
         <h1 className="mt-10 md:text-3xl text-lg font-bold">
           Каталог товаров STAUB
@@ -29,6 +29,7 @@ const BrandStaub = () => {
         <div className="flex items-center gap-5 w-full justify-center sm:mt-10 mt-5">
           <div className="flex flex-col gap-3">
             <img
+              loading="lazy"
               src="https://zwilling.ru/upload/resize_cache/uf/8c1/450_300_1/o40hn7m9q7td24a36a0s8g24h86iovuc.webp"
               alt=""
               className="w-60"
@@ -39,6 +40,7 @@ const BrandStaub = () => {
           </div>
           <div className="flex flex-col gap-3">
             <img
+              loading="lazy"
               src="https://zwilling.ru/upload/uf/226/rfjipnpdnesba62zcguj7k57tge4povz.webp"
               alt=""
               className="w-60"
@@ -53,6 +55,7 @@ const BrandStaub = () => {
       <div className="flex max-md:flex-col justify-between md:mt-20 mt-10">
         <div className="md:w-1/2">
           <img
+            loading="lazy"
             src="https://zwilling.ru/upload/brands/staub/articles/STAUB_50_Years_2024_website_brand_page_content_block_1365x1365-768.webp"
             alt=""
           />
@@ -76,6 +79,7 @@ const BrandStaub = () => {
       <div className="flex flex-row-reverse max-md:flex-col justify-between">
         <div className="md:w-1/2">
           <img
+            loading="lazy"
             src="https://zwilling.ru/upload/iblock/608/gcjipfv5y1xn103cd05lnlmjc2clsw5a.webp"
             alt=""
           />
@@ -96,6 +100,7 @@ const BrandStaub = () => {
       <div className="flex max-md:flex-col justify-between">
         <div className="md:w-1/2">
           <img
+            loading="lazy"
             src="https://zwilling.ru/upload/iblock/a89/cqfwjded5oupxi8nvhwvsjjczamg05vn.webp"
             alt=""
           />

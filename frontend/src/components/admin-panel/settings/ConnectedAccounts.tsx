@@ -32,6 +32,7 @@ const ConnectedAccounts = () => {
         >
           <div className="flex gap-1">
             <img
+              loading="lazy"
               src={account.icon}
               alt="Social img"
               className="size-6 object-cover rounded-full mr-2"

@@ -24,6 +24,7 @@ const CategoryItem = ({ category }: Props) => {
       <div className="rounded-md p-4 mb-3 w-full flex items-center justify-center h-[160px]">
         <div className="relative flex justify-center w-full h-full group-hover:scale-105 transition-all duration-200">
           <img
+            loading="lazy"
             src={category.imageUrl || "/placeholder.svg"}
             alt={category.name}
             className="object-cover max-w-40 w-full"

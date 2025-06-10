@@ -161,6 +161,7 @@ export default function CartPage() {
                         className="w-16 h-24 relative flex-shrink-0 cursor-pointer"
                       >
                         <img
+                          loading="lazy"
                           src={product.images[0] || "/placeholder.svg"}
                           alt={product.title}
                           className="object-contain w-full h-full"

@@ -296,7 +296,7 @@ const BrandHistorySlug = () => {
           } max-md:flex-col justify-between gap-5`}
         >
           <div className="md:w-1/2">
-            <img className="w-full" src={item.imgUrl} alt="" />
+            <img loading="lazy" className="w-full" src={item.imgUrl} alt="" />
           </div>
           <div className="flex md:w-1/2 text-center space-y-4 flex-col justify-center">
             <h1 className="md:text-3xl text-lg font-normal">{item.title}</h1>
