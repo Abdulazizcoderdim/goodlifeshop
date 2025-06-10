@@ -34,10 +34,6 @@ const Kontakty = () => {
   const onlineStoreDetails = [
     {
       label: "Моб. тел.",
-      value: "+375296276521",
-    },
-    {
-      label: "Моб. тел.",
       value: "+375291778768",
     },
     {
@@ -61,7 +57,7 @@ const Kontakty = () => {
           details={officialDetails}
         />
         <ContactCard
-          title="Интернет-магазин ZWILLING"
+          title="Интернет-магазин премиальной Европейской посуды."
           details={onlineStoreDetails}
         />
       </div>

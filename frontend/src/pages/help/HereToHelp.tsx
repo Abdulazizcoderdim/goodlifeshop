@@ -8,9 +8,9 @@ const HereToHelp = () => {
     <div className="bg-gray-custom">
       <div className="custom-container sm:py-16 py-8">
         <h1 className="text-3xl font-bold uppercase pb-5">Помощь</h1>
-        <div className="flex sm:gap-10 gap-5">
+        <div className="flex max-md:flex-col sm:gap-10 gap-5">
           {/* sidebar */}
-          <div className="w-1/3">
+          <div className="md:w-1/3">
             <div className="flex flex-col gap-3">
               {helpPages.map((item, i) => {
                 return (

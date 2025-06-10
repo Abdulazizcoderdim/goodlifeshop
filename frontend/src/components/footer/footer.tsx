@@ -205,11 +205,6 @@ export default function Footer() {
                     КОНТАКТЫ
                   </Link>
                 </li>
-                <li>
-                  <Link to="/here_to_help/kontakty" className="hover:underline">
-                    ОЦЕНКА УСЛОВИЙ ТРУДА
-                  </Link>
-                </li>
               </ul>
             </div>
 

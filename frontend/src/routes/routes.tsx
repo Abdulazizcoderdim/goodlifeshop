@@ -47,6 +47,7 @@ import VdokhnovlyayushchieRetseptSlug from "@/pages/brands/slugs/Vdokhnovlyayush
 import UseCareSlug from "@/pages/brands/slugs/UseCareSlug";
 import BrandHistorySlug from "@/pages/brands/slugs/BrandHistorySlug";
 import CulinarWorld from "@/pages/brands/CulinarWorld";
+import Returns from "@/pages/help/Returns";
 
 export const router = createBrowserRouter([
   {
@@ -161,7 +162,7 @@ export const router = createBrowserRouter([
           },
           {
             path: "returns",
-            element: <Kontakty />,
+            element: <Returns />,
           },
           {
             path: "delivery",

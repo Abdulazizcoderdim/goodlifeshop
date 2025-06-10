@@ -24,7 +24,7 @@ const data = [
   {
     title: "Обратная связь",
     icon: ShieldQuestion,
-    path: "/here_to_help/contact-form/",
+    path: "/here_to_help/returns",
   },
   {
     title: "Магазин рядом с домом",
