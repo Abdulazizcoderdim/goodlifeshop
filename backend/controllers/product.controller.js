@@ -29,6 +29,7 @@ class ProductController {
           { title: { contains: search, mode: "insensitive" } },
           { description: { contains: search, mode: "insensitive" } },
           { brand: { contains: search, mode: "insensitive" } },
+          { article: { contains: search, mode: "insensitive" } },
         ];
       }
 
