@@ -57,7 +57,7 @@ const Kontakty = () => {
       </p>
       <div className="flex flex-col items-starttext-start space-y-6">
         <ContactCard
-          title="Официальное представительство Zwilling"
+          title="Цвиллинг Джей.Эй. Хенкельс Рус"
           details={officialDetails}
         />
         <ContactCard
