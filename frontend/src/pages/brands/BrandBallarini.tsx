@@ -32,7 +32,7 @@ const BrandBallarini = () => {
               loading="lazy"
               src="https://zwilling.ru/upload/uf/6d2/hkr6frxe5zfj0ws1xo93a51cp61qaw9a.webp"
               alt=""
-              className="w-60"
+              className="w-60 h-52 object-contain"
             />
             <Button asChild variant={"default"}>
               <Link to={"/catalog/posuda"}>BALLARINI Посуда</Link>
@@ -43,7 +43,7 @@ const BrandBallarini = () => {
               loading="lazy"
               src="https://zwilling.ru/upload/uf/14e/2s466n85pas6tio090qo4cahc86h4iup.webp"
               alt=""
-              className="w-60"
+              className="w-60 h-52 object-contain"
             />
             <Button asChild variant={"default"}>
               <Link to={"/catalog/aksessuary"}>BALLARINI Аксессуары</Link>

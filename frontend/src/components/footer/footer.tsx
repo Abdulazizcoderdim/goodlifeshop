@@ -36,7 +36,6 @@ export default function Footer() {
               </div>
               <div className="space-y-1 text-sm">
                 <p>+375296276521</p>
-                <p>+375296276521</p>
                 <p>ПН-ПТ: 10:00-18:00</p>
               </div>
             </div>
@@ -262,20 +261,6 @@ export default function Footer() {
                   </Link>
                 </li>
               </ul>
-              <div
-                className="mt-6"
-                onClick={() => window.open("https://www.vedita.ru", "_blank")}
-              >
-                <p className="text-sm cursor-pointer">РАЗРАБОТЧИК САЙТА</p>
-                <img
-                  loading="lazy"
-                  src="/veda.svg?height=30&width=80"
-                  alt="Developer Logo"
-                  width={80}
-                  height={30}
-                  className="mt-2 cursor-pointer"
-                />
-              </div>
             </div>
           </div>
 
