@@ -77,7 +77,7 @@ const OrderMake = () => {
         <h1 className="text-center py-5 w-full text-2xl font-bold uppercase">
           оформить заказ
         </h1>
-        <div className="flex gap-5">
+        <div className="flex max-sm:flex-col gap-5">
           <div className="w-full bg-white p-3">
             {loading ? (
               <Skeleton className="h-4 w-1/2" />
@@ -188,7 +188,7 @@ const OrderMake = () => {
             )}
           </div>
 
-          <div className="w-1/3 sticky top-16 min-h-52 bg-white">
+          <div className="sm:w-1/3 sticky top-16 min-h-52 bg-white">
             <div className="border-t border-t-red-500 sm:p-4 p-2">
               <div className="flex text-lg font-bold border-b py-3 items-center justify-between">
                 <h1>Общая стоимость</h1>
