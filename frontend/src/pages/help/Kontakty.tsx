@@ -44,10 +44,6 @@ const Kontakty = () => {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-4xl font-bold text-start text-gray-900">
-        Контактная информация
-      </h1>
-
       <div className="flex flex-col items-starttext-start space-y-6">
         <ContactCard
           title="Obщество с ограниченной ответственностью АлькорКлимат"

@@ -35,7 +35,7 @@ const Category = () => {
     <section className="sm:py-12 py-6 custom-container">
       <div className="swiper-container relative">
         {/* Custom navigation buttons outside Swiper for better visibility */}
-        <div className="swiper-nav-prev absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 hidden md:flex">
+        <div className="swiper-nav-prev absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10">
           <button className="w-10 h-10 bg-white shadow-md rounded-full flex items-center justify-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -66,6 +66,9 @@ const Category = () => {
             el: ".swiper-custom-pagination",
           }}
           breakpoints={{
+            100: {
+              slidesPerView: 2,
+            },
             640: {
               slidesPerView: 2,
             },
@@ -97,7 +100,7 @@ const Category = () => {
         {/* Custom pagination */}
         <div className="swiper-custom-pagination flex justify-center mt-6"></div>
 
-        <div className="swiper-nav-next absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 hidden md:flex">
+        <div className="swiper-nav-next absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10">
           <button className="w-10 h-10 bg-white shadow-md rounded-full flex items-center justify-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
