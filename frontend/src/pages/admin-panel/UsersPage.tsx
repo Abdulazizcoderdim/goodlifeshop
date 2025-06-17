@@ -27,7 +27,11 @@ const UsersPage = () => {
 
   const fetchUsers = async (page = 1) => {
     try {
-      const res = await api.get(`/users?page=${page}&size=${pagination.size}`);
+      const res = await api.get(`/users?page=${page}&size=${pagination.size}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      });
       setusers(res.data.content);
       setPagination(res.data.pagination);
       processUserGrowthData(res.data.content);
