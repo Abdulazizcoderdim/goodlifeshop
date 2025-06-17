@@ -9,6 +9,8 @@ import "swiper/css";
 import "swiper/css/navigation";
 // @ts-expect-error: Swiper CSS modules do not provide type declarations
 import "swiper/css/pagination";
+import { Link } from "react-router-dom";
+import { Button } from "../ui/button";
 
 const slides = [
   {
@@ -19,7 +21,7 @@ const slides = [
     description:
       "От обжаривания до запекания: со сковородой ZWILLING Joy Plus вам понадобится только одна сковорода на кухне.",
     buttonText: "ПОДРОБНЕЕ",
-    buttonLink: "/catalog/ballarini/posuda-3156/ballarini-torre/",
+    buttonLink: "/catalog/posuda/skovorody-zwilling",
   },
   {
     id: 2,
@@ -27,7 +29,7 @@ const slides = [
     title: "BALLARINI TORRE",
     description: "BALLARINI Torre: воплощение универсальности на вашей кухне!",
     buttonText: "ПОДРОБНЕЕ",
-    buttonLink: "/catalog/ballarini/posuda-3156/ballarini-torre/",
+    buttonLink: "/catalog/posuda/chayniki",
   },
   {
     id: 3,
@@ -36,7 +38,7 @@ const slides = [
     description:
       "Раскройте свой кулинарный творческий потенциал с посудой ZWILLING PURE!",
     buttonText: "ПОДРОБНЕЕ  ",
-    buttonLink: "/catalog/zwilling/posuda-3105/zwilling-pure/",
+    buttonLink: "/catalog/posuda/skovorody-ballarini",
   },
 ];
 
@@ -86,9 +88,12 @@ export default function Slider() {
                     {slide.title}
                   </h2>
                   <p className="text-lg md:text-xl mb-8">{slide.description}</p>
-                  <button className="bg-red-600 hover:bg-red-700 text-white px-8 py-2 rounded-none font-medium">
-                    <a href={slide.buttonLink}>{slide.buttonText}</a>
-                  </button>
+                  <Button
+                    asChild
+                    className="bg-red-600 hover:bg-red-700 text-white px-8 py-2 rounded-none font-medium"
+                  >
+                    <Link to={slide.buttonLink}>{slide.buttonText}</Link>
+                  </Button>
                 </div>
               </div>
             </div>

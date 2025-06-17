@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { ChevronUp } from "lucide-react";
 import { Toaster } from "sonner";
 import AuthProvider from "@/provider/auth-provider";
+import KeepAlive from "@/components/KeepAlive";
 
 const Layout = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -51,7 +52,7 @@ const Layout = () => {
         <Toaster position="top-center" />
       </div>
 
-      {/* <KeepAlive /> */}
+      <KeepAlive />
     </AuthProvider>
   );
 };

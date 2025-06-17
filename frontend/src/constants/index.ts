@@ -252,16 +252,19 @@ export const CategoryData2 = [
     image: "/z1.webp",
     name: "ZWILLING Sorrento",
     buttonText: "ПОДРОБНЕЕ",
+    link: "/catalog/posuda/steklyannaya-posuda-zwilling",
   },
   {
     image: "/a2.webp",
     name: "КЕРАМИЧЕСКИЕ ФОРМЫ STAUB",
     buttonText: "ПОДРОБНЕЕ",
+    link: "/catalog/posuda/formy-dlya-zapekaniya-staub-1",
   },
   {
     image: "/z3.webp",
     name: "ZWILLING PROFESSIONAL S",
     buttonText: "ПОДРОБНЕЕ",
+    link: "/catalog/nozhi/nabory-nozhey",
   },
 ];
 

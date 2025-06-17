@@ -1,21 +1,33 @@
 import Sidebar from "@/components/admin-panel/common/Sidebar";
+import KeepAlive from "@/components/KeepAlive";
 import { useAuthStore } from "@/hooks/useAuthStore";
 import AuthProvider from "@/provider/auth-provider";
 import { UserRole } from "@/types";
 import { useEffect } from "react";
-import { Outlet } from "react-router-dom";
-import { Toaster } from "sonner";
+import { Outlet, useNavigate } from "react-router-dom";
+import { toast, Toaster } from "sonner";
 
 const LayoutAdmin = () => {
   const { user } = useAuthStore();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (!user) return; // user hali kelmagan bo‘lsa hech narsa qilma
+    const token = localStorage.getItem("accessToken");
+
+    if (!token) {
+      toast.error("Пожалуйста, войдите в систему еще раз.");
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
+      return;
+    }
+
+    if (!user) return;
 
     if (user.role !== UserRole.ADMIN) {
-      window.location.href = "/";
+      navigate("/");
     }
-  }, [user]);
+  }, [user, navigate]);
 
   return (
     <AuthProvider>
@@ -25,7 +37,7 @@ const LayoutAdmin = () => {
       </div>
       <Toaster position="top-center" />
 
-      {/* <KeepAlive /> */}
+      <KeepAlive />
     </AuthProvider>
   );
 };

@@ -1,4 +1,5 @@
 import { CategoryData2 } from "@/constants";
+import { Link } from "react-router-dom";
 
 const CategoryProduct = () => {
   return (
@@ -26,9 +27,12 @@ const CategoryProduct = () => {
               <h3 className="text-white lg:text-xl md:text-lg sm:text-base text-sm font-medium mb-4">
                 {product.name}
               </h3>
-              <button className="bg-white text-black sm:px-8 px-4 py-2 sm:text-sm text-sm font-bold rounded-md hover:bg-gray-100 transition-colors">
+              <Link
+                to={product.link}
+                className="bg-white text-black sm:px-8 px-4 py-2 sm:text-sm text-sm font-bold rounded-md hover:bg-gray-100 transition-colors"
+              >
                 {product.buttonText}
-              </button>
+              </Link>
             </div>
           </div>
         ))}

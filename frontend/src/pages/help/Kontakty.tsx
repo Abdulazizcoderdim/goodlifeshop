@@ -47,13 +47,10 @@ const Kontakty = () => {
       <h1 className="text-4xl font-bold text-start text-gray-900">
         Контактная информация
       </h1>
-      <p className="text-start text-gray-600">
-        Общество с ограниченной ответственностью «Цвиллинг Джей. Эй. Хенкельс
-        Рус»
-      </p>
+
       <div className="flex flex-col items-starttext-start space-y-6">
         <ContactCard
-          title="Цвиллинг Джей.Эй. Хенкельс Рус"
+          title="Obщество с ограниченной ответственностью АлькорКлимат"
           details={officialDetails}
         />
         <ContactCard
