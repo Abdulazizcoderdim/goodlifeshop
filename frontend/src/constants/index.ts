@@ -286,8 +286,7 @@ export const helpPages = [
     path: "/here_to_help/personal-agree",
   },
   {
-    title:
-      "ПОЛИТИКА В ОТНОШЕНИИ ОБРАБОТКИ И ЗАЩИТЫ ПЕРСОНАЛЬНЫХ ДАННЫХ ООО «ЦВИЛЛИНГ ДЖЕЙ.ЭЙ. ХЕНКЕЛЬС РУС»",
+    title: "Oбщество с ограниченной ответственностью АлькорКлимат",
     path: "/here_to_help/policies",
   },
   {

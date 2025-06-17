@@ -158,8 +158,8 @@ const CatalogUserPage = () => {
 
             <div className="swiper-container relative">
               {/* Custom navigation buttons outside Swiper for better visibility */}
-              <div className="swiper-nav-prev absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 hidden md:flex">
-                <button className="w-10 h-10 bg-white shadow-md rounded-full flex items-center justify-center">
+              <div className="swiper-nav-prev absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10">
+                <button className="sm:w-10 sm:h-10 w-8 h-8 bg-white shadow-md rounded-full flex items-center justify-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -189,6 +189,9 @@ const CatalogUserPage = () => {
                   el: ".swiper-custom-pagination",
                 }}
                 breakpoints={{
+                  100: {
+                    slidesPerView: 2,
+                  },
                   640: {
                     slidesPerView: 2,
                   },
@@ -222,7 +225,7 @@ const CatalogUserPage = () => {
                                 loading="lazy"
                                 src={item.imageUrl || "/placeholder.svg"}
                                 alt={item.name}
-                                className="object-cover max-w-32 w-full"
+                                className="object-contain max-w-32 w-full"
                               />
                             </div>
                           </div>
@@ -240,8 +243,8 @@ const CatalogUserPage = () => {
               {/* Custom pagination */}
               <div className="swiper-custom-pagination flex justify-center mt-6"></div>
 
-              <div className="swiper-nav-next absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 hidden md:flex">
-                <button className="w-10 h-10 bg-white shadow-md rounded-full flex items-center justify-center">
+              <div className="swiper-nav-next absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10">
+                <button className="sm:w-10 sm:h-10 w-8 h-8 bg-white shadow-md rounded-full flex items-center justify-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"

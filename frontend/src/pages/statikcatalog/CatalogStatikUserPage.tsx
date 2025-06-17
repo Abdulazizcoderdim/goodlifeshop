@@ -3,7 +3,6 @@ import CatalogNames from "../catalog/CatalogNames";
 import Brend from "@/components/home/brend";
 import Category from "@/components/home/category";
 import { useEffect, useState } from "react";
-import { Menu } from "lucide-react";
 import ProductItemLoading from "@/components/loading/ProductItemLoading";
 import type { Category as ICategory, IProduct } from "@/types";
 import ProductCard from "../product/product-card";
@@ -279,14 +278,14 @@ const CatalogStatikUserPage = () => {
                     </div>
                   </div>
 
-                  <Button
+                  {/* <Button
                     onClick={() => setOpenSearchBar(true)}
                     variant="outline"
                     className="bg-gray-100 border-gray-300 text-gray-700 gap-2"
                   >
                     Все фильтры
                     <Menu className="h-4 w-4" />
-                  </Button>
+                  </Button> */}
                 </div>
               </div>
             </div>
