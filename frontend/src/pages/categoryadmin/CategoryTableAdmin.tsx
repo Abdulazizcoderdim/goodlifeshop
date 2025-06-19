@@ -1,7 +1,7 @@
 import MyPagination from "@/components/admin-panel/pagination/MyPagination";
 import type { Category } from "@/types";
 import { motion } from "framer-motion";
-import { Edit, Search, Trash2 } from "lucide-react";
+import { Edit, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import EditCategoryAdmin from "./EditCategoryAdmin";
 import CategoryAddAdmin from "./CategoryAddAdmin";

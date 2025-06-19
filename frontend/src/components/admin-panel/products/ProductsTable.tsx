@@ -1,6 +1,6 @@
 import type { IProduct } from "@/types";
 import { motion } from "framer-motion";
-import { Edit, Search, Trash2 } from "lucide-react";
+import { Edit, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import MyPagination from "../pagination/MyPagination";
 import { useNavigate } from "react-router-dom";

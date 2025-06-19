@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Edit, Search, Trash2 } from "lucide-react";
+import { Edit, Trash2 } from "lucide-react";
 import MyPagination from "../pagination/MyPagination";
 import type { IUser } from "@/types";
 import api from "@/http/axios";
