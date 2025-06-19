@@ -233,7 +233,7 @@ const ProductUserPage = () => {
           </div>
 
           {/* Quantity and Add to Cart */}
-          <div className="flex items-center justify-between space-x-4">
+          <div className="flex flex-wrap gap-4 items-center justify-between">
             <div className="flex items-center gap-2">
               <div className="flex items-center border border-gray-300 rounded-none">
                 <button
