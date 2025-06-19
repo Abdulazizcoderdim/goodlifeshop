@@ -315,7 +315,7 @@ const CatalogUserPage = () => {
         <div className="flex justify-center py-5">
           <Button
             className="rounded-none"
-            disabled={loading || pagination.number + 1 >= pagination.totalPages}
+            disabled={loading || pagination.number >= pagination.totalPages}
             onClick={() =>
               fetchProductsBySlug(pagination.number + 1, sortOrder, true)
             }
