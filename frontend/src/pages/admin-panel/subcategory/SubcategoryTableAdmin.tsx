@@ -7,6 +7,7 @@ import api from "@/http/axios";
 import { toast } from "sonner";
 import EditSubcategory from "./EditSubcategory";
 import AddNewSubCategory from "./AddNewSubCategory";
+import SearchBar from "@/components/SearchBar";
 
 interface Props {
   subCategorys: Subcategory[];
@@ -20,6 +21,12 @@ interface Props {
   loading: boolean;
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   isModalOpen: boolean;
+  setPagination: (pagination: {
+    number: number;
+    size: number;
+    totalElements: number;
+    totalPages: number;
+  }) => void;
 }
 
 const SubcategoryTableAdmin = ({
@@ -29,8 +36,8 @@ const SubcategoryTableAdmin = ({
   loading,
   setIsModalOpen,
   isModalOpen,
+  setPagination,
 }: Props) => {
-  const [searchTerm, setSearchTerm] = useState("");
   const [filteredSubCategory, setFilteredSubCategory] = useState(subCategorys);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [categoryToEdit, setCategoryToEdit] = useState<Subcategory | null>(
@@ -38,24 +45,17 @@ const SubcategoryTableAdmin = ({
   );
 
   useEffect(() => {
-    if (!searchTerm.trim()) {
-      setFilteredSubCategory(subCategorys);
-    } else {
-      const term = searchTerm.toLowerCase();
-      const filtered = subCategorys.filter((user) =>
-        user.name.toLowerCase().includes(term)
-      );
-      setFilteredSubCategory(filtered);
-    }
-  }, [subCategorys, searchTerm]);
+    setFilteredSubCategory(subCategorys);
+  }, [subCategorys]);
 
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const term = e.target.value.toLowerCase();
-    setSearchTerm(term);
-    const filtered = subCategorys.filter((user) =>
-      user.name.toLowerCase().includes(term)
-    );
-    setFilteredSubCategory(filtered);
+  const fetchSubCategorys = async (term: string) => {
+    try {
+      const res = await api.get(`/subcategories?search=${term}`);
+      setFilteredSubCategory(res.data.content);
+      setPagination(res.data.pagination);
+    } catch (err) {
+      console.error("Error fetching subCategorys", err);
+    }
   };
 
   const handleEdit = (category: Subcategory) => {
@@ -108,20 +108,13 @@ const SubcategoryTableAdmin = ({
         transition={{ delay: 0.2 }}
       >
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-xl font-semibold text-gray-100">Пользователи</h2>
-          <div className="relative">
-            <input
-              type="text"
-              placeholder="Поиск пользователей..."
-              className="bg-gray-700 text-white placeholder-gray-400 rounded-lg pl-10 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              value={searchTerm}
-              onChange={handleSearch}
-            />
-            <Search
-              className="absolute left-3 top-2.5 text-gray-400"
-              size={18}
-            />
-          </div>
+          <h2 className="text-xl font-semibold text-gray-100">
+            Подкатегории продуктов
+          </h2>
+          <SearchBar
+            onSearch={fetchSubCategorys}
+            placeholder="Поиск подкатегорий"
+          />
         </div>
 
         <div className="overflow-x-auto">

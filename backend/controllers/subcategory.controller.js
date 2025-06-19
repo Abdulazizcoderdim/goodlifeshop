@@ -5,21 +5,30 @@ import generateSubcategorySlug from "../shared/generateSubcategorySlug.js";
 class SubCategoryController {
   async getAll(req, res, next) {
     try {
-      const { page = 1, size = 10 } = req.query;
+      const { page = 1, size = 10, search } = req.query;
 
       const pageNumber = parseInt(page);
       const pageSize = parseInt(size);
       const skip = (pageNumber - 1) * pageSize;
 
+      const where = {};
+
+      if (search) {
+        where.OR = [{ name: { contains: search, mode: "insensitive" } }];
+      }
+
       const [subcategories, totalElements] = await Promise.all([
         prisma.subcategory.findMany({
           skip,
           take: pageSize,
+          where,
           include: {
             category: true,
           },
         }),
-        prisma.subcategory.count(),
+        prisma.subcategory.count({
+          where,
+        }),
       ]);
 
       if (!subcategories)

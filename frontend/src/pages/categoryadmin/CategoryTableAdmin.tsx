@@ -7,6 +7,7 @@ import EditCategoryAdmin from "./EditCategoryAdmin";
 import CategoryAddAdmin from "./CategoryAddAdmin";
 import api from "@/http/axios";
 import { toast } from "sonner";
+import SearchBar from "@/components/SearchBar";
 
 interface Props {
   categorys: Category[];
@@ -20,6 +21,12 @@ interface Props {
   loading: boolean;
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   isModalOpen: boolean;
+  setPagination: (pagination: {
+    number: number;
+    size: number;
+    totalElements: number;
+    totalPages: number;
+  }) => void;
 }
 
 const CategoryTableAdmin = ({
@@ -29,31 +36,24 @@ const CategoryTableAdmin = ({
   loading,
   setIsModalOpen,
   isModalOpen,
+  setPagination,
 }: Props) => {
-  const [searchTerm, setSearchTerm] = useState("");
   const [filteredCategory, setFilteredCategory] = useState(categorys);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [categoryToEdit, setCategoryToEdit] = useState<Category | null>(null);
 
   useEffect(() => {
-    if (!searchTerm.trim()) {
-      setFilteredCategory(categorys);
-    } else {
-      const term = searchTerm.toLowerCase();
-      const filtered = categorys.filter((user) =>
-        user.name.toLowerCase().includes(term)
-      );
-      setFilteredCategory(filtered);
-    }
-  }, [categorys, searchTerm]);
+    setFilteredCategory(categorys);
+  }, [categorys]);
 
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const term = e.target.value.toLowerCase();
-    setSearchTerm(term);
-    const filtered = categorys.filter((user) =>
-      user.name.toLowerCase().includes(term)
-    );
-    setFilteredCategory(filtered);
+  const fetchCategorys = async (term: string) => {
+    try {
+      const res = await api.get(`/categories?search=${term}`);
+      setFilteredCategory(res.data.content);
+      setPagination(res.data.pagination);
+    } catch (err) {
+      console.error("Error fetching categorys", err);
+    }
   };
 
   const handleEdit = (category: Category) => {
@@ -116,20 +116,10 @@ const CategoryTableAdmin = ({
         transition={{ delay: 0.2 }}
       >
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-xl font-semibold text-gray-100">Пользователи</h2>
-          <div className="relative">
-            <input
-              type="text"
-              placeholder="Поиск пользователей..."
-              className="bg-gray-700 text-white placeholder-gray-400 rounded-lg pl-10 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              value={searchTerm}
-              onChange={handleSearch}
-            />
-            <Search
-              className="absolute left-3 top-2.5 text-gray-400"
-              size={18}
-            />
-          </div>
+          <h2 className="text-xl font-semibold text-gray-100">
+            Категории продуктов
+          </h2>
+          <SearchBar onSearch={fetchCategorys} placeholder="Поиск категорий" />
         </div>
 
         <div className="overflow-x-auto">

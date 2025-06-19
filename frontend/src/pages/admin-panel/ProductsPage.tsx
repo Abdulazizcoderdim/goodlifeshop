@@ -98,6 +98,7 @@ const ProductsPage = () => {
         </motion.div>
 
         <ProductsTable
+          setPagination={setPagination}
           handlePageChange={handlePageChange}
           pagination={pagination}
           products={products}

@@ -6,6 +6,7 @@ import type { IUser } from "@/types";
 import api from "@/http/axios";
 import { toast } from "sonner";
 import EditUserForm from "./EditUserForm";
+import SearchBar from "@/components/SearchBar";
 
 interface Props {
   handlePageChange: (page: number) => void;
@@ -16,39 +17,40 @@ interface Props {
     totalPages: number;
   };
   users: IUser[];
+  setPagination: (pagination: {
+    number: number;
+    size: number;
+    totalElements: number;
+    totalPages: number;
+  }) => void;
 }
 
-const UsersTable = ({ handlePageChange, pagination, users }: Props) => {
-  const [searchTerm, setSearchTerm] = useState("");
+const UsersTable = ({
+  handlePageChange,
+  pagination,
+  users,
+  setPagination,
+}: Props) => {
   const [filteredUsers, setFilteredUsers] = useState<IUser[]>(users);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [userToEdit, setUserToEdit] = useState<IUser | null>(null);
 
   useEffect(() => {
-    if (!searchTerm.trim()) {
-      setFilteredUsers(users);
-    } else {
-      const term = searchTerm.toLowerCase();
-      const filtered = users.filter(
-        (user) =>
-          user.email.toLowerCase().includes(term) ||
-          user.firstName?.toLowerCase().includes(term) ||
-          user.lastName?.toLowerCase().includes(term)
-      );
-      setFilteredUsers(filtered);
-    }
-  }, [users, searchTerm]);
+    setFilteredUsers(users);
+  }, [users]);
 
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const term = e.target.value.toLowerCase();
-    setSearchTerm(term);
-    const filtered = users.filter(
-      (user) =>
-        user.email.toLowerCase().includes(term) ||
-        user?.firstName?.toLowerCase().includes(term) ||
-        user?.lastName?.toLowerCase().includes(term)
-    );
-    setFilteredUsers(filtered);
+  const fetchUsers = async (term: string) => {
+    try {
+      const res = await api.get(`/users?search=${term}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      });
+      setFilteredUsers(res.data.content);
+      setPagination(res.data.pagination);
+    } catch (err) {
+      console.error("Error fetching products", err);
+    }
   };
 
   const handleDelete = (id: string) => {
@@ -101,19 +103,7 @@ const UsersTable = ({ handlePageChange, pagination, users }: Props) => {
       >
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-xl font-semibold text-gray-100">Пользователи</h2>
-          <div className="relative">
-            <input
-              type="text"
-              placeholder="Поиск пользователей..."
-              className="bg-gray-700 text-white placeholder-gray-400 rounded-lg pl-10 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              value={searchTerm}
-              onChange={handleSearch}
-            />
-            <Search
-              className="absolute left-3 top-2.5 text-gray-400"
-              size={18}
-            />
-          </div>
+          <SearchBar onSearch={fetchUsers} placeholder="Поиск пользователей" />
         </div>
 
         <div className="overflow-x-auto">

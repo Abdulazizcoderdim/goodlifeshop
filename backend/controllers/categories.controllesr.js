@@ -5,14 +5,21 @@ import generateCategorySlug from "../shared/generateCategorySlug.js";
 class CategoriesController {
   async getAllCategories(req, res, next) {
     try {
-      const { page = 1, size = 10 } = req.query;
+      const { page = 1, size = 10, search } = req.query;
 
       const pageNumber = parseInt(page);
       const pageSize = parseInt(size);
       const skip = (pageNumber - 1) * pageSize;
 
+      const where = {};
+
+      if (search) {
+        where.OR = [{ name: { contains: search, mode: "insensitive" } }];
+      }
+
       const [categories, totalElements] = await Promise.all([
         prisma.category.findMany({
+          where,
           skip,
           take: pageSize,
           include: {
@@ -25,7 +32,9 @@ class CategoriesController {
             },
           },
         }),
-        prisma.category.count(),
+        prisma.category.count({
+          where,
+        }),
       ]);
 
       const totalPages = Math.ceil(totalElements / pageSize);

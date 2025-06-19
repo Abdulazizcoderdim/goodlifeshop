@@ -82,6 +82,7 @@ const CategoryAdmin = () => {
         </motion.div>
 
         <CategoryTableAdmin
+          setPagination={setPagination}
           setIsModalOpen={setIsModalOpen}
           isModalOpen={isModalOpen}
           loading={loading}

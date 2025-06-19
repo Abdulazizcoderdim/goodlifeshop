@@ -82,6 +82,7 @@ const SubcategoryPageAdmin = () => {
         </motion.div>
 
         <SubcategoryTableAdmin
+          setPagination={setPagination}
           setIsModalOpen={setIsModalOpen}
           isModalOpen={isModalOpen}
           loading={loading}

@@ -158,6 +158,7 @@ const UsersPage = () => {
           users={users}
           pagination={pagination}
           handlePageChange={handlePageChange}
+          setPagination={setPagination}
         />
 
         {/* USER CHARTS */}

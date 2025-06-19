@@ -4,16 +4,28 @@ import { BaseError } from "../errors/base.error.js";
 class UserController {
   async getAll(req, res, next) {
     try {
-      const { page = 1, size = 10 } = req.query;
+      const { page = 1, size = 10, search } = req.query;
 
       const pageNumber = parseInt(page);
       const pageSize = parseInt(size);
       const skip = (pageNumber - 1) * pageSize;
 
+      const where = {};
+
+      if (search) {
+        where.OR = [
+          { email: { contains: search, mode: "insensitive" } },
+          { firstName: { contains: search, mode: "insensitive" } },
+          { lastName: { contains: search, mode: "insensitive" } },
+          { phoneNumber: { contains: search, mode: "insensitive" } },
+        ];
+      }
+
       const [users, totalElements] = await Promise.all([
         prisma.user.findMany({
           skip,
           take: pageSize,
+          where,
         }),
         prisma.user.count(),
       ]);
