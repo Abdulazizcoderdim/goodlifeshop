@@ -46,7 +46,7 @@ const Kontakty = () => {
     <div className="space-y-6">
       <div className="flex flex-col items-starttext-start space-y-6">
         <ContactCard
-          title="Obщество с ограниченной ответственностью АлькорКлимат"
+          title="Общество с ограниченной ответственностью АлькорКлимат"
           details={officialDetails}
         />
         <ContactCard
