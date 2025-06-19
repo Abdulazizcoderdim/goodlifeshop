@@ -265,7 +265,7 @@ const ProductUserPage = () => {
             </div>
             {/* Price */}
             <div className="text-xl font-bold text-gray-900">
-              {formatPrice(product?.price || 0)} RUB
+              {formatPrice(product?.price || 0)} РУБ
             </div>
           </div>
 

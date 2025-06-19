@@ -179,7 +179,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                 </span>
               )}
               <span className="text-sm font-semibold text-gray-900">
-                {formatPrice(product.price)} RUB
+                {formatPrice(product.price)} РУБ
               </span>
             </div>
 
