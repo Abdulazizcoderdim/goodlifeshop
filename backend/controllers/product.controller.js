@@ -27,7 +27,6 @@ class ProductController {
       if (search) {
         where.OR = [
           { title: { contains: search, mode: "insensitive" } },
-          { description: { contains: search, mode: "insensitive" } },
           { brand: { contains: search, mode: "insensitive" } },
           { article: { contains: search, mode: "insensitive" } },
         ];
@@ -85,6 +84,7 @@ class ProductController {
       next(error);
     }
   }
+
   async getOne(req, res, next) {
     try {
       const { id } = req.params;
@@ -116,6 +116,7 @@ class ProductController {
       next(error);
     }
   }
+
   async create(req, res, next) {
     try {
       const {
