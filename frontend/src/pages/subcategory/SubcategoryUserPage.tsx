@@ -78,7 +78,7 @@ const SubcategoryUserPage = () => {
 
   return (
     <div className="custom-container">
-      <CatalogNames />
+      <CatalogNames brand={null} />
 
       <div className="pt-10 pb-5 max-md:hidden">
         <div className="flex items-center gap-3">

@@ -86,7 +86,7 @@ const CatalogStatikUserPage = () => {
   return (
     <div className="custom-container pb-10">
       {/* catloglar */}
-      <CatalogNames />
+      <CatalogNames brand={null} />
       {/* contents */}
       <div className="pt-10 pb-5 max-md:hidden">
         {/* path url */}
@@ -117,7 +117,7 @@ const CatalogStatikUserPage = () => {
             славится собственными традициями, при этом всех их объединяет одно:
             неутолимая страсть к совершенству.
           </p>
-          <Category />
+          <Category brand={null} />
           <Brend />
 
           <div>

@@ -127,7 +127,7 @@ const CatalogUserPage = () => {
   return (
     <div className="custom-container">
       {/* catloglar */}
-      <CatalogNames />
+      <CatalogNames brand={null} />
       {/* contents */}
       <div className="pt-10 pb-5">
         {/* path url */}

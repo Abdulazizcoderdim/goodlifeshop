@@ -50,7 +50,7 @@ export default function NotFound() {
           <p>ПН-ПТ: 10:00 - 18:00</p>
         </div>
       </div>
-      <Category />
+      <Category brand={null} />
     </div>
   );
 }

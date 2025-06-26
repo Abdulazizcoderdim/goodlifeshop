@@ -35,7 +35,7 @@ const HomePage = () => {
   return (
     <div className="flex flex-col">
       <Slider />
-      <Category />
+      <Category brand={null} />
       <CategoryProduct />
       <NewProducts loading={isLoading} products={products} />
       <Brend />
