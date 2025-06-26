@@ -26,7 +26,7 @@ const BrandZwilling = () => {
           Каталог товаров ZWILLING
         </h1>
 
-        <Category />
+        <Category brand="zwilling" />
 
         <div className="flex max-md:flex-col justify-between gap-5">
           <div className="md:w-1/2">

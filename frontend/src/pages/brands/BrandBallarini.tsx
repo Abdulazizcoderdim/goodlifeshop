@@ -35,7 +35,7 @@ const BrandBallarini = () => {
               className="w-60 h-52 object-contain"
             />
             <Button asChild variant={"default"}>
-              <Link to={"/catalog/posuda"}>BALLARINI Посуда</Link>
+              <Link to={"/catalog/ballarini/posuda"}>BALLARINI Посуда</Link>
             </Button>
           </div>
           <div className="flex flex-col gap-3">
@@ -46,7 +46,9 @@ const BrandBallarini = () => {
               className="w-60 h-52 object-contain"
             />
             <Button asChild variant={"default"}>
-              <Link to={"/catalog/aksessuary"}>BALLARINI Аксессуары</Link>
+              <Link to={"/catalog/ballarini/aksessuary"}>
+                BALLARINI Аксессуары
+              </Link>
             </Button>
           </div>
         </div>

@@ -26,7 +26,7 @@ interface CategoryType {
   };
 }
 
-const Category = () => {
+const Category = ({ brand = null }: { brand: string | null }) => {
   const { data, error, isLoading } = useSWR("/categories", fetcher);
   console.log(data);
   console.log(error);
@@ -92,7 +92,10 @@ const Category = () => {
               ))
             : data?.content.map((category: CategoryType, index: number) => (
                 <SwiperSlide key={index} className="py-4">
-                  <CategoryItem category={category as CategoryType} />
+                  <CategoryItem
+                    brand={brand}
+                    category={category as CategoryType}
+                  />
                 </SwiperSlide>
               ))}
         </Swiper>

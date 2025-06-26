@@ -4,7 +4,7 @@ import type { Category } from "@/types";
 import { Link, useLocation } from "react-router-dom";
 import useSWR from "swr";
 
-const CatalogNames = () => {
+const CatalogNames = ({ brand = null }: { brand: string | null }) => {
   const { pathname } = useLocation();
 
   const { data, isLoading, error } = useSWR("/categories", fetcher);
@@ -17,7 +17,7 @@ const CatalogNames = () => {
       ) : (
         data?.content?.map((item: Category, i: number) => (
           <Link
-            to={`/catalog/${item.slug}`}
+            to={`/catalog/${brand ? brand + "/" : ""}${item.slug}`}
             key={i}
             className={`font-medium cursor-pointer text-sm text-gray-400 ${
               item.slug === pathname && "text-black"

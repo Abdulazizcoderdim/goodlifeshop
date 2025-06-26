@@ -13,12 +13,13 @@ interface Props {
       subcategories: number;
     };
   };
+  brand?: string | null;
 }
 
-const CategoryItem = ({ category }: Props) => {
+const CategoryItem = ({ category, brand = null }: Props) => {
   return (
     <Link
-      to={`/catalog/${category.slug}`}
+      to={`/catalog/${brand ? brand + "/" : ""}${category.slug}`}
       className="flex flex-col gap-3 items-center group transition-transform group"
     >
       <div className="rounded-md p-4 mb-3 w-full flex items-center justify-center h-[160px]">

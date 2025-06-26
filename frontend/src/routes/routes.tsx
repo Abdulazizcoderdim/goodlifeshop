@@ -48,6 +48,12 @@ import UseCareSlug from "@/pages/brands/slugs/UseCareSlug";
 import BrandHistorySlug from "@/pages/brands/slugs/BrandHistorySlug";
 import CulinarWorld from "@/pages/brands/CulinarWorld";
 import Returns from "@/pages/help/Returns";
+import BrandZwillingCategory from "@/pages/zwilling/BrandZwillingCategory";
+import BrandZwillingSubCategory from "@/pages/zwilling/BrandZwillingSubCategory";
+import BrandStaubCategory from "@/pages/staub/BrandStaubCategory";
+import BrandStaubSubCategory from "@/pages/staub/BrandStaubSubCategory";
+import BrandBallariniCategory from "@/pages/ballarini/BrandBallariniCategory";
+import BrandBallariniSubCategory from "@/pages/ballarini/BrandBallariniSubCategory";
 
 export const router = createBrowserRouter([
   {
@@ -192,12 +198,36 @@ export const router = createBrowserRouter([
         element: <CatalogStatikUserPage />,
       },
       {
+        path: "catalog/zwilling/:category/:subcategory",
+        element: <BrandZwillingSubCategory />,
+      },
+      {
+        path: "catalog/zwilling/:category",
+        element: <BrandZwillingCategory />,
+      },
+      {
         path: "catalog/zwilling",
         element: <BrandZwilling />,
       },
       {
+        path: "catalog/staub/:category/:subcategory",
+        element: <BrandStaubSubCategory />,
+      },
+      {
+        path: "catalog/staub/:category",
+        element: <BrandStaubCategory />,
+      },
+      {
         path: "catalog/staub",
         element: <BrandStaub />,
+      },
+      {
+        path: "catalog/ballarini/:category/:subcategory",
+        element: <BrandBallariniSubCategory />,
+      },
+      {
+        path: "catalog/ballarini/:category",
+        element: <BrandBallariniCategory />,
       },
       {
         path: "catalog/ballarini",

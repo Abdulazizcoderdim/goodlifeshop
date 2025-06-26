@@ -35,7 +35,7 @@ const BrandStaub = () => {
               className="w-60"
             />
             <Button asChild variant={"default"}>
-              <Link to={"/catalog/posuda"}>STAUB Посуда</Link>
+              <Link to={"/catalog/staub/posuda"}>STAUB Посуда</Link>
             </Button>
           </div>
           <div className="flex flex-col gap-3">
@@ -46,7 +46,7 @@ const BrandStaub = () => {
               className="w-60"
             />
             <Button asChild variant={"default"}>
-              <Link to={"/catalog/aksessuary"}>STAUB Аксессуары</Link>
+              <Link to={"/catalog/staub/aksessuary"}>STAUB Аксессуары</Link>
             </Button>
           </div>
         </div>

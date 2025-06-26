@@ -145,14 +145,20 @@ class CategoriesController {
   async getCategorySlug(req, res, next) {
     try {
       const { slug } = req.params;
-      const { page = 1, size = 10 } = req.query;
+      const { page = 1, size = 10, brand } = req.query;
 
       const pageNumber = parseInt(page);
       const pageSize = parseInt(size);
       const skip = (pageNumber - 1) * pageSize;
 
+      const where = {};
+
+      if (brand) {
+        where.brand = brand;
+      }
+
       const category = await prisma.category.findUnique({
-        where: { slug: slug },
+        where: { slug },
         include: {
           subcategories: true,
         },
