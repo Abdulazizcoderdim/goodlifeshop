@@ -70,18 +70,7 @@ export const router = createBrowserRouter([
         path: "search",
         element: <SearchPage />,
       },
-      {
-        path: "catalog/zwilling",
-        element: <BrandZwilling />,
-      },
-      {
-        path: "catalog/staub",
-        element: <BrandStaub />,
-      },
-      {
-        path: "catalog/ballarini",
-        element: <BrandBallarini />,
-      },
+
       {
         path: "/personal",
         element: <Personal />,
@@ -201,6 +190,18 @@ export const router = createBrowserRouter([
       {
         path: "catalog",
         element: <CatalogStatikUserPage />,
+      },
+      {
+        path: "catalog/zwilling",
+        element: <BrandZwilling />,
+      },
+      {
+        path: "catalog/staub",
+        element: <BrandStaub />,
+      },
+      {
+        path: "catalog/ballarini",
+        element: <BrandBallarini />,
       },
     ],
   },
