@@ -13,77 +13,121 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import type { IPosts } from "@/types";
+import api from "@/http/axios";
 
-const data = [
-  {
-    title: "BALLARINI - ИННОВАЦИИ",
-    imageUrl:
-      "https://zwilling.ru/upload/resize_cache/iblock/b7f/300_210_2/ew0pe1xtjdmc0n7uzb6m11nh1py1c3d9.webp",
-    link: "/culinary-world/o-kompanii/ballarini-innovation",
-  },
-  {
-    title: "BALLARINI - ПРОИЗВОДСТВО",
-    imageUrl:
-      "https://zwilling.ru/upload/resize_cache/iblock/a56/300_210_2/bhxna32mst3wryizzzgwywdxfx3sydgh.webp",
-    link: "/culinary-world/o-kompanii/ballarini-production",
-  },
-  {
-    title: "BALLARINI - НАШИ ЦЕЛИ",
-    imageUrl:
-      "https://zwilling.ru/upload/resize_cache/iblock/7e7/300_210_2/t71flryobfo2j5qofleohkr8605u850x.webp",
-    link: "/culinary-world/o-kompanii/ballarini-purpose",
-  },
-  {
-    title: "BALLARINI - НАСЛЕДИЕ",
-    imageUrl:
-      "https://zwilling.ru/upload/resize_cache/iblock/899/300_210_2/8fj9su5rbxjbichx79e1irdkpgvuif3y.webp",
-    link: "/culinary-world/o-kompanii/ballarini-heritage",
-  },
-  {
-    title: "STAUB - МИРОВОЙ БРЕНД",
-    imageUrl:
-      "https://zwilling.ru/upload/resize_cache/iblock/b33/300_210_2/eypbur51moy0v17psj6ga9upuw051v29.webp",
-    link: "/culinary-world/o-kompanii/staub-world",
-  },
-  {
-    title: "STAUB - ЧУГУННЫЕ КОКОТЫ",
-    imageUrl:
-      "https://zwilling.ru/upload/resize_cache/iblock/ea7/300_210_2/fkpvf3ongjq3liyhkf4jv713aqzkmmlt.webp",
-    link: "/culinary-world/o-kompanii/staub-cocotte",
-  },
-  {
-    title: "STAUB - АССОРТИМЕНТ",
-    imageUrl:
-      "https://zwilling.ru/upload/resize_cache/iblock/8ae/300_210_2/mcwbv028hcjs2q2hvylk5lcwp830jkog.webp",
-    link: "/culinary-world/o-kompanii/staub-assortement",
-  },
-  {
-    title: "STAUB - СДЕЛАНО ВО ФРАНЦИИ",
-    imageUrl:
-      "https://zwilling.ru/upload/resize_cache/iblock/426/300_210_2/i8k76rsk60epbkuxpjfw9k03dg382sic.webp",
-    link: "/culinary-world/o-kompanii/staub-made-in-france",
-  },
-  {
-    title: "ZWILLING ENFINIGY",
-    imageUrl:
-      "https://zwilling.ru/upload/resize_cache/iblock/f3f/300_210_2/8jhk3tru09w6e05r2j3ay3hdc9xb02hc.webp",
-    link: "/culinary-world/o-kompanii/zwilling-enfinigy",
-  },
-  {
-    title: "ZWILLING FRESH&SAVE",
-    imageUrl:
-      "https://zwilling.ru/upload/resize_cache/iblock/f3f/300_210_2/8jhk3tru09w6e05r2j3ay3hdc9xb02hc.webp",
-    link: "/culinary-world/o-kompanii/zwilling-fresh-save",
-  },
-  {
-    title: "ZWILLING - КАЧЕСТВО",
-    imageUrl:
-      "https://zwilling.ru/upload/resize_cache/iblock/dc2/300_210_2/cv6nnl0bei46qbyyh36icw015w4srz9c.webp",
-    link: "/culinary-world/o-kompanii/zwilling-quality",
-  },
-];
+// const data = [
+//   {
+//     title: "BALLARINI - ИННОВАЦИИ",
+//     imageUrl:
+//       "https://zwilling.ru/upload/resize_cache/iblock/b7f/300_210_2/ew0pe1xtjdmc0n7uzb6m11nh1py1c3d9.webp",
+//     link: "/culinary-world/o-kompanii/ballarini-innovation",
+//     category: "brand_history",
+//   },
+//   {
+//     title: "BALLARINI - ПРОИЗВОДСТВО",
+//     imageUrl:
+//       "https://zwilling.ru/upload/resize_cache/iblock/a56/300_210_2/bhxna32mst3wryizzzgwywdxfx3sydgh.webp",
+//     link: "/culinary-world/o-kompanii/ballarini-production",
+//     category: "brand_history",
+//   },
+//   {
+//     title: "BALLARINI - НАШИ ЦЕЛИ",
+//     imageUrl:
+//       "https://zwilling.ru/upload/resize_cache/iblock/7e7/300_210_2/t71flryobfo2j5qofleohkr8605u850x.webp",
+//     link: "/culinary-world/o-kompanii/ballarini-purpose",
+//     category: "brand_history",
+//   },
+//   {
+//     title: "BALLARINI - НАСЛЕДИЕ",
+//     imageUrl:
+//       "https://zwilling.ru/upload/resize_cache/iblock/899/300_210_2/8fj9su5rbxjbichx79e1irdkpgvuif3y.webp",
+//     link: "/culinary-world/o-kompanii/ballarini-heritage",
+//     category: "brand_history",
+//   },
+//   {
+//     title: "STAUB - МИРОВОЙ БРЕНД",
+//     imageUrl:
+//       "https://zwilling.ru/upload/resize_cache/iblock/b33/300_210_2/eypbur51moy0v17psj6ga9upuw051v29.webp",
+//     link: "/culinary-world/o-kompanii/staub-world",
+//     category: "brand_history",
+//   },
+//   {
+//     title: "STAUB - ЧУГУННЫЕ КОКОТЫ",
+//     imageUrl:
+//       "https://zwilling.ru/upload/resize_cache/iblock/ea7/300_210_2/fkpvf3ongjq3liyhkf4jv713aqzkmmlt.webp",
+//     link: "/culinary-world/o-kompanii/staub-cocotte",
+//     category: "brand_history",
+//   },
+//   {
+//     title: "STAUB - АССОРТИМЕНТ",
+//     imageUrl:
+//       "https://zwilling.ru/upload/resize_cache/iblock/8ae/300_210_2/mcwbv028hcjs2q2hvylk5lcwp830jkog.webp",
+//     link: "/culinary-world/o-kompanii/staub-assortement",
+//     category: "brand_history",
+//   },
+//   {
+//     title: "STAUB - СДЕЛАНО ВО ФРАНЦИИ",
+//     imageUrl:
+//       "https://zwilling.ru/upload/resize_cache/iblock/426/300_210_2/i8k76rsk60epbkuxpjfw9k03dg382sic.webp",
+//     link: "/culinary-world/o-kompanii/staub-made-in-france",
+//     category: "brand_history",
+//   },
+//   {
+//     title: "ZWILLING ENFINIGY",
+//     imageUrl:
+//       "https://zwilling.ru/upload/resize_cache/iblock/f3f/300_210_2/8jhk3tru09w6e05r2j3ay3hdc9xb02hc.webp",
+//     link: "/culinary-world/o-kompanii/zwilling-enfinigy",
+//     category: "brand_history",
+//   },
+//   {
+//     title: "ZWILLING FRESH&SAVE",
+//     imageUrl:
+//       "https://zwilling.ru/upload/resize_cache/iblock/f3f/300_210_2/8jhk3tru09w6e05r2j3ay3hdc9xb02hc.webp",
+//     link: "/culinary-world/o-kompanii/zwilling-fresh-save",
+//     category: "brand_history",
+//   },
+//   {
+//     title: "ZWILLING - КАЧЕСТВО",
+//     imageUrl:
+//       "https://zwilling.ru/upload/resize_cache/iblock/dc2/300_210_2/cv6nnl0bei46qbyyh36icw015w4srz9c.webp",
+//     link: "/culinary-world/o-kompanii/zwilling-quality",
+//     category: "brand_history",
+//   },
+// ];
 
 export default function BrandHistory() {
+  const [posts, setPosts] = useState<IPosts[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [pagination, setPagination] = useState({
+    number: 1,
+    size: 20,
+    totalElements: 0,
+    totalPages: 0,
+  });
+
+  useEffect(() => {
+    fetchPosts(pagination.number);
+  }, []);
+
+  const fetchPosts = async (page = 1) => {
+    try {
+      setLoading(true);
+      const res = await api.get(
+        `/posts?page=${page}&size=${pagination.size}&category=brand_history`
+      );
+      setPosts(res.data.content);
+      setPagination(res.data.pagination);
+    } catch (error) {
+      console.log("Failed to fetch posts", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  console.log(loading);
+
   return (
     <div className="min-h-screen custom-container bg-white">
       {/* Breadcrumb Navigation */}
@@ -151,7 +195,7 @@ export default function BrandHistory() {
                 <AccordionTrigger>ФИЛЬТР</AccordionTrigger>
                 <AccordionContent>
                   <div className="text-sm text-gray-600">
-                    <p>Выбрано: 3</p>
+                    <p>Выбрано: 10</p>
                     <button className="text-blue-600 hover:underline mt-1">
                       Показать
                     </button>
@@ -167,12 +211,12 @@ export default function BrandHistory() {
             <div className="flex justify-end mb-6">
               <div className="flex items-center gap-2 text-sm">
                 <span className="text-gray-600">ПОКАЗЫВАТЬ ПО:</span>
-                <Select defaultValue="3">
+                <Select defaultValue="10">
                   <SelectTrigger className="w-20 h-8">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent defaultValue={"3"}>
-                    <SelectItem value="3">3</SelectItem>
+                  <SelectContent defaultValue={"10"}>
+                    <SelectItem value="10">10</SelectItem>
                     {/* <SelectItem value="24">24</SelectItem> */}
                     {/* <SelectItem value="48">48</SelectItem> */}
                   </SelectContent>
@@ -182,7 +226,7 @@ export default function BrandHistory() {
 
             {/* Content Cards */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              {data.map((item, i) => (
+              {posts.map((item, i) => (
                 <BrendNewsCard key={i} item={item} />
               ))}
             </div>

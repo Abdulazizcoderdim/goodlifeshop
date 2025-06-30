@@ -113,10 +113,16 @@ model Subcategory {
 }
 
 model Post {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  id        String       @id @default(auto()) @map("_id") @db.ObjectId
   title     String
-  content   String
-  imageUrl  String?
-  category  String // "brand_history", "usage_and_care", "recipes"
-  createdAt DateTime @default(now())
+  imageUrl  String
+  category  PostCategory
+  link      String
+  createdAt DateTime     @default(now())
+}
+
+enum PostCategory {
+  brand_history
+  usage_and_care
+  recipes
 }

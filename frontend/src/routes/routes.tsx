@@ -54,6 +54,7 @@ import BrandStaubCategory from "@/pages/staub/BrandStaubCategory";
 import BrandStaubSubCategory from "@/pages/staub/BrandStaubSubCategory";
 import BrandBallariniCategory from "@/pages/ballarini/BrandBallariniCategory";
 import BrandBallariniSubCategory from "@/pages/ballarini/BrandBallariniSubCategory";
+import PostsPage from "@/pages/posts/PostsPage";
 
 export const router = createBrowserRouter([
   {
@@ -278,6 +279,10 @@ export const router = createBrowserRouter([
       {
         path: "subcategory",
         element: <SubcategoryPageAdmin />,
+      },
+      {
+        path: "posts",
+        element: <PostsPage />,
       },
     ],
   },

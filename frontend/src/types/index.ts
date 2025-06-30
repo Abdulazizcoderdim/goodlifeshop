@@ -68,6 +68,21 @@ export interface IProductVariant {
   images: string[];
 }
 
+export interface IPosts {
+  id: string;
+  title: string;
+  imageUrl: string;
+  category: PostCategory;
+  link?: string;
+  createdAt?: string;
+}
+
+export enum PostCategory {
+  brand_history = "brand_history",
+  usage_and_care = "usage_and_care",
+  recipes = "recipes",
+}
+
 export interface IUser {
   id: string;
   email: string;

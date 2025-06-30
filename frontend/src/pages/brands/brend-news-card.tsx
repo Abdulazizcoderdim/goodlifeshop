@@ -1,12 +1,9 @@
+import type { IPosts } from "@/types";
 import { MoveRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 interface Props {
-  item: {
-    title: string;
-    imageUrl: string;
-    link: string;
-  };
+  item: IPosts;
   key: number;
 }
 
@@ -15,7 +12,7 @@ const BrendNewsCard = ({ item, key }: Props) => {
 
   return (
     <div
-      onClick={() => navigate(item.link)}
+      onClick={() => navigate(item.link || "")}
       key={key}
       className="group cursor-pointer"
     >

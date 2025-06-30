@@ -1,30 +1,63 @@
 import { useParams } from "react-router-dom";
 import BrendNewsCard from "../brend-news-card";
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import type { IPosts } from "@/types";
+import api from "@/http/axios";
 
-const data = [
-  {
-    title: "BALLARINI - ИННОВАЦИИ",
-    imageUrl:
-      "https://zwilling.ru/upload/resize_cache/iblock/b7f/300_210_2/ew0pe1xtjdmc0n7uzb6m11nh1py1c3d9.webp",
-    link: "/culinary-world/o-kompanii/ballarini-innovation",
-  },
-  {
-    title: "BALLARINI - ПРОИЗВОДСТВО",
-    imageUrl:
-      "https://zwilling.ru/upload/resize_cache/iblock/a56/300_210_2/bhxna32mst3wryizzzgwywdxfx3sydgh.webp",
-    link: "/culinary-world/o-kompanii/ballarini-production",
-  },
-  {
-    title: "BALLARINI - НАШИ ЦЕЛИ",
-    imageUrl:
-      "https://zwilling.ru/upload/resize_cache/iblock/7e7/300_210_2/t71flryobfo2j5qofleohkr8605u850x.webp",
-    link: "/culinary-world/o-kompanii/ballarini-purpose",
-  },
-];
+// const data = [
+//   {
+//     title: "BALLARINI - ИННОВАЦИИ",
+//     imageUrl:
+//       "https://zwilling.ru/upload/resize_cache/iblock/b7f/300_210_2/ew0pe1xtjdmc0n7uzb6m11nh1py1c3d9.webp",
+//     link: "/culinary-world/o-kompanii/ballarini-innovation",
+//   },
+//   {
+//     title: "BALLARINI - ПРОИЗВОДСТВО",
+//     imageUrl:
+//       "https://zwilling.ru/upload/resize_cache/iblock/a56/300_210_2/bhxna32mst3wryizzzgwywdxfx3sydgh.webp",
+//     link: "/culinary-world/o-kompanii/ballarini-production",
+//   },
+//   {
+//     title: "BALLARINI - НАШИ ЦЕЛИ",
+//     imageUrl:
+//       "https://zwilling.ru/upload/resize_cache/iblock/7e7/300_210_2/t71flryobfo2j5qofleohkr8605u850x.webp",
+//     link: "/culinary-world/o-kompanii/ballarini-purpose",
+//   },
+// ];
 
 const UseCareSlug = () => {
   const { slug } = useParams();
+
+  const [posts, setPosts] = useState<IPosts[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [pagination, setPagination] = useState({
+    number: 1,
+    size: 20,
+    totalElements: 0,
+    totalPages: 0,
+  });
+
+  useEffect(() => {
+    fetchPosts(pagination.number);
+  }, []);
+
+  const fetchPosts = async (page = 1) => {
+    try {
+      setLoading(true);
+      const res = await api.get(
+        `/posts?page=${page}&size=${pagination.size}&category=usage_and_care`
+      );
+      setPosts(res.data.content);
+      setPagination(res.data.pagination);
+    } catch (error) {
+      console.log("Failed to fetch posts", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  console.log(loading);
 
   const render = () => {
     switch (slug) {
@@ -137,7 +170,7 @@ const UseCareSlug = () => {
 
       {/* Content Cards */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 custom-container py-16">
-        {data.map((item, i) => (
+        {posts.map((item, i) => (
           <BrendNewsCard key={i} item={item} />
         ))}
       </div>

@@ -41,6 +41,12 @@ const SIDEBAR_ITEMS = [
     color: "#19D981",
     href: "/admin-panel/subcategory",
   },
+  {
+    name: "Посты",
+    icon: CalendarCheck,
+    color: "#10B981",
+    href: "/admin-panel/posts",
+  },
 ];
 
 const Sidebar = () => {
