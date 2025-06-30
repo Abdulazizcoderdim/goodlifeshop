@@ -40,7 +40,7 @@ const BrandBallariniCategory = () => {
   const [loading, setLoading] = useState(false);
   const [pagination, setPagination] = useState({
     number: 1,
-    size: 50,
+    size: 60,
     totalElements: 0,
     totalPages: 0,
   });
