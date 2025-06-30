@@ -111,3 +111,12 @@ model Subcategory {
   categoryId String    @db.ObjectId
   products   Product[]
 }
+
+model Post {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  title     String
+  content   String
+  imageUrl  String?
+  category  String // "brand_history", "usage_and_care", "recipes"
+  createdAt DateTime @default(now())
+}
