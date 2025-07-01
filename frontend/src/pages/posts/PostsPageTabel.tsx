@@ -55,6 +55,15 @@ const PostsPageTabel = ({
     setIsEditModalOpen(true);
   };
 
+  const getCategoryLabel = (category: string) => {
+    const categoryMap: Record<string, string> = {
+      brand_history: "История бренда",
+      usage_and_care: "Использование и уход",
+      recipes: "Вдохновляющие рецепты",
+    };
+    return categoryMap[category] || category;
+  };
+
   if (loading) {
     return (
       <div className="flex w-full rounded-lg justify-center items-center py-10 my-5 bg-gray-800 ">
@@ -119,7 +128,7 @@ const PostsPageTabel = ({
                   </td>
 
                   <td className="px-6 py-4 whitespace-nowrap">
-                    {post.category}
+                    {getCategoryLabel(post.category)}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
                     <button
