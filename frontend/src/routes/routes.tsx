@@ -43,9 +43,6 @@ import OrderMake from "@/pages/order/OrderMake";
 import BrandHistory from "@/pages/brands/BrandHistory";
 import UseCare from "@/pages/brands/use-care";
 import VdokhnovlyayushchieRetsept from "@/pages/brands/vdokhnovlyayushchie-retsept";
-import VdokhnovlyayushchieRetseptSlug from "@/pages/brands/slugs/VdokhnovlyayushchieRetseptSlug";
-import UseCareSlug from "@/pages/brands/slugs/UseCareSlug";
-import BrandHistorySlug from "@/pages/brands/slugs/BrandHistorySlug";
 import CulinarWorld from "@/pages/brands/CulinarWorld";
 import Returns from "@/pages/help/Returns";
 import BrandZwillingCategory from "@/pages/zwilling/BrandZwillingCategory";
@@ -55,6 +52,8 @@ import BrandStaubSubCategory from "@/pages/staub/BrandStaubSubCategory";
 import BrandBallariniCategory from "@/pages/ballarini/BrandBallariniCategory";
 import BrandBallariniSubCategory from "@/pages/ballarini/BrandBallariniSubCategory";
 import PostsPage from "@/pages/posts/PostsPage";
+import PostSlug from "@/pages/brands/slugs/PostSlug";
+import NewPostForm from "@/pages/posts/NewPostForm";
 
 export const router = createBrowserRouter([
   {
@@ -110,7 +109,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/culinary-world/o-kompanii/:slug",
-        element: <BrandHistorySlug />,
+        element: <PostSlug />,
       },
       {
         path: "culinary-world",
@@ -122,7 +121,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/culinary-world/use-care/:slug",
-        element: <UseCareSlug />,
+        element: <PostSlug />,
       },
       {
         path: "/culinary-world/vdokhnovlyayushchie-retsepty",
@@ -130,7 +129,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/culinary-world/vdokhnovlyayushchie-retsepty/:slug",
-        element: <VdokhnovlyayushchieRetseptSlug />,
+        element: <PostSlug />,
       },
       {
         path: "here_to_help",
@@ -283,6 +282,10 @@ export const router = createBrowserRouter([
       {
         path: "posts",
         element: <PostsPage />,
+      },
+      {
+        path: "posts/new",
+        element: <NewPostForm />,
       },
     ],
   },

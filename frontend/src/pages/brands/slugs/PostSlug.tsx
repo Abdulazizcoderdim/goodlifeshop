@@ -10,7 +10,7 @@ import PostSkeleton from "@/pages/posts/PostSkeleton";
 import ErrorState from "@/pages/posts/ErrorState";
 import PostContent from "@/pages/posts/PostContent";
 
-const BrandHistorySlug = () => {
+const PostSlug = () => {
   const { slug } = useParams<{ slug: string }>();
   const [post, setPost] = useState<IPosts | null>(null);
   const [loading, setLoading] = useState(true);
@@ -180,4 +180,4 @@ const BrandHistorySlug = () => {
   );
 };
 
-export default BrandHistorySlug;
+export default PostSlug;

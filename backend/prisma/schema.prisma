@@ -119,7 +119,6 @@ model Post {
   category  PostCategory
   slug      String       @unique
   content   String
-  link      String
   createdAt DateTime     @default(now())
 }
 
