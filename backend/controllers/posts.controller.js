@@ -1,5 +1,6 @@
 import prisma from "../config/prisma.client.js";
 import { BaseError } from "../errors/base.error.js";
+import generatePostSlug from "../shared/generatePostSlug.js";
 
 class PostsController {
   async getAll(req, res, next) {
@@ -83,8 +84,18 @@ class PostsController {
 
   async create(req, res, next) {
     try {
+      if (
+        !req.body.title ||
+        !req.body.content ||
+        !req.body.category ||
+        !req.body.imageUrl
+      )
+        return next(BaseError.BadRequest("All fields are required"));
+
+      const createSlug = await generatePostSlug(req.body.title);
+
       const post = await prisma.post.create({
-        data: req.body,
+        data: { ...req.body, slug: createSlug },
       });
 
       res.json(post);
@@ -97,12 +108,38 @@ class PostsController {
     try {
       const { id } = req.params;
 
+      if (
+        !req.body.title ||
+        !req.body.content ||
+        !req.body.category ||
+        !req.body.imageUrl
+      )
+        return next(BaseError.BadRequest("All fields are required"));
+
+      const createSlug = await generatePostSlug(req.body.title);
+
       if (!id) return next(BaseError.BadRequest("Post not found"));
 
       const post = await prisma.post.update({
         where: { id },
-        data: req.body,
+        data: { ...req.body, slug: createSlug },
       });
+
+      res.json(post);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async getOneBySlug(req, res, next) {
+    try {
+      const { slug } = req.params;
+
+      const post = await prisma.post.findUnique({
+        where: { slug },
+      });
+
+      if (!post) return next(BaseError.BadRequest("Post not found"));
 
       res.json(post);
     } catch (error) {

@@ -117,7 +117,8 @@ model Post {
   title     String
   imageUrl  String
   category  PostCategory
-  slug      String
+  slug      String       @unique
+  content   String
   link      String
   createdAt DateTime     @default(now())
 }

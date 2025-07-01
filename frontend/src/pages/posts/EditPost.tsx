@@ -15,6 +15,7 @@ import { useState } from "react";
 import { useImageUploader } from "@/hooks/useImageUploader";
 import api from "@/http/axios";
 import { toast } from "sonner";
+import RichTextEditor from "./RichTextEditor";
 
 interface Props {
   setIsEditModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -27,7 +28,7 @@ const EditPost = ({ setIsEditModalOpen, defaultValues, onSuccess }: Props) => {
     title: defaultValues.title,
     category: defaultValues.category,
     imageUrl: defaultValues.imageUrl,
-    link: defaultValues.link,
+    content: defaultValues.content,
   });
 
   const { uploadImage, uploading, error: uploadError } = useImageUploader();
@@ -39,15 +40,14 @@ const EditPost = ({ setIsEditModalOpen, defaultValues, onSuccess }: Props) => {
       e.preventDefault();
       setLoading(true);
       const res = await api.put(`/posts/${defaultValues.id}`, formData);
-
       if (res.data) {
         toast.success("Сообщение успешно обновлено");
       }
-
       onSuccess("1");
       setIsEditModalOpen(false);
     } catch (error) {
       console.log(error);
+      toast.error("Ошибка при обновлении поста");
     } finally {
       setLoading(false);
     }
@@ -94,9 +94,9 @@ const EditPost = ({ setIsEditModalOpen, defaultValues, onSuccess }: Props) => {
       onClose={() => setIsEditModalOpen(false)}
       title="Редактировать пост"
     >
-      <div className="space-y-6 h-full">
+      <div className="space-y-6 h-full max-h-[80vh] overflow-y-auto">
         {/* Edit Form */}
-        <form onSubmit={handleSubmit} className="space-y-4 h-full">
+        <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="title">Заголовок</Label>
             <Input
@@ -137,7 +137,7 @@ const EditPost = ({ setIsEditModalOpen, defaultValues, onSuccess }: Props) => {
           <div className="space-y-2">
             <Label htmlFor="imageUrl" className="flex items-center gap-2">
               <ImageIcon className="w-4 h-4" />
-              Изображение
+              Главное изображение
             </Label>
 
             {/* File Upload Area */}
@@ -217,6 +217,15 @@ const EditPost = ({ setIsEditModalOpen, defaultValues, onSuccess }: Props) => {
                 </div>
               </div>
             )}
+          </div>
+
+          {/* Rich Text Editor for Content */}
+          <div className="space-y-2">
+            <Label htmlFor="content">Содержание</Label>
+            <RichTextEditor
+              content={formData.content}
+              onChange={(content) => setFormData({ ...formData, content })}
+            />
           </div>
 
           <div className="flex justify-end items-end gap-3 pt-4">

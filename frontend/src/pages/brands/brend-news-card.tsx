@@ -12,7 +12,7 @@ const BrendNewsCard = ({ item, key }: Props) => {
 
   return (
     <div
-      onClick={() => navigate(item.link || "")}
+      onClick={() => navigate(item.slug || "")}
       key={key}
       className="group cursor-pointer"
     >

@@ -73,7 +73,8 @@ export interface IPosts {
   title: string;
   imageUrl: string;
   category: PostCategory;
-  link?: string;
+  slug: string;
+  content: string;
   createdAt?: string;
 }
 

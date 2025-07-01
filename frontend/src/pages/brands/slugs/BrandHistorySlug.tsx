@@ -1,309 +1,181 @@
+import api from "@/http/axios";
+import type { IPosts } from "@/types";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "lucide-react";
+import PostSkeleton from "@/pages/posts/PostSkeleton";
+import ErrorState from "@/pages/posts/ErrorState";
+import PostContent from "@/pages/posts/PostContent";
 
 const BrandHistorySlug = () => {
-  const { slug } = useParams();
+  const { slug } = useParams<{ slug: string }>();
+  const [post, setPost] = useState<IPosts | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const render = () => {
-    switch (slug) {
-      case "ballarini-innovation":
-        return [
-          {
-            title: "Инновации по-итальянски.",
-            desc: "",
-            imgUrl:
-              "https://zwilling.ru/upload/resize_cache/iblock/b7f/1588_397_1/ew0pe1xtjdmc0n7uzb6m11nh1py1c3d9.webp",
-          },
-          {
-            title: "Готовьте так, как вы умеете.",
-            desc: "Возможно, наши итальянские корни подарили нам особый кулинарный вкус. Мы считаем, что приготовление пищи должно приносить удовольствие. Так что готовьте с легкостью, готовьте с amore и готовьте с друзьями и семьей. Неважно, что вы готовите и как вы это готовите – главное, чтобы это было весело и на посуде было написано BALLARINI.",
-            imgUrl:
-              "https://zwilling.ru/upload/brands/ballarini/articles/BAL_BLP_Brand_PURPOSE_2100x1400px3-768.webp",
-          },
-          {
-            title: "Да здравствует простота",
-            desc: "В Италии готовят с душой – не напрягаясь и без излишеств. Только свежие ингредиенты, щепотка фантазии и большая порция Passione. Это все, что нужно, чтобы насладиться Cucina Italiana. Это не только просто, но и очень molto bene.",
-            imgUrl:
-              "https://zwilling.ru/upload/brands/ballarini/articles/BAL_BLP_Brand_PRODUCTION_2100x1400px6-768.jpg",
-            bgColor: "#D6D2C4",
-          },
-        ];
-      case "ballarini-production":
-        return [
-          {
-            title: "Кусочек Италии, созданный для вас.",
-            desc: "",
-            imgUrl:
-              "https://zwilling.ru/upload/resize_cache/iblock/a56/1588_397_1/bhxna32mst3wryizzzgwywdxfx3sydgh.webp",
-          },
-          {
-            title: "Готовьте так, как вы умеете.",
-            desc: "Возможно, наши итальянские корни подарили нам особый кулинарный вкус. Мы считаем, что приготовление пищи должно приносить удовольствие. Так что готовьте с легкостью, готовьте с amore и готовьте с друзьями и семьей. Неважно, что вы готовите и как вы это готовите – главное, чтобы это было весело и на посуде было написано BALLARINI.",
-            imgUrl:
-              "https://zwilling.ru/upload/brands/ballarini/articles/BAL_BLP_Brand_PURPOSE_2100x1400px3-768.webp",
-          },
-          {
-            title: "Да здравствует простота",
-            desc: "В Италии готовят с душой – не напрягаясь и без излишеств. Только свежие ингредиенты, щепотка фантазии и большая порция Passione. Это все, что нужно, чтобы насладиться Cucina Italiana. Это не только просто, но и очень molto bene.",
-            imgUrl:
-              "https://zwilling.ru/upload/brands/ballarini/articles/BAL_BLP_Brand_PRODUCTION_2100x1400px6-768.jpg",
-            bgColor: "#D6D2C4",
-          },
-        ];
-      case "ballarini-purpose":
-        return [
-          {
-            title: "Радость от итальянской кухни",
-            desc: "",
-            imgUrl:
-              "https://zwilling.ru/upload/resize_cache/iblock/7e7/1588_397_1/t71flryobfo2j5qofleohkr8605u850x.webp",
-          },
-          {
-            title: "Готовьте так, как вы умеете.",
-            desc: "Возможно, наши итальянские корни подарили нам особый кулинарный вкус. Мы считаем, что приготовление пищи должно приносить удовольствие. Так что готовьте с легкостью, готовьте с amore и готовьте с друзьями и семьей. Неважно, что вы готовите и как вы это готовите – главное, чтобы это было весело и на посуде было написано BALLARINI.",
-            imgUrl:
-              "https://zwilling.ru/upload/brands/ballarini/articles/BAL_BLP_Brand_PURPOSE_2100x1400px3-768.webp",
-          },
-          {
-            title: "Да здравствует простота",
-            desc: "В Италии готовят с душой – не напрягаясь и без излишеств. Только свежие ингредиенты, щепотка фантазии и большая порция Passione. Это все, что нужно, чтобы насладиться Cucina Italiana. Это не только просто, но и очень molto bene.",
-            imgUrl:
-              "https://zwilling.ru/upload/brands/ballarini/articles/BAL_BLP_Brand_PRODUCTION_2100x1400px6-768.jpg",
-            bgColor: "#D6D2C4",
-          },
-        ];
-      case "ballarini-heritage":
-        return [
-          {
-            title: "BALLARINI – создана в 1889.",
-            desc: "",
-            imgUrl:
-              "https://zwilling.ru/upload/resize_cache/iblock/899/1588_397_1/8fj9su5rbxjbichx79e1irdkpgvuif3y.webp",
-          },
-          {
-            title: "Легко готовить, вкусно есть.",
-            desc: "Уже более 130 лет наше сердце бьется от страсти к итальянской кухне. За пять поколений скромная мастерская превратилась в глобальную компанию, полную традиций. Компания, которая похожа на большую семью. Мы от всей души стремимся к тому, чтобы вам было легче готовить вкусную еду, тем самым делая жизнь приятнее. Как мы и обещали 130 лет назад, ваша «gioia di vivere» — наше вдохновение.",
-            imgUrl:
-              "https://zwilling.ru/upload/brands/ballarini/articles/BAL_BLP_Brand_HERITAGE_2100x1400px-768.jpg",
-          },
-          {
-            title: "Наши ворота в кулинарный мир.",
-            desc: "Городские ворота Ривароло не просто так являются частью нашего логотипа: они символизируют наше происхождение. Деревня с населением около 2500 человек по-прежнему остается нашим домом. Наши сковороды до сих пор покидают город через эти ворота и несут вкус Италии по всему миру. Более 74% нашей посуды экспортируется, что делает нас послами Cucina Italiana. С каждым изделием BALLARINI частичка Италии входит в ваш дом. Benvenuto Италия. Benvenuto вкусная еда!",
-            imgUrl:
-              "https://zwilling.ru/upload/brands/ballarini/articles/004__Ballarini_Heritage-768.jpg",
-          },
-          {
-            title: "Ривароло и Золинген: страсть к совершенству.",
-            desc: "BALLARINI является частью ZWILLING Group с 2016 года. Это великолепное партнерство двух брендов, олицетворяющих страсть, удовольствие и качество. У них общие цели: усовершенствовать ваш кулинарный опыт, вызвать улыбку на вашем лице и отправиться с вами в путешествие, полное вкусов и удовольствия – каждый день.",
-            imgUrl:
-              "https://zwilling.ru/upload/brands/staub/articles/STAUB_Brand_Landingpage_1_3_Chefs_around_the_world_5_1922x1922-768.webp",
-            bgColor: "#D6D2C4",
-          },
-        ];
-      case "staub-world":
-        return [
-          {
-            title: "STAUB и шеф-повара по всему миру",
-            desc: "Будь то кухня отеля или ресторан, отмеченный звездой Мишлен, они все требуют качества, точности и скорости. Профессиональные повара должны иметь возможность полностью полагаться на свою посуду. Именно поэтому, шеф-повара со звездами Мишлен во всем мире ценят первоклассную продукцию STAUB.",
-            imgUrl:
-              "https://zwilling.ru/upload/brands/staub/articles/STAUB_Brand_Landingpage_1_3_Chefs_around_the_world_1_1922x1922-768.webp",
-            bgColor: "#3E5D58",
-          },
-          {
-            title: "Кухня дома со звездой Мишлен",
-            desc: "Со STAUB сотрудничают сотни лучших рестораторов, многие из них отмечены гидом Мишлен. Вот почему уважаемые шеф-повара во всем мире выбирают STAUB и отмечают ее превосходство на своих кухнях.",
-            imgUrl:
-              "https://zwilling.ru/upload/brands/staub/articles/STAUB_Brand_Landingpage_1_3_Chefs_around_the_world_2_1922x1922-768.webp",
-            bgColor: "#93272C",
-          },
-          {
-            title: "Бренд для кулинарных творцов...",
-            desc: "Шеф-повар – это не тот, кто просто готовит еду, это кулинарный творец. Он приходит на кухню каждый день, готовый превзойти свои же ожидания.",
-            imgUrl:
-              "https://zwilling.ru/upload/brands/staub/articles/STAUB_Brand_Landingpage_1_3_Chefs_around_the_world_3_1922x1922-768.jpg",
-            bgColor: "#D6D2C4",
-          },
-          {
-            title: "Послы хорошего вкуса",
-            desc: "Некоторые повара утверждают, что приготовление еды в чугунной посуде STAUB улучшило и, даже приблизило к совершенству их блюда.",
-            imgUrl:
-              "https://zwilling.ru/upload/brands/staub/articles/STAUB_Brand_Landingpage_1_3_Chefs_around_the_world_5_1922x1922-768.webp",
-            bgColor: "#D6D2C4",
-          },
-        ];
-      case "staub-cocotte":
-        return [
-          {
-            title: "В чем секрет наших кокотов",
-            desc: "Почему мы говорим, что кокот — самая универсальная кастрюля в мире? От жаркого до буйабеса и даже хлеба или воздушного суфле – с кокотом возможно все.Наши кокоты таят в себе множество тайн, как больших, так и маленьких. К счастью, мы рады поделиться их секретами.",
-            imgUrl:
-              "https://zwilling.ru/upload/brands/staub/articles/STAUB_Brand_Landingpage_1_4_Cocotte_1_1922x1922-768.webp",
-            bgColor: "#93272C",
-          },
-          {
-            title: "Важно то, что внутри",
-            desc: "Истинная красота идет изнутри, как и настоящее удовольствие. Именно поэтому, внутренняя поверхность всех кокотов STAUB выполнена из высококачественной матовой черной эмали. Матовая черная эмаль действует как микрогриль, придавая блюду восхитительный жареный аромат. Она также обеспечивает идеальные результаты обжаривания, тушения и карамелизации продуктов.",
-            imgUrl:
-              "https://zwilling.ru/upload/brands/staub/articles/STAUB_Brand_Landingpage_1_4_Cocotte_3_1922x1922-768.jpg",
-            bgColor: "#CFCDC9",
-          },
-          {
-            title: "Французское качество",
-            desc: "Наши чугунные кокоты, как и все чугунные изделия STAUB, производятся по традиционным методам в ограниченном количестве на нашем французском заводе.Это позволяет нам гарантировать исключительное качество STAUB: каждый кокот в процессе производства проходит визуальную и техническую проверку около 100 раз. Почему мы прилагаем столько усилий? Ответ прост: из-за вас. Мы хотим, чтобы вы готовили потрясающие блюда в нашей посуде.",
-            imgUrl:
-              "https://zwilling.ru/upload/brands/staub/articles/STAUB_Brand_Landingpage_1_4_Cocotte_4_1922x1922-768.jpg",
-            bgColor: "#000000",
-          },
-          {
-            title: "Вкусное различие",
-            desc: "Хороший вкус – это прежде всего правильный материал.Эмалированный чугун кокота сохраняет питательную ценность и насыщенный вкус каждого ингредиента. Какие бы блюда вы ни приготовили в кокоте STAUB, результат всегда будет восхитительным.",
-            imgUrl:
-              "https://zwilling.ru/upload/brands/staub/articles/STAUB_Brand_Landingpage_1_4_Cocotte_5_1922x1922-768.webp",
-            bgColor: "#93272C",
-          },
-        ];
-      case "staub-assortement":
-        return [
-          {
-            title: "Вселенная STAUB",
-            desc: "Настоящее наслаждение едой доставляет удовольствие не только вашим вкусовым рецепторам. Оно затрагивает все ваши чувства, начиная с момента ее приготовления. Любой, кто рассматривает кулинарию не просто как страсть, а как «смысл жизни», знает, что нужно для приготовления изысканных блюд: много времени, качественные ингредиенты, внимание к деталям и правильная посуда для каждого этапа приготовления.",
-            imgUrl:
-              "https://zwilling.ru/upload/brands/staub/articles/STAUB_Brand_Landingpage_1_2_Assortment_1_1922x1922-768.webp",
-            bgColor: "#006272",
-          },
-          {
-            title: "Для особых моментов, которые хочется продлить",
-            desc: "Воссоздаете ли вы проверенные рецепты своей бабушки или готовите свои собственные кухонные шедевры, STAUB помогает создавать моменты, которые вы запомните навсегда.",
-            imgUrl:
-              "https://zwilling.ru/upload/brands/staub/articles/STAUB_Brand_Landingpage_1_2_Assortment_2_1922x1922-768.webp",
-            bgColor: "#D6D2C4",
-          },
-          {
-            title: "",
-            desc: "У нас есть идеальный ассортимент продукции для всех ваших потребностей - чугунные кокоты, сделанные во Франции, шикарные керамические изделия, которые можно поставить прямо из духовки на стол, а также элегантные аксессуары, которые делают приготовление пищи и сервировку еще красивее. Здесь вы можете найти все – и только высочайшего качества STAUB.",
-            imgUrl:
-              "https://zwilling.ru/upload/brands/staub/articles/STAUB_Brand_Landingpage_1_4_Cocotte_4_1922x1922-768.jpg",
-            bgColor: "#93272C",
-          },
-          {
-            title: "Жизнь в цвете...",
-            desc: "Погрузитесь в мир цвета STAUB. Наши продукты доступны в широком диапазоне ярких оттенков, вдохновленных миром природы, последними тенденциями дизайна и интерьера и, проверенной временем, традиционной эстетикой.",
-            imgUrl:
-              "https://zwilling.ru/upload/brands/staub/articles/STAUB_Brand_Landingpage_1_2_Assortment_4_1922x1922-768.webp",
-            bgColor: "#392874",
-          },
-        ];
-      case "staub-made-in-france":
-        return [
-          {
-            title: "Это французский вкус",
-            desc: "Франция – родина традиционной и изысканной кухни. Петух в вине, рататуй, тарт фламбе, шоколадный мусс… список французских деликатесов, любимых во всем мире, можно продолжать бесконечно.",
-            imgUrl:
-              "https://zwilling.ru/upload/brands/staub/articles/STAUB_Brand_Landingpage_1_1_Made_in_France_1_1922x1922-768.webp",
-            bgColor: "#3E5D58",
-          },
-          {
-            title: "",
-            desc: "Только посуда, произведённая из материалов высочайшего качества и по принципам традиционного мастерства, подходит для приготовления этих кулинарных шедевров. Вот почему Франция также является родиной выдающейся посуды – родиной STAUB.",
-            imgUrl:
-              "https://zwilling.ru/upload/brands/staub/articles/STAUB_Brand_Landingpage_1_1_Made_in_France_2_1922x1922-768.webp",
-            bgColor: "#A2B6B0",
-          },
-          {
-            title: "Непрерывающееся наследие аиста",
-            desc: "Эльзас является домом, полным богатых кулинарных традиций и выдающегося мастерства. Так что не случайно, в 1974 году Фрэнсис Стауб спроектировал здесь свой первый чугунный кокот, положив начало компании STAUB.",
-            imgUrl:
-              "https://zwilling.ru/upload/brands/staub/articles/STAUB_Brand_Landingpage_1_1_Made_in_France_3_1922x1922-768.jpg",
-            bgColor: "#93272C",
-          },
-        ];
-      case "zwilling-enfinigy":
-        return [
-          {
-            title: "ЭЛЕКТРИЧЕСКОЕ СОВЕРШЕНСТВО",
-            desc: "Высококачественные электроприборы, созданные с вниманием к деталям и нашей страстью к совершенству. ZWILLING Enfinigy сочетает в себе интуитивно понятную функциональность и новейшие технологии. В сочетании с выдающимся дизайном, это привело к созданию ассортимента продукции, отвечающей самым высоким стандартам – вашим.",
-            imgUrl:
-              "https://zwilling.ru/upload/brands/zwilling/articles/Zwilling_2904_05EXTRA_0703-highres-lowres.webp",
-          },
-          {
-            title: "В ВАШЕМ СТИЛЕ",
-            desc: "ZWILLING Enfinigy – это шедевры дизайна для вашей кухни. Электроприборы, созданные миланским дизайнером Маттео Туном, доступны в различных цветах. Любите ли вы классический цвет, например черный и серебристый, или вам нравятся модные оттенки, например золотой или розовое золото, здесь вы обязательно найдете своих новых кухонных фаворитов.",
-            imgUrl:
-              "https://zwilling.ru/upload/brands/zwilling/articles/ZW_Brand_Landingpage_1_4_ENFINIGY_3_1365x2048.webp",
-          },
-        ];
-      case "zwilling-fresh-save":
-        return [
-          {
-            title: "",
-            desc: "С ZWILLING FRESH&SAVE, мы вывели хранение и приготовление пищи на кухне на новый уровень: выбирайте экологичность благодаря перезаряжаемым батареям, а длительную свежесть и сокращение пищевых отходов благодаря вакуумной упаковке. Вакуумный насос легко помещается у вас в ладони из-за своего компактного и элегантного дизайна.",
-            imgUrl:
-              "https://zwilling.ru/upload/brands/zwilling/articles/Zwilling_2904_05EXTRA_0720-768.webp",
-          },
-          {
-            title: "",
-            desc: "ZWILLING FRESH&SAVE уже используется в более чем в миллионе домов по всему миру каждый день, внося значительный вклад в сокращение пищевых отходов.",
-            imgUrl:
-              "https://zwilling.ru/upload/brands/zwilling/articles/ZW_Brand_Landingpage_1_3_Fresh_Save_4_1400x1400-768.webp",
-          },
-          {
-            title: "",
-            desc: "Система состоит из перезаряжаемого вакуумного насоса с батарейным питанием, а также контейнеров и пакетов различных размеров. Эти простые в использовании продукты, помогут вам создать кухню своей мечты.",
-            imgUrl:
-              "https://zwilling.ru/upload/brands/zwilling/articles/ZW_Brand_Landingpage_1_3_Fresh_Save_5_1400x1400-768.webp",
-          },
-        ];
-      case "zwilling-quality":
-        return [
-          {
-            title:
-              "КЛАССИЧЕСКИЕ ПРОДУКТЫ ДЛЯ СОВРЕМЕННОЙ КУЛЬТУРЫ ПРИГОТОВЛЕНИЯ ЕДЫ",
-            desc: "Благодаря почти 300-летним традициям и опыту, изысканным материалам и нашей бескомпромиссной приверженности качеству, мы постоянно создаем новые предметы, необходимые для современной кухни. Мы гордимся тем, что наша высококачественная классическая продукция продолжает вдохновлять кулинаров по всему миру. Например, наши кухонные ножницы ZWILLING, известные как «кухонные помощники» из-за своей многофункциональности, и серия ножей FOUR STAR, выпускаемая с 1939 и 1976 годов соответственно, являются незаменимыми кухонными инструментами для миллионов людей.",
-            imgUrl:
-              "https://zwilling.ru/upload/brands/zwilling/articles/ZW_Brand_Landingpage_1_2_Quality_2_1400x1400-768.jpg",
-          },
-          {
-            title: "КАЧЕСТВО В НАДЕЖНЫХ РУКАХ",
-            desc: "Мы гарантируем высочайшее качество продукции, контролируя каждый этап производственного процесса. ZWILLING объединяет промышленное производство с опытными мастерами, которые разделяют нашу страсть к качеству. Когда вы держите в руках продукцию ZWILLING, вы держите в руках частичку истории и часть будущего.",
-            imgUrl:
-              "https://zwilling.ru/upload/brands/zwilling/articles/ZW_Brand_Landingpage_1_2_Quality_3_1400x1400-768.webp",
-          },
-          {
-            title: "",
-            desc: "Будущее начинается на вашей кухне с сегодняшнего дня. Мы постоянно совершенствуем наши процессы и используем новейшие технологии для улучшения нашей продукции и разработки новых решений для современной кухни. Инновационные продукты для вакуумного хранения продуктов от ZWILLING FRESH & SAVE и наши электроприборы ZWILLING ENFINIGY демонстрируют, как мы сочетаем надежную функциональность с современным дизайном для кухни 21-го века.",
-            imgUrl:
-              "https://zwilling.ru/upload/brands/zwilling/articles/ZW_Brand_Landingpage_1_2_Quality_4_1400x1400-768.webp",
-          },
-          {
-            title: "КРАСИВАЯ КУХОННАЯ ПОСУДА, КОТОРАЯ ТОЧНО ВАМ ПОДОЙДЕТ.",
-            desc: "Для нас настоящее удовольствие, когда на кухне задействованы все органы чувств. Вот почему, мы стремимся создавать продукты с элегантным дизайном, которые делают вашу кухню красивее, помогают готовить вкусные блюда и вдохновляют вас каждый день. Более 15 лет, мы сотрудничаем с миланским дизайнером Маттео Туном, улучшая постоянно растущее количество продуктов ZWILLING понятным и современным стилем.",
-            imgUrl:
-              "https://zwilling.ru/upload/brands/zwilling/articles/ZW_Brand_Landingpage_1_2_Quality_5_1400x1400-768.webp",
-          },
-        ];
+  useEffect(() => {
+    if (slug) {
+      fetchSlugPost();
+    }
+  }, [slug]);
 
-      default:
-        break;
+  // Update document title when post loads
+  useEffect(() => {
+    if (post) {
+      document.title = `${post.title} | Brand History`;
+    }
+    return () => {
+      document.title = "Brand History";
+    };
+  }, [post]);
+
+  const fetchSlugPost = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const res = await api.get(`/posts/slug/${slug}`);
+
+      if (!res.data) {
+        throw new Error("Post not found");
+      }
+
+      setPost(res.data);
+    } catch (error) {
+      console.error("Error fetching post:", error);
+      setError("Пост не найден");
+    } finally {
+      setLoading(false);
     }
   };
 
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString("ru-RU", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  };
+
+  const getCategoryLabel = (category: string) => {
+    const categoryMap: Record<string, string> = {
+      brand_history: "История бренда",
+      usage_and_care: "Использование и уход",
+      recipes: "Вдохновляющие рецепты",
+    };
+    return categoryMap[category] || category;
+  };
+
+  const handleRetry = () => {
+    fetchSlugPost();
+  };
+
+  if (loading) {
+    return <PostSkeleton />;
+  }
+
+  if (error || !post) {
+    return (
+      <ErrorState
+        title={
+          error === "Пост не найден" ? "Пост не найден" : "Ошибка загрузки"
+        }
+        message={error || "Не удалось загрузить пост"}
+        showBackButton={true}
+        showHomeButton={true}
+      />
+    );
+  }
+
   return (
-    <div className="custom-container">
-      {render()?.map((item, index) => (
-        <div
-          key={index}
-          className={`flex ${index % 2 !== 0 ? "flex-row-reverse" : ""} ${
-            item.bgColor && "bg-[" + item.bgColor + "]"
-          } max-md:flex-col justify-between gap-5`}
-        >
-          <div className="md:w-1/2">
-            <img loading="lazy" className="w-full" src={item.imgUrl} alt="" />
+    <div className="custom-container py-8">
+      <div className="max-w-4xl mx-auto">
+        {/* Breadcrumb Navigation */}
+        {/* <nav className="flex items-center gap-2 text-sm text-gray-600 mb-6">
+          <Link to="/" className="hover:text-gray-900 transition-colors">
+            Главная
+          </Link>
+          <ChevronRight className="w-4 h-4" />
+          <Link
+            to="/brand-history"
+            className="hover:text-gray-900 transition-colors"
+          >
+            История бренда
+          </Link>
+          <ChevronRight className="w-4 h-4" />
+          <span className="text-gray-900 font-medium truncate">
+            {post.title}
+          </span>
+        </nav> */}
+
+        {/* Back Button */}
+        {/* <div className="mb-6">
+          <Button
+            variant="outline"
+            onClick={() => navigate(-1)}
+            className="gap-2"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Назад
+          </Button>
+        </div> */}
+
+        {/* Main Content */}
+        <Card className="overflow-hidden">
+          <CardHeader className="space-y-4">
+            {/* Category Badge */}
+            <Badge variant="secondary" className="w-fit">
+              {getCategoryLabel(post.category)}
+            </Badge>
+
+            {/* Title */}
+            <h1 className="text-3xl font-bold text-gray-900 leading-tight">
+              {post.title}
+            </h1>
+
+            {/* Date */}
+            {post.createdAt && (
+              <div className="flex items-center gap-2 text-gray-600">
+                <Calendar className="w-4 h-4" />
+                <time dateTime={post.createdAt}>
+                  {formatDate(post.createdAt)}
+                </time>
+              </div>
+            )}
+          </CardHeader>
+
+          <CardContent className="space-y-6 shadow-xs">
+            {/* Featured Image */}
+            {post.imageUrl && (
+              <div className="relative">
+                <img
+                  src={post.imageUrl || "/placeholder.svg"}
+                  alt={post.title}
+                  className="w-full h-64 md:h-80 object-cover rounded-lg shadow-md"
+                  onError={(e) => {
+                    e.currentTarget.style.display = "none";
+                  }}
+                />
+              </div>
+            )}
+
+            {/* Post Content */}
+            <PostContent content={post.content} />
+          </CardContent>
+        </Card>
+
+        {/* Retry Button for Errors */}
+        {error && (
+          <div className="mt-6 text-center">
+            <Button onClick={handleRetry} variant="outline">
+              Попробовать еще раз
+            </Button>
           </div>
-          <div className="flex md:w-1/2 text-center space-y-4 flex-col justify-center">
-            <h1 className="md:text-3xl text-lg font-normal">{item.title}</h1>
-            {item.desc && <p>{item.desc}</p>}
-          </div>
-        </div>
-      ))}
+        )}
+      </div>
     </div>
   );
 };
