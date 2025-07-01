@@ -160,7 +160,7 @@ const NewPostForm = () => {
                     <p className="text-sm font-medium">
                       Перетащите изображение сюда или
                     </p>
-                    <label className="text-sm text-primary cursor-pointer hover:underline">
+                    <label className="text-sm text-white font-bold cursor-pointer hover:underline">
                       выберите файл
                       <input
                         type="file"

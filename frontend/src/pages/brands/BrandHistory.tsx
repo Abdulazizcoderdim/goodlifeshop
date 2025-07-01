@@ -195,7 +195,7 @@ export default function BrandHistory() {
                 <AccordionTrigger>ФИЛЬТР</AccordionTrigger>
                 <AccordionContent>
                   <div className="text-sm text-gray-600">
-                    <p>Выбрано: 10</p>
+                    <p>Выбрано: {pagination.totalElements}</p>
                     <button className="text-blue-600 hover:underline mt-1">
                       Показать
                     </button>
@@ -216,7 +216,9 @@ export default function BrandHistory() {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent defaultValue={"10"}>
-                    <SelectItem value="10">10</SelectItem>
+                    <SelectItem value="10">
+                      {pagination.totalElements}
+                    </SelectItem>
                     {/* <SelectItem value="24">24</SelectItem> */}
                     {/* <SelectItem value="48">48</SelectItem> */}
                   </SelectContent>
