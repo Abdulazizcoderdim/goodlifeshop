@@ -111,19 +111,19 @@ const ProductsTable = ({
             <thead>
               <tr>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                  Name
+                  Название
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                  Category
+                  Категория
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                  Price
+                  Цена
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                  In Stock
+                  В наличии
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                  Actions
+                  Действия
                 </th>
               </tr>
             </thead>
@@ -157,7 +157,7 @@ const ProductsTable = ({
                   </td>
 
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                    {product.inStock ? "Yes" : "No"}
+                    {product.inStock ? "Да" : "Нет"}
                   </td>
 
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
