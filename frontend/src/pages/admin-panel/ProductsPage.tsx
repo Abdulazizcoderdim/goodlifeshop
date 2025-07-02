@@ -27,7 +27,7 @@ const ProductsPage = () => {
     try {
       setLoading(true);
       const res = await api.get(
-        `/products?page=${page}&size=${pagination.size}`
+        `/products?page=${page}&size=${pagination.size}&showAll=true`
       );
 
       setProducts(res.data.content);

@@ -42,7 +42,7 @@ const ProductsTable = ({
 
   const fetchProducts = async (term: string) => {
     try {
-      const res = await api.get(`/products?search=${term}`);
+      const res = await api.get(`/products?search=${term}&showAll=true`);
       setFilteredProducts(res.data.content);
       setPagination(res.data.pagination);
     } catch (err) {
@@ -119,9 +119,9 @@ const ProductsTable = ({
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                   Price
                 </th>
-                {/* <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                   In Stock
-                </th> */}
+                </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                   Actions
                 </th>
@@ -156,9 +156,9 @@ const ProductsTable = ({
                     {product.price.toFixed(2)} ₽
                   </td>
 
-                  {/* <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                    {product.variants?.[0]?.inStock ? "Yes" : "No"}
-                  </td> */}
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                    {product.inStock ? "Yes" : "No"}
+                  </td>
 
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
                     <button
@@ -198,15 +198,6 @@ const ProductsTable = ({
         itemsPerPage={pagination.size}
         onPageChange={handlePageChange}
       />
-
-      {/* {isEditModalOpen && productEdit && (
-        <EditProductForm
-          isOpen={isEditModalOpen}
-          setIsEditModalOpen={setIsEditModalOpen}
-          defaultValues={productEdit}
-          onSuccess={handleSuccessEdit}
-        />
-      )} */}
     </>
   );
 };

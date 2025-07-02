@@ -45,6 +45,7 @@ interface FormData {
   discountPercentage: number;
   color: string;
   dishwasherSafe: boolean;
+  inStock: boolean;
   batteryRequired: boolean;
   dimensions: {
     productWeight: number;
@@ -160,8 +161,6 @@ const EditProductForm = () => {
           const productData = productResponse.data.content;
           setProduct(productData);
 
-          console.log(productData, "asasas");
-
           // Convert characteristics object to array for form handling
           const characteristicsArray = Object.entries(
             productData.characteristics || {}
@@ -184,6 +183,7 @@ const EditProductForm = () => {
             originCountry: productData.originCountry,
             price: productData.price,
             color: productData.color,
+            inStock: productData.inStock,
             discountPercentage: productData.discountPercentage,
             dishwasherSafe: productData.dishwasherSafe,
             batteryRequired: productData.batteryRequired,
@@ -321,6 +321,7 @@ const EditProductForm = () => {
         color: data.color,
         dishwasherSafe: data.dishwasherSafe,
         batteryRequired: data.batteryRequired,
+        inStock: data.inStock,
         dimensions: {
           productWeight: Number(data.dimensions.productWeight),
           productHeight: Number(data.dimensions.productHeight),
@@ -678,6 +679,19 @@ const EditProductForm = () => {
                   </div>
 
                   <div className="flex gap-6">
+                    <div className="flex items-center space-x-2">
+                      <Checkbox
+                        id="inStock"
+                        onCheckedChange={(checked) =>
+                          setValue("inStock", !!checked)
+                        }
+                        checked={watch("inStock")}
+                        {...register("inStock")}
+                        className="border-gray-600 data-[state=checked]:bg-gray-700"
+                      />
+                      <Label htmlFor="inStock">В наличии</Label>
+                    </div>
+
                     <div className="flex items-center space-x-2">
                       <Checkbox
                         id="dishwasherSafe"

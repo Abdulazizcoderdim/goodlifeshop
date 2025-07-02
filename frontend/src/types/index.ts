@@ -16,6 +16,7 @@ export interface IProduct {
   updatedAt: string;
   discountPercentage: number;
   images: string[]; // URL'lar
+  inStock?: boolean;
 
   characteristics: {
     [key: string]: unknown;

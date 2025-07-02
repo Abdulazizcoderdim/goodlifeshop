@@ -24,6 +24,10 @@ class ProductController {
       //   build where clase
       const where = {};
 
+      if (!req.query.showAll) {
+        where.inStock = true;
+      }
+
       if (search) {
         where.OR = [
           { title: { contains: search, mode: "insensitive" } },
@@ -131,6 +135,7 @@ class ProductController {
         subcategoryId,
         color,
         discountPercentage,
+        inStock,
         dishwasherSafe,
         batteryRequired,
         characteristics,
@@ -167,6 +172,7 @@ class ProductController {
             },
           },
           color,
+          inStock,
           dishwasherSafe,
           batteryRequired,
           characteristics,
@@ -205,6 +211,7 @@ class ProductController {
         categoryId,
         color,
         subcategoryId,
+        inStock,
         dishwasherSafe,
         batteryRequired,
         characteristics,
@@ -240,6 +247,7 @@ class ProductController {
           categoryId: categoryId, // handle undefined
           subcategoryId,
           color,
+          inStock,
           dishwasherSafe,
           batteryRequired,
           characteristics,

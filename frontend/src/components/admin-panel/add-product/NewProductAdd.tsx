@@ -39,6 +39,7 @@ const productSchema = z.object({
   color: z.string().optional(),
   dishwasherSafe: z.boolean().default(false).optional(),
   batteryRequired: z.boolean().default(false).optional(),
+  inStock: z.boolean().default(true),
   dimensions: z.object({
     productWeight: z
       .number()
@@ -143,6 +144,7 @@ export interface FormData {
   color?: string;
   dishwasherSafe?: boolean;
   batteryRequired?: boolean;
+  inStock: boolean;
   dimensions: ProductDimensions;
   images: string[];
   characteristics: Characteristic[];
@@ -188,6 +190,7 @@ const NewProductAdd = () => {
       color: "",
       dishwasherSafe: false,
       batteryRequired: false,
+      inStock: true,
       dimensions: {
         productWeight: 0,
         productHeight: 0,
@@ -387,6 +390,7 @@ const NewProductAdd = () => {
         color: data.color || "",
         dishwasherSafe: data.dishwasherSafe,
         batteryRequired: data.batteryRequired,
+        inStock: data.inStock,
         dimensions: {
           productWeight: Number(data.dimensions.productWeight) || 0,
           productHeight: Number(data.dimensions.productHeight) || 0,
@@ -726,6 +730,17 @@ const NewProductAdd = () => {
                 </div>
 
                 <div className="flex gap-6">
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="inStock"
+                      checked={watch("inStock")}
+                      onCheckedChange={(checked) =>
+                        setValue("inStock", !!checked)
+                      }
+                      className="border-gray-600 data-[state=checked]:bg-gray-700"
+                    />
+                    <Label htmlFor="inStock">В наличии</Label>
+                  </div>
                   <div className="flex items-center space-x-2">
                     <Checkbox
                       id="dishwasherSafe"
