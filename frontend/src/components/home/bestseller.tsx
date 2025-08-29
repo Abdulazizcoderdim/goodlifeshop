@@ -1,5 +1,5 @@
-import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
@@ -9,9 +9,9 @@ import "swiper/css/navigation";
 // @ts-expect-error: Swiper CSS modules do not provide type declarations
 import "swiper/css/pagination";
 
-import ProductItem from "../product-item/product-item";
 import type { IProduct } from "@/types";
 import ProductItemLoading from "../loading/ProductItemLoading";
+import ProductItem from "../product-item/product-item";
 
 const Bestseller = ({
   products,
